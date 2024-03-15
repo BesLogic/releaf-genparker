@@ -11,10 +11,7 @@
       },
       "configurations": {
         "production": {
-          "tags": ["ghcr.io/andy2great/generatorsensorgateringserver:latest"]
-        },
-        "dev": {
-          "tags": ["ghcr.io/andy2great/generatorsensorgateringserver:dev"]
+          "tags": ["ghcr.io/andy2great/genparker_philantropy:latest"]
         }
       }
     },
