@@ -7,7 +7,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: ghcr.io/BesLogic/genparker_philantropy:latest
+          image: ghcr.io/beslogic/genparker_philantropy:latest
           envFrom:
             - secretRef:
                 name: dev-platform-secret

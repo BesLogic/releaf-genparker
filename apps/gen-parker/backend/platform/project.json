@@ -11,7 +11,7 @@
       },
       "configurations": {
         "production": {
-          "tags": ["ghcr.io/BesLogic/genparker_philantropy:latest"]
+          "tags": ["ghcr.io/beslogic/genparker_philantropy:latest"]
         }
       }
     },
