@@ -47,10 +47,6 @@ jobs:
       - name: Install dependencies
         run: npm i --ignore-scripts
 
-      - uses: actions/setup-go@v4
-        with:
-          go-version-file: './go.mod'
-
       - name: publish affected
         run: npx nx affected --target=publish-docker --head=${{needs.init.outputs.branch}} --base=$BEFORE_SHA --configuration=${{needs.init.outputs.environment}} --parallel=5
 
