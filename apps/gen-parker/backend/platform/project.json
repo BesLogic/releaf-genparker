@@ -1,0 +1,79 @@
+{
+  "name": "gen-parker-backend-platform",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/gen-parker/backend/platform/src",
+  "projectType": "application",
+  "targets": {
+    "publish-docker": {
+      "executor": "@nx-tools/nx-container:build",
+      "options": {
+        "push": true
+      },
+      "configurations": {
+        "production": {
+          "tags": ["ghcr.io/andy2great/generatorsensorgateringserver:latest"]
+        },
+        "dev": {
+          "tags": ["ghcr.io/andy2great/generatorsensorgateringserver:dev"]
+        }
+      }
+    },
+    "setup": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "npm install"
+          }
+        ],
+        "cwd": "dist/apps/gen-parker/backend/platform"
+      }
+    },
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "generatePackageJson": true,
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/gen-parker/backend/platform",
+        "main": "apps/gen-parker/backend/platform/src/main.js",
+        "tsConfig": "apps/gen-parker/backend/platform/tsconfig.app.json"
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/js:node",
+      "options": {
+        "buildTarget": "gen-parker-backend-platform:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "gen-parker-backend-platform:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/gen-parker/backend/platform/**/*.js"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/gen-parker/backend/platform/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["lang:node"]
+}

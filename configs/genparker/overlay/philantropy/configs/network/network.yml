@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: platform-genparker-ingress
+spec:
+  tls:
+    - hosts:
+        - philantropy.genparker.com
+      secretName: genparker-tls-philantropy
+  rules:
+    - host: philantropy.genparker.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: genparker-be-svc
+                port:
+                  number: 59595
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: genparker-certificate
+spec:
+  dnsNames:
+    - philantropy.genparker.com
+  secretName: genparker-tls-philantropy

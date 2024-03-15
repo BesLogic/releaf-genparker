@@ -1,0 +1,25 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Serve GenParker",
+      "dependsOrder": "parallel",
+      "dependsOn": [
+        "serve-backend-platform"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "serve-backend-platform",
+      "type": "shell",
+      "command": "npx nx run gen-parker-backend-platform:serve",
+      "presentation": {
+        "panel": "dedicated",
+        "group": "GenParker BE"
+      }
+    }
+  ]
+}

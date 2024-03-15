@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: genparker-be
+  annotations:
+    reloader.stakater.com/auto: 'true'
+    configmap.reloader.stakater.com/reload: 'version-config'
+  labels:
+    app: backend
+spec:
+  serviceName: genparker-be
+  revisionHistoryLimit: 0
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          imagePullPolicy: Always
+      volumes:
+        - name: genparker-agent-config
+          configMap:
+            name: genparker-agent-config
+      imagePullSecrets:
+        - name: dockersecret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: genparker-be-svc
+  labels:
+    app: backend
+spec:
+  clusterIP: None
+  ports:
+    - name: http
+      port: 59595
+  selector:
+    app: backend
