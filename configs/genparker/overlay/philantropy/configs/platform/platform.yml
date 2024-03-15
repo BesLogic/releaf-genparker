@@ -8,11 +8,16 @@ spec:
       containers:
         - name: backend
           image: ghcr.io/beslogic/genparker_philantropy:latest
-          envFrom:
-            - secretRef:
-                name: dev-platform-secret
           env:
             - name: SERVER
-              value: 'Dev'
+              value: "Dev"
             - name: SERVICE
-              value: 'platform-service'
+              value: "platform-service"
+            - name: KAFKA_SERVER
+              value: "my-cluster-kafka-brokers.kafka.svc.cluster.local:9092"
+            - name: KAFKA_TOPIC_DATA
+              value: "genparker-philantropy-topic-data"
+            - name: KAFKA_TOPIC_LOG
+              value: "genparker-philantropy-topic-log"
+            - name: KAFKA_TOPIC_MODULE
+              value: "genparker-philantropy-topic-module"
