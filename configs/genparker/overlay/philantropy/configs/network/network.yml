@@ -3,10 +3,6 @@ kind: Ingress
 metadata:
   name: platform-genparker-ingress
 spec:
-  tls:
-    - hosts:
-        - philanthropy.genparker.com
-      secretName: genparker-tls-philanthropy
   rules:
     - host: philanthropy.genparker.com
       http:
