@@ -26,6 +26,7 @@ app.use(
 );
 
 app.use((req, res, next) => {
+  console.log(`[${uuid()}] ${req.method} ${req.url}`);
   express.json()(req, res, (outcome) => {
     if (outcome && outcome.status >= 400 && outcome.status <= 500) {
       res.sendStatus(500).end();
