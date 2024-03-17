@@ -11,6 +11,7 @@ const kafkaClient = process.env.SERVER
 kafkaClient.connectProducer(undefined);
 
 const addSensorData = async (req) => {
+  console.log(req.body)
   const data = Object.keys(req.body).map((x) => {
     const senseur = x.replace(/^\D+/g, '');
     const position = x.replace(senseur, '');
