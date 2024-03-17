@@ -2,30 +2,23 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: genparker-philanthropy
-  annotations:
-    reloader.stakater.com/auto: 'true'
-    configmap.reloader.stakater.com/reload: 'version-config'
   labels:
-    app: backend
+    app: backend-philanthropy
 spec:
   serviceName: genparker-philanthropy
   revisionHistoryLimit: 0
   replicas: 1
   selector:
     matchLabels:
-      app: backend
+      app: backend-philanthropy
   template:
     metadata:
       labels:
-        app: backend
+        app: backend-philanthropy
     spec:
       containers:
-        - name: backend
+        - name: backend-philanthropy
           imagePullPolicy: Always
-      volumes:
-        - name: genparker-agent-config
-          configMap:
-            name: genparker-agent-config
       imagePullSecrets:
         - name: dockersecret
 ---
@@ -34,11 +27,11 @@ kind: Service
 metadata:
   name: genparker-philanthropy-svc
   labels:
-    app: backend
+    app: backend-philanthropy
 spec:
   clusterIP: None
   ports:
     - name: http
       port: 59595
   selector:
-    app: backend
+    app: backend-philanthropy

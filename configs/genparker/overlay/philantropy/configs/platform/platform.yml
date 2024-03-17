@@ -6,7 +6,7 @@ spec:
   template:
     spec:
       containers:
-        - name: backend
+        - name: backend-philanthropy
           image: ghcr.io/beslogic/genparker_philantropy:latest
           env:
             - name: SERVER
