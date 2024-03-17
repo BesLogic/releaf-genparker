@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: genparker-be
+  name: genparker-philanthropy
   annotations:
     reloader.stakater.com/auto: 'true'
     configmap.reloader.stakater.com/reload: 'version-config'
   labels:
     app: backend
 spec:
-  serviceName: genparker-be
+  serviceName: genparker-philanthropy
   revisionHistoryLimit: 0
   replicas: 1
   selector:
@@ -32,7 +32,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: genparker-be-svc
+  name: genparker-philanthropy-svc
   labels:
     app: backend
 spec:

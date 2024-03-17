@@ -5,25 +5,16 @@ metadata:
 spec:
   tls:
     - hosts:
-        - philantropy.genparker.com
-      secretName: genparker-tls-philantropy
+        - philanthropy.genparker.com
+      secretName: genparker-tls-philanthropy
   rules:
-    - host: philantropy.genparker.com
+    - host: philanthropy.genparker.com
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: genparker-be-svc
+                name: genparker-philanthropy-svc
                 port:
                   number: 59595
----
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: genparker-certificate
-spec:
-  dnsNames:
-    - philantropy.genparker.com
-  secretName: genparker-tls-philantropy

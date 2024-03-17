@@ -62,8 +62,6 @@ jobs:
           kustomization: 'overlay/*/kustomization.yml'
           base-directory: 'configs/genparker'
 
-      - run: find ${{ steps.kustomize.outputs.directory }}
-
       - run: cp -r ${{ steps.kustomize.outputs.directory }} deployment_configs
 
       - name: Update with kustomize
