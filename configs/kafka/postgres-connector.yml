@@ -48,6 +48,8 @@ spec:
     connection.url: jdbc:postgresql://aws-0-ca-central-1.pooler.supabase.com:5432/postgres
     connection.username: postgres.kmweqdlgighuhnogorky
     connection.password: 'to Add'
+    key.converter: org.apache.kafka.connect.storage.StringConverter
+    value.converter: org.apache.kafka.connect.json.JsonConverter
     insert.mode: upsert
     delete.enabled: true
     primary.key.mode: record_key
