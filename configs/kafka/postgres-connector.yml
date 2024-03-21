@@ -45,13 +45,13 @@ metadata:
 spec:
   class: io.confluent.connect.jdbc.JdbcSinkConnector
   tasksMax: 1
-  config:  
-    connection.url: jdbc:postgresql://aws-0-ca-central-1.pooler.supabase.com:5432/postgres,
-    connection.username: postgres.kmweqdlgighuhnogorky,
-    connection.password: 'to Add',
-    insert.mode: upsert,
-    delete.enabled: true,
-    primary.key.mode: record_key,
-    schema.evolution: basic,
-    database.time_zone: UTC,
-    topics: genparker-philantropy-topic-data,
+  config:
+    connection.url: jdbc:postgresql://aws-0-ca-central-1.pooler.supabase.com:5432/postgres
+    connection.username: postgres.kmweqdlgighuhnogorky
+    connection.password: 'to Add'
+    insert.mode: upsert
+    delete.enabled: true
+    primary.key.mode: record_key
+    schema.evolution: basic
+    database.time_zone: UTC
+    topics: genparker-philantropy-topic-data
