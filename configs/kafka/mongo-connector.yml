@@ -22,7 +22,6 @@ spec:
             version: 1.11.2
   config:
     group.id: connect-cluster
-    key.converter: org.apache.kafka.connect.json.JsonConverter
     value.converter: org.apache.kafka.connect.json.JsonConverter
     key.converter.schemas.enable: false
     value.converter.schemas.enable: false
