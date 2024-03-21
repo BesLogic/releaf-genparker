@@ -1,3 +1,40 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnect
+metadata:
+  namespace: kafka
+  name: postgres-sink-connect-cluster
+  annotations:
+    strimzi.io/use-connector-resources: 'true'
+spec:
+  bootstrapServers: my-cluster-kafka-bootstrap:9092
+  build:
+    output:
+      type: docker
+      image: ghcr.io/andy2great/postgresdb-sink:latest
+      pushSecret: dockersecret
+    plugins:
+      - name: my-plugin
+        artifacts:
+          - type: maven
+            repository: https://repo1.maven.org/maven2
+            group: io.debezium
+            artifact: debezium-connector-postgres
+            version: 2.5.3.Final
+  config:
+    group.id: connect-cluster
+    key.converter: org.apache.kafka.connect.json.JsonConverter
+    value.converter: org.apache.kafka.connect.json.JsonConverter
+    key.converter.schemas.enable: false
+    value.converter.schemas.enable: false
+    offset.storage.topic: connect-offsets
+    config.storage.topic: connect-configs
+    status.storage.topic: connect-status
+  template:
+    pod:
+      imagePullSecrets:
+        - name: dockersecret
+
+---
 # apiVersion: kafka.strimzi.io/v1beta2
 # kind: KafkaConnector
 # metadata:
