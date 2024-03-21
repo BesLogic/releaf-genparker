@@ -48,12 +48,12 @@ spec:
   config:
     topics: genparker-philantropy-topic-data
     topic.prefix: data
-    database.hostname: otto.db.elephantsql.com
+    database.hostname: aws-0-ca-central-1.pooler.supabase.com
     database.port: 5432
-    database.user: vipaiexm
+    database.user: postgres.kmweqdlgighuhnogorky
     database.password: 'to add'
-    database.dbname: vipaiexm
-    database.server.name: vipaiexm
+    database.dbname: postgres
+    database.server.name: postgres
     key.converter: org.apache.kafka.connect.json.JsonConverter
     value.converter: org.apache.kafka.connect.json.JsonConverter
     key.converter.schemas.enable: false
