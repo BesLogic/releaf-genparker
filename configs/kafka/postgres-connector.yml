@@ -41,7 +41,7 @@ metadata:
   namespace: kafka
   name: connector-postgresdb-sink
   labels:
-    strimzi.io/cluster: postgresdb-sink-connect-cluster
+    strimzi.io/cluster: postgres-sink-connect-cluster
 spec:
   class: io.debezium.connector.postgresql.PostgresConnector
   tasksMax: 1
