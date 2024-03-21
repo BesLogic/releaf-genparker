@@ -35,21 +35,25 @@ spec:
         - name: dockersecret
 
 ---
-# apiVersion: kafka.strimzi.io/v1beta2
-# kind: KafkaConnector
-# metadata:
-#   namespace: kafka
-#   name: connector-mongodb-sink
-#   labels:
-#     strimzi.io/cluster: mongodb-sink-connect-cluster
-# spec:
-#   class: com.mongodb.kafka.connect.MongoSinkConnector
-#   tasksMax: 1
-#   config:
-#     topics: genparker-philantropy-topic-data
-#     connection.uri: 'to add'
-#     database: kafka
-#     collection: data
-#     key.converter: org.apache.kafka.connect.storage.StringConverter
-#     value.converter: org.apache.kafka.connect.json.JsonConverter
-#     value.converter.schemas.enable: false
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  namespace: kafka
+  name: connector-postgresdb-sink
+  labels:
+    strimzi.io/cluster: postgresdb-sink-connect-cluster
+spec:
+  class: io.debezium.connector.postgresql.PostgresConnector
+  tasksMax: 1
+  config:
+    topics: genparker-philantropy-topic-data
+    database.hostname: otto.db.elephantsql.com
+    database.port: 5432
+    database.user: vipaiexm
+    database.password: 'to add'
+    database.dbname: vipaiexm
+    database.server.name: vipaiexm
+    key.converter: org.apache.kafka.connect.json.JsonConverter
+    value.converter: org.apache.kafka.connect.json.JsonConverter
+    key.converter.schemas.enable: false
+    value.converter.schemas.enable: false
