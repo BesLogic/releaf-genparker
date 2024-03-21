@@ -18,7 +18,7 @@ spec:
           - type: maven
             repository: https://repo1.maven.org/maven2
             group: io.debezium
-            artifact: debezium-connector-postgres
+            artifact: debezium-connector-jdbc
             version: 2.5.3.Final
   config:
     group.id: postgres-connect-cluster
@@ -39,22 +39,19 @@ apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaConnector
 metadata:
   namespace: kafka
-  name: postgres-sink-connect-cluster
+  name: connector-postgres-sink
   labels:
     strimzi.io/cluster: postgres-sink-connect-cluster
 spec:
-  class: io.debezium.connector.postgresql.PostgresConnector
+  class: io.confluent.connect.jdbc.JdbcSinkConnector
   tasksMax: 1
-  config:
-    topics: genparker-philantropy-topic-data
-    topic.prefix: data
-    database.hostname: aws-0-ca-central-1.pooler.supabase.com
-    database.port: 5432
-    database.user: postgres.kmweqdlgighuhnogorky
-    database.password: 'to add'
-    database.dbname: postgres
-    database.server.name: postgres
-    key.converter: org.apache.kafka.connect.json.JsonConverter
-    value.converter: org.apache.kafka.connect.json.JsonConverter
-    key.converter.schemas.enable: false
-    value.converter.schemas.enable: false
+  config:  
+    connection.url: jdbc:postgresql://aws-0-ca-central-1.pooler.supabase.com:5432/postgres,
+    connection.username: postgres.kmweqdlgighuhnogorky,
+    connection.password: 'to Add',
+    insert.mode: upsert,
+    delete.enabled: true,
+    primary.key.mode: record_key,
+    schema.evolution: basic,
+    database.time_zone: UTC,
+    topics: genparker-philantropy-topic-data,
