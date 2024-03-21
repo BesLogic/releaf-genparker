@@ -13,7 +13,7 @@ spec:
       image: ghcr.io/andy2great/postgresdb-sink:latest
       pushSecret: dockersecret
     plugins:
-      - name: my-plugin
+      - name: postgres-plugin
         artifacts:
           - type: maven
             repository: https://repo1.maven.org/maven2
@@ -21,7 +21,7 @@ spec:
             artifact: debezium-connector-postgres
             version: 2.5.3.Final
   config:
-    group.id: connect-cluster
+    group.id: postgres-connect-cluster
     key.converter: org.apache.kafka.connect.json.JsonConverter
     value.converter: org.apache.kafka.connect.json.JsonConverter
     key.converter.schemas.enable: false
