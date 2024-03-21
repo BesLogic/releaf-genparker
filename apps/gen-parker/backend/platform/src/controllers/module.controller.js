@@ -24,6 +24,7 @@ const addSensorData = async (req) => {
       position: position
     };
   });
+  console.log('my kafka message')
 
   await kafkaClient.publishMessage(
     data.map((x) => ({
