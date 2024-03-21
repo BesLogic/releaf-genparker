@@ -43,7 +43,7 @@ metadata:
   labels:
     strimzi.io/cluster: postgres-sink-connect-cluster
 spec:
-  class: io.confluent.connect.jdbc.JdbcSinkConnector
+  class: io.debezium.connector.jdbc.JdbcSinkConnector
   tasksMax: 1
   config:
     connection.url: jdbc:postgresql://aws-0-ca-central-1.pooler.supabase.com:5432/postgres
