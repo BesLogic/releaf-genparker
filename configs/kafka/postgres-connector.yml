@@ -47,6 +47,7 @@ spec:
   tasksMax: 1
   config:
     topics: genparker-philantropy-topic-data
+    topic.prefix: data
     database.hostname: otto.db.elephantsql.com
     database.port: 5432
     database.user: vipaiexm
