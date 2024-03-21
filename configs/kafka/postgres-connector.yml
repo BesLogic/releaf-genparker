@@ -39,7 +39,7 @@ apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaConnector
 metadata:
   namespace: kafka
-  name: connector-postgres-sink
+  name: postgres-sink-connect-cluster
   labels:
     strimzi.io/cluster: postgres-sink-connect-cluster
 spec:
