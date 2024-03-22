@@ -50,7 +50,7 @@ spec:
     connection.password: 'to Add'
     key.converter: org.apache.kafka.connect.storage.StringConverter
     value.converter: org.apache.kafka.connect.json.JsonConverter
-    value.converter.schemas.enable: false
+    value.converter.schemas.enable: true
     insert.mode: upsert
     delete.enabled: true
     auto.create: true
