@@ -1,4 +1,4 @@
-import { jsonStringifyRecursive } from '../json';
+import { jsonStringifyRecursive } from '../util/json';
 
 export const exceptionHandling = (err, req, res, _) => {
   if (err.errorCode) {
