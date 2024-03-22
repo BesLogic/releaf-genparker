@@ -53,6 +53,8 @@ spec:
     value.converter.schemas.enable: false
     insert.mode: upsert
     delete.enabled: true
+    auto.create: true
+    auto.evolve: true
     primary.key.mode: record_key
     schema.evolution: basic
     database.time_zone: UTC

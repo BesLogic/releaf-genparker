@@ -30,167 +30,32 @@ const addSensorData = async (req) => {
     data.map((x) => ({
       key: `${mac}~${token}`,
       value: JSON.stringify({
-        "schema": { 
-            "type": "struct",
-            "fields": [
-                {
-                    "type": "struct",
-                    "fields": [
-                        {
-                            "type": "int32",
-                            "optional": false,
-                            "field": "id"
-                        },
-                        {
-                            "type": "string",
-                            "optional": false,
-                            "field": "first_name"
-                        },
-                        {
-                            "type": "string",
-                            "optional": false,
-                            "field": "last_name"
-                        },
-                        {
-                            "type": "string",
-                            "optional": false,
-                            "field": "email"
-                        }
-                    ],
-                    "optional": true,
-                    "name": "PostgreSQL_server.inventory.customers.Value", 
-                    "field": "before"
-                },
-                {
-                    "type": "struct",
-                    "fields": [
-                        {
-                            "type": "int32",
-                            "optional": false,
-                            "field": "id"
-                        },
-                        {
-                            "type": "string",
-                            "optional": false,
-                            "field": "first_name"
-                        },
-                        {
-                            "type": "string",
-                            "optional": false,
-                            "field": "last_name"
-                        },
-                        {
-                            "type": "string",
-                            "optional": false,
-                            "field": "email"
-                        }
-                    ],
-                    "optional": true,
-                    "name": "PostgreSQL_server.inventory.customers.Value",
-                    "field": "after"
-                },
-                {
-                    "type": "struct",
-                    "fields": [
-                        {
-                            "type": "string",
-                            "optional": false,
-                            "field": "version"
-                        },
-                        {
-                            "type": "string",
-                            "optional": false,
-                            "field": "connector"
-                        },
-                        {
-                            "type": "string",
-                            "optional": false,
-                            "field": "name"
-                        },
-                        {
-                            "type": "int64",
-                            "optional": false,
-                            "field": "ts_ms"
-                        },
-                        {
-                            "type": "boolean",
-                            "optional": true,
-                            "default": false,
-                            "field": "snapshot"
-                        },
-                        {
-                            "type": "string",
-                            "optional": false,
-                            "field": "db"
-                        },
-                        {
-                            "type": "string",
-                            "optional": false,
-                            "field": "schema"
-                        },
-                        {
-                            "type": "string",
-                            "optional": false,
-                            "field": "table"
-                        },
-                        {
-                            "type": "int64",
-                            "optional": true,
-                            "field": "txId"
-                        },
-                        {
-                            "type": "int64",
-                            "optional": true,
-                            "field": "lsn"
-                        },
-                        {
-                            "type": "int64",
-                            "optional": true,
-                            "field": "xmin"
-                        }
-                    ],
-                    "optional": false,
-                    "name": "io.debezium.connector.postgresql.Source", 
-                    "field": "source"
-                },
-                {
-                    "type": "string",
-                    "optional": false,
-                    "field": "op"
-                },
-                {
-                    "type": "int64",
-                    "optional": true,
-                    "field": "ts_ms"
-                }
-            ],
-            "optional": false,
-            "name": "PostgreSQL_server.inventory.customers.Envelope" 
+        "schema": {
+          "type": "struct",
+          "optional": false,
+          "version": 1,
+          "fields": [
+            {
+              "type": "int32",
+              "optional": false,
+              "field": "val"
+            },
+            {
+              "type": "int32",
+              "optional": false,
+              "field": "senseur"
+            },
+            {
+              "type": "string",
+              "optional": false,
+              "field": "position"
+            }
+          ],
         },
-        "payload": { 
-            "before": null, 
-            "after": { 
-                "id": 1,
-                "first_name": "Anne",
-                "last_name": "Kretchmar",
-                "email": "annek@noanswer.org"
-            },
-            "source": { 
-                "version": "2.5.3.Final",
-                "connector": "postgresql",
-                "name": "PostgreSQL_server",
-                "ts_ms": 1559033904863,
-                "snapshot": true,
-                "db": "postgres",
-                "sequence": "[\"24023119\",\"24023128\"]",
-                "schema": "public",
-                "table": "customers",
-                "txId": 555,
-                "lsn": 24023128,
-                "xmin": null
-            },
-            "op": "c", 
-            "ts_ms": 1559033904863 
+        "payload": {
+          "val": x.val,
+          "senseur": x.senseur,
+          "position": x.position,
         }
     }),
       // value: JSON.stringify({
