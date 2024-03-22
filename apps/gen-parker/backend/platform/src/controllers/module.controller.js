@@ -36,11 +36,6 @@ const addSensorData = async (req) => {
           "version": 1,
           "fields": [
             {
-              "type": "io.debezium.time.Date",
-              "optional": false,
-              "field": "date"
-            },
-            {
               "type": "int32",
               "optional": false,
               "field": "value"
@@ -58,7 +53,6 @@ const addSensorData = async (req) => {
           ],
         },
         "payload": {
-          "date": Date.now(),
           "value": x.val,
           "sensor": x.senseur,
           "key": `${mac}~${token}`,
