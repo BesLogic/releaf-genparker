@@ -25,10 +25,10 @@ const addSensorData = async (req) => {
     };
   });
   console.log('my kafka message')
-
+  
   await kafkaClient.publishMessage(
-    data.map((x) => ({
-      key: `${mac}~${token}`,
+    data.map((x, i) => ({
+      key: `${mac}~${token}~${Date.now()}~${i}`,
       value: JSON.stringify({
         "schema": {
           "type": "struct",
@@ -36,7 +36,7 @@ const addSensorData = async (req) => {
           "version": 1,
           "fields": [
             {
-              "type": "org.apache.kafka.connect.data.Date",
+              "type": "io.debezium.time.Date",
               "optional": false,
               "field": "date"
             },
