@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: genparker-be
+  name: genparker-philanthropy
 spec:
   template:
     spec:
       containers:
-        - name: backend
+        - name: backend-philanthropy
           image: ghcr.io/beslogic/genparker_philantropy:latest
           env:
             - name: SERVER
-              value: "Dev"
+              value: 'Dev'
             - name: SERVICE
-              value: "platform-service"
+              value: 'platform-service'
             - name: KAFKA_SERVER
-              value: "my-cluster-kafka-brokers.kafka.svc.cluster.local:9092"
+              value: 'my-cluster-kafka-brokers.kafka.svc.cluster.local:9092'
             - name: KAFKA_TOPIC_DATA
-              value: "genparker-philantropy-topic-data"
+              value: 'genparker-philantropy-topic-data'
             - name: KAFKA_TOPIC_LOG
-              value: "genparker-philantropy-topic-log"
+              value: 'genparker-philantropy-topic-log'
             - name: KAFKA_TOPIC_MODULE
-              value: "genparker-philantropy-topic-module"
+              value: 'genparker-philantropy-topic-module'

@@ -1,0 +1,41 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  namespace: kafka
+  name: genparker-philantropy-topic-data
+  labels:
+    strimzi.io/cluster: my-cluster
+spec:
+  partitions: 1
+  replicas: 2
+  config:
+    retention.ms: 60000
+    segment.bytes: 1000000
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  namespace: kafka
+  name: genparker-philantropy-topic-log
+  labels:
+    strimzi.io/cluster: my-cluster
+spec:
+  partitions: 1
+  replicas: 2
+  config:
+    retention.ms: 60000
+    segment.bytes: 1000000
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  namespace: kafka
+  name: genparker-philantropy-topic-module
+  labels:
+    strimzi.io/cluster: my-cluster
+spec:
+  partitions: 1
+  replicas: 2
+  config:
+    retention.ms: 60000
+    segment.bytes: 1000000

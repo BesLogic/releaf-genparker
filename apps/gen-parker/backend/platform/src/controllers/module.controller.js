@@ -11,6 +11,9 @@ const kafkaClient = process.env.SERVER
 kafkaClient.connectProducer(undefined);
 
 const addSensorData = async (req) => {
+  const mac = req.header('Mac');
+  const token = req.header('Authorization');
+
   const data = Object.keys(req.body).map((x) => {
     const senseur = x.replace(/^\D+/g, '');
     const position = x.replace(senseur, '');
@@ -18,20 +21,48 @@ const addSensorData = async (req) => {
     return {
       val: req.body[x],
       senseur: Number(senseur),
-      position: position,
-      timestamp: new Date(),
-      module: req.module._id,
+      position: position
     };
   });
-
+  console.log('my kafka message')
+  
   await kafkaClient.publishMessage(
-    data.map((x) => ({
-      key: `${x.module}`,
+    data.map((x, i) => ({
+      key: `${mac}~${token}~${Date.now()}~${i}`,
       value: JSON.stringify({
-        val: x.val,
-        senseur: x.senseur,
-        position: x.position,
-      }),
+        "schema": {
+          "type": "struct",
+          "optional": false,
+          "version": 1,
+          "fields": [
+            {
+              "type": "int32",
+              "optional": false,
+              "field": "value"
+            },
+            {
+              "type": "int32",
+              "optional": false,
+              "field": "sensor"
+            },
+            {
+              "type": "string",
+              "optional": false,
+              "field": "key"
+            }
+          ],
+        },
+        "payload": {
+          "value": x.val,
+          "sensor": x.senseur,
+          "key": `${mac}~${token}`,
+        }
+    }),
+      // value: JSON.stringify({
+      //   val: x.val,
+      //   senseur: x.senseur,
+      //   position: x.position,
+      // }),
     }))
   );
 };
