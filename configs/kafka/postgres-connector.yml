@@ -50,13 +50,12 @@ spec:
     connection.password: 'to Add'
     key.converter: org.apache.kafka.connect.storage.StringConverter
     value.converter: org.apache.kafka.connect.json.JsonConverter
-    pk.mode: record_key
     value.converter.schemas.enable: true
     insert.mode: upsert
     delete.enabled: true
     auto.create: true
     auto.evolve: true
-    primary.key.mode: record_key
+    primary.key.mode: kafka
     schema.evolution: basic
     database.time_zone: UTC
     topics: genparker-philantropy-topic-data
