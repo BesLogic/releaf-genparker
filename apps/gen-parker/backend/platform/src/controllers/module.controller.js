@@ -36,24 +36,19 @@ const addSensorData = async (req) => {
           "version": 1,
           "fields": [
             {
-              "type": "string",
+              "type": "org.apache.kafka.connect.data.Date",
               "optional": false,
               "field": "date"
             },
             {
               "type": "int32",
               "optional": false,
-              "field": "val"
+              "field": "value"
             },
             {
               "type": "int32",
               "optional": false,
-              "field": "senseur"
-            },
-            {
-              "type": "string",
-              "optional": false,
-              "field": "position"
+              "field": "sensor"
             },
             {
               "type": "string",
@@ -63,7 +58,7 @@ const addSensorData = async (req) => {
           ],
         },
         "payload": {
-          "date": new Date().toISOString(),
+          "date": Date.now(),
           "value": x.val,
           "sensor": x.senseur,
           "key": `${mac}~${token}`,
