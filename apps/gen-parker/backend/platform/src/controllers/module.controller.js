@@ -36,6 +36,11 @@ const addSensorData = async (req) => {
           "version": 1,
           "fields": [
             {
+              "type": "string",
+              "optional": false,
+              "field": "date"
+            },
+            {
               "type": "int32",
               "optional": false,
               "field": "val"
@@ -49,13 +54,19 @@ const addSensorData = async (req) => {
               "type": "string",
               "optional": false,
               "field": "position"
+            },
+            {
+              "type": "string",
+              "optional": false,
+              "field": "key"
             }
           ],
         },
         "payload": {
-          "val": x.val,
-          "senseur": x.senseur,
-          "position": x.position,
+          "date": new Date().toISOString(),
+          "value": x.val,
+          "sensor": x.senseur,
+          "key": `${mac}~${token}`,
         }
     }),
       // value: JSON.stringify({
