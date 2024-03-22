@@ -55,7 +55,7 @@ spec:
     delete.enabled: true
     auto.create: true
     auto.evolve: true
-    primary.key.mode: kafka
+    primary.key.mode: record_key
     schema.evolution: basic
     database.time_zone: UTC
     topics: genparker-philantropy-topic-data
