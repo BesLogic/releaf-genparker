@@ -28,41 +28,12 @@ const addSensorData = async (req) => {
 
   await kafkaClient.publishMessage(
     data.map((x, i) => ({
-      key: `${mac}~${token}~${Date.now()}~${i}`,
+      key: `${mac}~${token}`,
       value: JSON.stringify({
-        "schema": {
-          "type": "struct",
-          "optional": false,
-          "version": 1,
-          "fields": [
-            {
-              "type": "int32",
-              "optional": false,
-              "field": "value"
-            },
-            {
-              "type": "int32",
-              "optional": false,
-              "field": "sensor"
-            },
-            {
-              "type": "string",
-              "optional": false,
-              "field": "key"
-            }
-          ],
-        },
-        "payload": {
-          "value": x.val,
-          "sensor": x.senseur,
-          "key": `${mac}~${token}`,
-        }
+        val: x.val,
+        senseur: x.senseur,
+        position: x.position,
       }),
-      // value: JSON.stringify({
-      //   val: x.val,
-      //   senseur: x.senseur,
-      //   position: x.position,
-      // }),
     }))
   );
 };
