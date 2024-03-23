@@ -11,6 +11,7 @@ Individuals will be able to buy a box to grow trees. It will include GenParker h
 While the plantation process is underway, the individual will unlock achievements for their support. At the end of the process, the individual will either plant the trees or offer them to a nursery.
 
 ## High level project interaction
+![Figma](https://www.figma.com/file/8bow63vDBmSKpr6GEtVfag/Mobile-App?type=design&node-id=0-1&mode=design&t=b0mSSHYs8Rm6GgFG-0)
 ![image](https://github.com/BesLogic/releaf-genparker/assets/22083907/d4bd84b6-b32b-4b19-9dd0-443c5eda0831)
 
 ## Project Structure
