@@ -35,7 +35,8 @@
         "compiler": "tsc",
         "outputPath": "dist/apps/gen-parker/backend/platform",
         "main": "apps/gen-parker/backend/platform/src/main.js",
-        "tsConfig": "apps/gen-parker/backend/platform/tsconfig.app.json"
+        "tsConfig": "apps/gen-parker/backend/platform/tsconfig.app.json",
+        "webpackConfig": "apps/gen-parker/backend/platform/webpack.config.js"
       },
       "configurations": {
         "production": {
