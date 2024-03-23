@@ -3,8 +3,8 @@
 *
  */
 // Attention entrée votre SSID et mot de passe
-char cSSID[33] = "Leon!!";
-char cPassw[21] = "!!Leon!!";
+char cSSID[33] = "In Code We Trust";
+char cPassw[21] = "Gud3Fuder";
  
 // include et define temperature et humidité ambiante
 #include <DHT_U.h>
