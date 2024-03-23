@@ -5,7 +5,9 @@
       "label": "Serve GenParker",
       "dependsOrder": "parallel",
       "dependsOn": [
-        "serve-backend-platform"
+        "serve-backend-platform",
+        "serve-releaf-mobile",
+        "serve-releaf-backend"
       ],
       "group": {
         "kind": "build",
@@ -22,16 +24,22 @@
       }
     },
     {
-      "label": "serve-backend-releaf-mobile",
+      "label": "serve-releaf-mobile",
       "type": "shell",
       "command": "npx nx run releaf-mobile-app:serve:development",
       "presentation": {
         "panel": "dedicated",
         "group": "Releaf Mobile"
       },
-      {
-        
-      }
+    },
+    {
+      "label": "serve-releaf-backend",
+      "type": "shell",
+      "command": "npx nx run releaf-backend:serve",
+      "presentation": {
+        "panel": "dedicated",
+        "group": "Releaf Mckendobile"
+      },
     }
   ]
 }
