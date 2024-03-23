@@ -17,7 +17,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@gen-parker/shared-js/util": ["libs/shared-js/util/src/index.js"]
+      "@gen-parker/shared-js/util": ["libs/shared-js/util/src/index.js"],
+      "generated/backend-types": ["libs/generated/backend-types/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

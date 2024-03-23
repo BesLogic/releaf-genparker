@@ -1,0 +1,30 @@
+{
+  "name": "generated-backend-types",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/generated/backend-types/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/generated/backend-types",
+        "main": "libs/generated/backend-types/src/index.ts",
+        "tsConfig": "libs/generated/backend-types/tsconfig.lib.json",
+        "assets": ["libs/generated/backend-types/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/generated/backend-types/jest.config.ts"
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["backend-swagger"]
+}
