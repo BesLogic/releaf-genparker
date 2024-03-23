@@ -20,6 +20,15 @@
         "panel": "dedicated",
         "group": "GenParker BE"
       }
+    },
+    {
+      "label": "serve-backend-releaf-mobile",
+      "type": "shell",
+      "command": "npx nx run releaf-mobile-app:serve:development",
+      "presentation": {
+        "panel": "dedicated",
+        "group": "Releaf Mobile"
+      }
     }
   ]
 }
