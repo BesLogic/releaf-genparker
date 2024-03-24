@@ -10,10 +10,10 @@ const styles = StyleSheet.create({
     width: 85,
     justifyContent: 'center',
     alignItems: 'center',
-    overflow: 'visible', // allow the image to overflow
+    overflow: 'visible',
   },
   imageOverCircle: {
-    position: 'absolute', // position the image over the circle
+    position: 'absolute',
     height: '120%',
     width: '120%',
     top: -18,
