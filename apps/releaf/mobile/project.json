@@ -1,0 +1,129 @@
+{
+  "name": "releaf-mobile-app",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/releaf/mobile/src",
+  "projectType": "application",
+  "targets": {
+    "start": {
+      "executor": "@nx/react-native:start",
+      "dependsOn": [],
+      "options": {
+        "port": 8081
+      }
+    },
+    "run-ios": {
+      "executor": "@nx/react-native:run-ios",
+      "dependsOn": [],
+      "options": {}
+    },
+    "bundle-ios": {
+      "executor": "@nx/react-native:bundle",
+      "dependsOn": [],
+      "outputs": ["{options.bundleOutput}"],
+      "options": {
+        "entryFile": "src/main.tsx",
+        "platform": "ios",
+        "bundleOutput": "dist/apps/releaf/mobile/ios/main.jsbundle"
+      }
+    },
+    "run-android": {
+      "executor": "@nx/react-native:run-android",
+      "dependsOn": [],
+      "options": {}
+    },
+    "build-android": {
+      "executor": "@nx/react-native:build-android",
+      "outputs": [
+        "{projectRoot}/android/app/build/outputs/bundle",
+        "{projectRoot}/android/app/build/outputs/apk"
+      ],
+      "dependsOn": [],
+      "options": {}
+    },
+    "build-ios": {
+      "executor": "@nx/react-native:build-ios",
+      "outputs": ["{projectRoot}/ios/build/Build"],
+      "dependsOn": [],
+      "options": {}
+    },
+    "pod-install": {
+      "executor": "@nx/react-native:pod-install",
+      "dependsOn": ["sync-deps"],
+      "outputs": ["{projectRoot}/ios/Pods", "{projectRoot}/ios/Podfile.lock"],
+      "options": {}
+    },
+    "upgrade": {
+      "executor": "@nx/react-native:upgrade",
+      "options": {}
+    },
+    "bundle-android": {
+      "executor": "@nx/react-native:bundle",
+      "dependsOn": [],
+      "outputs": ["{options.bundleOutput}"],
+      "options": {
+        "entryFile": "src/main.tsx",
+        "platform": "android",
+        "bundleOutput": "dist/apps/releaf/mobile/android/main.jsbundle"
+      }
+    },
+    "sync-deps": {
+      "executor": "@nx/react-native:sync-deps",
+      "options": {}
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/releaf/mobile/web",
+        "index": "apps/releaf/mobile/src/index.html",
+        "baseHref": "/",
+        "main": "apps/releaf/mobile/src/main-web.tsx",
+        "tsConfig": "apps/releaf/mobile/tsconfig.app.json",
+        "assets": [
+          "apps/releaf/mobile/src/favicon.ico",
+          "apps/releaf/mobile/src/assets"
+        ],
+        "webpackConfig": "apps/releaf/mobile/webpack.config.js"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/webpack:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "releaf-mobile-app:build",
+        "hmr": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "releaf-mobile-app:build:development"
+        },
+        "production": {
+          "buildTarget": "releaf-mobile-app:build:production",
+          "hmr": false
+        }
+      }
+    }
+  },
+  "tags": []
+}

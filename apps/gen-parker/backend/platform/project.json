@@ -11,7 +11,9 @@
       },
       "configurations": {
         "production": {
-          "tags": ["ghcr.io/beslogic/genparker_philantropy:latest"]
+          "tags": [
+            "ghcr.io/beslogic/genparker_philantropy:latest"
+          ]
         }
       }
     },
@@ -28,14 +30,17 @@
     },
     "build": {
       "executor": "@nrwl/webpack:webpack",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "generatePackageJson": true,
         "target": "node",
         "compiler": "tsc",
         "outputPath": "dist/apps/gen-parker/backend/platform",
         "main": "apps/gen-parker/backend/platform/src/main.js",
-        "tsConfig": "apps/gen-parker/backend/platform/tsconfig.app.json"
+        "tsConfig": "apps/gen-parker/backend/platform/tsconfig.app.json",
+        "webpackConfig": "apps/gen-parker/backend/platform/webpack.config.js"
       },
       "configurations": {
         "production": {
@@ -58,19 +63,21 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["apps/gen-parker/backend/platform/**/*.js"]
-      }
+      "outputs": [
+        "{options.outputFile}"
+      ]
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
-        "jestConfig": "apps/gen-parker/backend/platform/jest.config.js",
-        "passWithNoTests": true
+        "jestConfig": "apps/gen-parker/backend/platform/jest.config.js"
       }
     }
   },
-  "tags": ["lang:node"]
+  "tags": [
+    "lang:node"
+  ]
 }
