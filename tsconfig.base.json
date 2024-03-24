@@ -17,7 +17,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@gen-parker/shared-js/util": ["libs/shared-js/util/src/index.js"]
+      "@gen-parker/shared-js/util": ["libs/shared-js/util/src/index.js"],
+      "@releaf-mobile/assets/*": ["apps/releaf/mobile/src/assets/*"],
     }
   },
   "exclude": ["node_modules", "tmp"]
