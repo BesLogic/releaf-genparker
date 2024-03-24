@@ -5,17 +5,17 @@
 // Attention entrée votre SSID et mot de passe
 char cSSID[33] = "In Code We Trust";
 char cPassw[21] = "Gud3Fuder";
- 
+
 // include et define temperature et humidité ambiante
 #include <DHT_U.h>
 #define DHTPIN 5                  // Pin température/humidité
 #define DHTTYPE    DHT11          // DHT 11
 DHT_Unified dht(DHTPIN, DHTTYPE);
- 
+
 #define MOD_HW 0         // 0 = UNO ou NANO, 1 = test with MEGA
 #define TESTMODE 0       // 0 = production mode, 1 = test mode
 #define DEBUG 0          // 0 = production mode, enlève commentaires pour debuger, 1 = commentaires pour debugger
- 
+
 // /////////////////////////////////////
 #if MOD_HW == 1
 #define LogSerial Serial  //V4.8
@@ -28,7 +28,7 @@ DHT_Unified dht(DHTPIN, DHTTYPE);
 #define Megalogln(x)
 #define Megadelay(x)
 #endif
- 
+
 // /////////////////////////////////////
 #if DEBUG == 1
 #define mlog(x) LogSerial.print(x)
@@ -39,18 +39,23 @@ DHT_Unified dht(DHTPIN, DHTTYPE);
 #define mlogln(x)
 #define mdelay(x)
 #endif
- 
+
 // Définir les PINs UNO
 #define dHUMIDTESOL A1      // Pin humidité sol
 #define dPHOTO A0           // Pin photocell
- 
+
 // Variable globale à usage multiple. Faire attention
 String sG1; String sG2;
 int iHu = 0;    // Humidité
 int iTe = 0;    // Température
 int iPhoto = 0; // Photocell
 int iHuSol = 0; // Humidité du sol
- 
+
+#include "samplemoothing.h"
+
+// Every sample count for 7%
+SampleSmoothing temperatureSmoothing(0.07f);
+
 void setup() {
   Serial.begin(74880);
   mlogln("");
@@ -59,16 +64,16 @@ void setup() {
   mlogln("");
   pinMode(LED_BUILTIN, OUTPUT);      // LED du Arduino
   digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
- 
+
   // Note: ESP-01 envoie message 191 après 5 secondes de power-up assurer que Arduino écoute
   delay(1500);
   vClignote(2,500);
- 
+
   boolean bExit = false;
   boolean bRecu = false;
- 
+
   // Écoute ESP-01, une fois code 191 reçu, envoie SSID et mot de passe
-  // Note: Ne pas activer "mlog" lors de synchronisation avec ESP-01.  
+  // Note: Ne pas activer "mlog" lors de synchronisation avec ESP-01.
   while(!bExit){
     while (Serial.available()) {
       sG1 = Serial.readString();
@@ -92,21 +97,21 @@ void setup() {
           delay(2000);
           bExit=true; // sortir de l'initialisation
           break;
-         default:
+        default:
           break;
         } // end switch
- 
+
        } // endif(bRecu)
-      
+
     } //  while (Serial.available()
-    bRecu = false;      
+    bRecu = false;
   } // while (!bExit)
- 
- 
+
+
   // Attends confirmation connection pour se synchroniser
   bRecu = false;
   bExit = false;
- 
+
     while(!bExit){
       while (Serial.available()) {
         sG1 = Serial.readString();
@@ -120,19 +125,19 @@ void setup() {
               break;
             default:
               break;
-         } // end switch             
+         } // end switch
         } // enf if reçu
       } // end while (Serial.available())
       bRecu = false;
     } // while(!bExit){
- 
+
   vClignote(6,500);
   delay(10000);
 } // end set-up
- 
- 
+
+
 void loop() {
- 
+
   // A - Obtenir valeur des senseurs
   // A1 - Température et humidité ambiante
   if(true){
@@ -140,10 +145,10 @@ void loop() {
     dht.begin();
     sensor_t sensor;
     dht.temperature().getSensor(&sensor);
-    delayMS = sensor.min_delay / 1000;    
- 
+    delayMS = sensor.min_delay / 1000;
+
     delay(delayMS); // Delay between measurements.
- 
+
     // Get temperature event and print its value.
     sensors_event_t event;
     dht.temperature().getEvent(&event);
@@ -152,7 +157,9 @@ void loop() {
     }
     else {
       iTe = event.temperature;
+      temperatureSmoothing.AddSample(event.temperature);
     }
+
     // Get humidity event and print its value.
     dht.humidity().getEvent(&event);
     if (isnan(event.relative_humidity)) {
@@ -162,7 +169,7 @@ void loop() {
        iHu = event.relative_humidity;
     }
   } // if(true)
- 
+
   // A2 - Humidité Sol
 //    iHuSol = 30;
   int iVal = analogRead(dHUMIDTESOL);
@@ -170,19 +177,19 @@ void loop() {
   int igCM_V12_sec = 450; // calibration
   int igCM_V12_eau = 928; // calibration
   iHuSol = map(iVal,igCM_V12_sec,igCM_V12_eau,0,100);
-  mlog("iHuSol :");  mlogln(iHuSol); 
- 
- 
+  mlog("iHuSol :");  mlogln(iHuSol);
+
+
   // A2 - Photosensible
 //    iPhoto = 67;
   iPhoto =  analogRead(dPHOTO);
-  mlog("iPhoto :");  mlogln(iPhoto); 
+  mlog("iPhoto :");  mlogln(iPhoto);
 //  convertion en lux...
 
   // Il faut envoyer 4 valeurs (301, 302, 304 & 399)
   // B - Envoyer valeur au ESP-01
   delay(3000);
-  sG1 = "301:" + (String)iTe;
+  sG1 = "301:" + String(temperatureSmoothing.GetSmoothValue(), 1);
   LogSerial.println(sG1);
   delay(3000);
   sG1 = "302:" + (String)iHu;
@@ -193,26 +200,26 @@ void loop() {
   delay(3000);
   sG1 = "304:" + (String)iPhoto;
   LogSerial.println(sG1);
-  delay(3000); 
+  delay(3000);
   sG1 = "399:Fin.";
   LogSerial.println(sG1);
   vClignote(3,1000);
- 
+
   // Attendre avant de renvoyer l'info
   delay(50000);
- 
+
 } // void loop()
- 
+
 // /////////////////////////////////
 void vClignote(int nF, int nTemps){
- 
+
   if(nF >0){
     for(int i=0; i<nF; i++){
       digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
       delay(nTemps);                       // wait for a second
       digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-      delay(nTemps);                       // wait for a second   
+      delay(nTemps);                       // wait for a second
     }
   } // end if(nF >0)
- 
+
 } // end vClignote(int nF, int nTemps)
