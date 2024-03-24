@@ -7,13 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.2.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GenParker.Domain\GenParker.Domain.csproj" />
     <ProjectReference Include="..\GenParker.Events\GenParker.Events.csproj" />
-    <ProjectReference Include="..\Releaf.Domain\Releaf.Domain.csproj" />
-    <ProjectReference Include="..\Releaf.Infrastructure\Releaf.Infrastructure.csproj" />
+    <ProjectReference Include="..\GenParker.Infrastructure\GenParker.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

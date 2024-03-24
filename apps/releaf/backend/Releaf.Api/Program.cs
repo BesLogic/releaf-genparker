@@ -1,8 +1,11 @@
+using GenParker.Application.DI;
 using Releaf.Application.DI;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddGenParker();
+builder.Services.AddReleafAuth();
 builder.Services.AddReleafApp();
 
 builder.Services.AddControllers();
@@ -15,8 +18,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+  app.UseSwagger();
+  app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();

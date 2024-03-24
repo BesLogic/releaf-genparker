@@ -5,19 +5,19 @@ namespace Releaf.Infrastructure.Repo;
 
 public class TreeRepo : ITreeRepo
 {
-  private static readonly Guid PinCherryId = new Guid("81eeb67d-f469-4b27-9625-a4bbfe261a8e");
-  private static readonly Guid RedMapleId = new Guid("a511da78-696f-4db9-b55c-10abb2650ee0");
-  private static readonly Guid HuckleberryId = new Guid("75ea29f6-b3cf-4f57-8a95-8bdf59153438");
-  private static readonly Guid BigShellbarkHickoryId = new Guid("694aca76-0d90-4e65-8829-4ab97451c632");
+  public static readonly TreeDefinitionId PinCherryId = new TreeDefinitionId(new Guid("81eeb67d-f469-4b27-9625-a4bbfe261a8e"));
+  public static readonly TreeDefinitionId RedMapleId = new TreeDefinitionId(new Guid("a511da78-696f-4db9-b55c-10abb2650ee0"));
+  public static readonly TreeDefinitionId HuckleberryId = new TreeDefinitionId(new Guid("75ea29f6-b3cf-4f57-8a95-8bdf59153438"));
+  public static readonly TreeDefinitionId BigShellbarkHickoryId = new TreeDefinitionId(new Guid("694aca76-0d90-4e65-8829-4ab97451c632"));
 
   public IEnumerable<TreeDefinitionAggregate> GetAll()
   {
     return new TreeDefinitionAggregate[]
     {
-      new TreeDefinitionAggregate(new TreeDefinitionId(PinCherryId), "Pin Cherry", PinCherryInstructions),
-      new TreeDefinitionAggregate(new TreeDefinitionId(RedMapleId), "Red Maple", RedMapleInstructions),
-      new TreeDefinitionAggregate(new TreeDefinitionId(HuckleberryId), "Huckleberry", HuckleberryInstructions),
-      new TreeDefinitionAggregate(new TreeDefinitionId(BigShellbarkHickoryId), "Big Shellbark Hickory", BigShellbarkHickoryInstructions),
+      new TreeDefinitionAggregate(PinCherryId, "Pin Cherry", PinCherryInstructions),
+      new TreeDefinitionAggregate(RedMapleId, "Red Maple", RedMapleInstructions),
+      new TreeDefinitionAggregate(HuckleberryId, "Huckleberry", HuckleberryInstructions),
+      new TreeDefinitionAggregate(BigShellbarkHickoryId, "Big Shellbark Hickory", BigShellbarkHickoryInstructions),
     };
   }
 

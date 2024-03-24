@@ -26,8 +26,3 @@ public class TreeDefinitionAggregate
 
   public IEnumerable<TreeInstruction> Instructions { get; } = Enumerable.Empty<TreeInstruction>();
 }
-
-public record TreeDefinitionId(Guid Value)
-{
-  public static TreeDefinitionId New() => new TreeDefinitionId(Guid.NewGuid());
-}

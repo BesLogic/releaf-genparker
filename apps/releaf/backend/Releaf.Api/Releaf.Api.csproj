@@ -12,7 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GenParker.Application\GenParker.Application.csproj" />
     <ProjectReference Include="..\Releaf.Application\Releaf.Application.csproj" />
+    <ProjectReference Include="..\Releaf.Auth\Releaf.Auth.csproj" />
     <ProjectReference Include="..\Releaf.Domain\Releaf.Domain.csproj" />
   </ItemGroup>
 

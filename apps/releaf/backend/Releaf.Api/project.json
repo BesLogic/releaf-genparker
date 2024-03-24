@@ -12,7 +12,8 @@
       "options": {
         "output": "libs/generated/backend-swagger/swagger.json"
       },
-      "dependsOn": ["build"]
+      "dependsOn": [ "build" ]
+
     }
   },
   "tags": []
