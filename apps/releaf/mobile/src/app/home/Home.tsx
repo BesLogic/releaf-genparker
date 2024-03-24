@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { TreeStateCard } from './components/Tree-state-card';
 
 export class TreeState {
@@ -31,8 +31,14 @@ const trees = [
 
 export const Home = () => {
   return (
-    <View>
-      <Text>Home</Text>
+    <View style={{ backgroundColor: '#ffffff' }}>
+      <View
+        style={{
+          margin: 10,
+        }}
+      >
+        <Text>Home</Text>
+      </View>
 
       {trees.map((tree, index) => (
         <View
@@ -46,6 +52,6 @@ export const Home = () => {
           <TreeStateCard treeState={tree}></TreeStateCard>
         </View>
       ))}
-    </View>
+    </View >
   );
 };
