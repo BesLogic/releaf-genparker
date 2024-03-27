@@ -27,13 +27,14 @@ const addSensorData = async (req) => {
   console.log(req.body)
   const currentDate = Date.now();
   await kafkaClient.publishMessage(
-    data.map((x, i) => ({
+    data.map((x) => ({
       key: `${mac}~${token}`,
       value: JSON.stringify({
         value: x.val,
         sensor: x.senseur,
-        position: x.position,
         date: currentDate,
+        mac,
+        key: token
       }),
     }))
   );
