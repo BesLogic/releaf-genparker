@@ -24,5 +24,15 @@ export const logEvent = (req) => {
 
   if (!messages.length) throw new BadRequest('no logs has been sent');
 
-  // SEND LOGS TO KAFKA
+  const timestamp = new Date();
+  kafkaClient.publishMessage(
+    messages.map((x) => ({
+      key: 'log',
+      value: JSON.stringify({
+        log: x.log,
+        mess: x.mess,
+        timestamp,
+      })
+    }))
+  );
 };
