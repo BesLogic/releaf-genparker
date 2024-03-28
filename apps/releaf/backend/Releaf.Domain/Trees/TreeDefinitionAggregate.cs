@@ -22,7 +22,7 @@ public class TreeDefinitionAggregate
 
   public string Name { get; } = string.Empty;
 
-  public TreeDefinitionId Id { get; } = TreeDefinitionId.New();
+  public TreeDefinitionId Id { get; } = TreeDefinitionId.Empty();
 
   public IEnumerable<TreeInstruction> Instructions { get; } = Enumerable.Empty<TreeInstruction>();
 }

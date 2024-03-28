@@ -13,7 +13,8 @@ public class BoxAggregate
     DeviceId deviceId,
     DateTime germinationDay,
     IEnumerable<Seed> seeds,
-    double averageInchHeight)
+    double averageInchHeight,
+    BoxVitals boxVitals)
   {
     Id = id;
     OwnerId = ownerId;
@@ -22,7 +23,7 @@ public class BoxAggregate
     GerminationDay = germinationDay;
     Seeds = seeds;
     SeedsAverageInchHeight = averageInchHeight;
-    Vitals = new BoxVitals();
+    Vitals = boxVitals ?? new BoxVitals(BoxVitalValue.Empty(), BoxVitalValue.Empty(), BoxVitalValue.Empty(), BoxVitalValue.Empty());
   }
 
   public BoxId Id { get; }

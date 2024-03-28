@@ -52,6 +52,6 @@ public class SensorDataRepo : ISensorDataRepo
   private IMongoCollection<Data> GetDataCollection()
   {
     var client = new MongoClient(Options.Value.ConnectionString);
-    return client.GetDatabase("kafka").GetCollection<Data>("data");
+    return client.GetDatabase(Options.Value.DbName).GetCollection<Data>("data");
   }
 }

@@ -10,6 +10,18 @@ public class BoxVitals
 
   public BoxVitalValue LuminosityPercent { get; private set; } = new BoxVitalValue(default, default);
 
+  public BoxVitals(
+    BoxVitalValue temperature,
+    BoxVitalValue airHumidityPercent,
+    BoxVitalValue soilMoisturePercent,
+    BoxVitalValue luminosityPercent)
+  {
+    Temperature = temperature;
+    AirHumidityPercent = airHumidityPercent;
+    SoilMoisturePercent = soilMoisturePercent;
+    LuminosityPercent = luminosityPercent;
+  }
+
   internal void UpdateTemperature(double temperature, DateTime timeStamp)
   {
     Temperature = new BoxVitalValue(temperature, timeStamp);
@@ -40,4 +52,6 @@ public class BoxVitalValue
 
   public double Value { get; }
   public DateTime LastUpdate { get; }
+
+  public static BoxVitalValue Empty() => new BoxVitalValue(0, DateTime.MinValue);
 }

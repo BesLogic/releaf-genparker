@@ -5,5 +5,5 @@ namespace Releaf.Domain.Repo;
 public interface ITreeRepo
 {
   IEnumerable<TreeDefinitionAggregate> GetAll();
-  TreeDefinitionAggregate GetOne(Guid id);
+  TreeDefinitionAggregate GetOne(TreeDefinitionId id);
 }

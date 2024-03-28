@@ -1,17 +1,15 @@
-﻿using Releaf.Shared;
+using Releaf.Shared;
 
 namespace Releaf.Domain.Boxes;
 
 public class BoxId : ValueObject
 {
-  public BoxId(Guid value)
+  public BoxId(string value)
   {
     Value = value;
   }
 
-  public Guid Value { get; }
-
-  public static BoxId New() => new BoxId(Guid.NewGuid());
+  public string Value { get; }
 
   protected override IEnumerable<object> GetEqualityComponents()
   {

@@ -1,4 +1,4 @@
-namespace GenParker.Infrastructure.Settings;
+namespace Releaf.Infrastructure.Settings;
 
 public class MongoDbSettings
 {

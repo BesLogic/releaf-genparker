@@ -24,14 +24,14 @@ public class BoxesController : ControllerBase
   }
 
   [HttpGet]
-  public IEnumerable<Guid> GetAll()
+  public IEnumerable<string> GetAll()
   {
     IEnumerable<BoxAggregate> boxes = boxRepo.GetBoxesForUser(currentUser.Id);
     return boxes.Select(t => t.Id.Value);
   }
 
   [HttpGet("{id}")]
-  public BoxAggregate GetBoxDetails(Guid id)
+  public BoxAggregate GetBoxDetails(string id)
   {
     return boxRepo.GetBox(currentUser.Id, new BoxId(id));
   }
