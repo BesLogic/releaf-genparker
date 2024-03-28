@@ -2,7 +2,7 @@ apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaConnector
 metadata:
   namespace: kafka
-  name: connector-mongodb-sink
+  name: connector-mongodb-sink-releaf-data
   labels:
     strimzi.io/cluster: mongodb-sink-connect-cluster
 spec:
