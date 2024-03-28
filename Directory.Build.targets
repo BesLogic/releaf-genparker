@@ -8,6 +8,9 @@
     <NodeModulesRelativePath>$([MSBuild]::MakeRelative($(MSBuildProjectDirectory), $(RepoRoot)))</NodeModulesRelativePath>
   </PropertyGroup>
   <Target Name="CheckNxModuleBoundaries" BeforeTargets="Build">
-    <Exec Command="node $(NodeModulesRelativePath)/node_modules/@nx-dotnet/core/src/tasks/check-module-boundaries.js --project-root &quot;$(MSBuildProjectDirRelativePath)&quot;"/>
+    <!--
+    Note => in "- -project-root" should be "- -" wihout spapce, but XML comments don't allow this
+    <Exec Command="node $(NodeModulesRelativePath)/node_modules/@nx-dotnet/core/src/tasks/check-module-boundaries.js - -project-root &quot;$(MSBuildProjectDirRelativePath)&quot;"/>
+    -->
   </Target>
 </Project>

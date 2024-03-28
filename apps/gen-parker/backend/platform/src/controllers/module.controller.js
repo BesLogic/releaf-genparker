@@ -11,7 +11,7 @@ const kafkaClient = process.env.SERVER
 kafkaClient.connectProducer(undefined);
 const addSensorData = async (req) => {
   const mac = req.header('Mac');
-  const token = req.header('Authorization');
+  const key = req.header('Token');
 
   const data = Object.keys(req.body).map((x) => {
     const senseur = x.replace(/^\D+/g, '');
@@ -27,13 +27,14 @@ const addSensorData = async (req) => {
   console.log(req.body)
   const currentDate = Date.now();
   await kafkaClient.publishMessage(
-    data.map((x, i) => ({
-      key: `${mac}~${token}`,
+    data.map((x) => ({
+      key: `${mac}~${key}`,
       value: JSON.stringify({
         value: x.val,
         sensor: x.senseur,
-        position: x.position,
         date: currentDate,
+        mac,
+        key
       }),
     }))
   );
