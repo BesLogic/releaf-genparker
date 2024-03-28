@@ -1,9 +1,7 @@
 import {
-  BadRequest,
   FakeKafkaClient,
   KafkaClient,
 } from '@gen-parker/shared-js/util';
-import { Tree } from '../models/tree';
 
 // setup kafka properly
 const kafkaClient = process.env.SERVER
