@@ -16,7 +16,7 @@ DHT_Unified dht(DHTPIN, DHTTYPE);
 #define TESTMODE 0       // 0 = production mode, 1 = test mode
 #define DEBUG 0          // 0 = production mode, enlève commentaires pour debuger, 1 = commentaires pour debugger
 
-#define REQUEST_TIMEOUT 50000 // 50 secondes
+#define REQUEST_INTERVAL 50000 // 50 secondes
 #define ESP01_POWER_UP 191 // Message sent by ESP-01 5 seconds after power-up.
 #define ESP01_SYNC 192 // Message sent by ESP-01 to confirm connection.
 
@@ -195,7 +195,7 @@ void loop() {
   vClignote(3, 1000);
 
   // Attendre avant de renvoyer l'info
-  delay(REQUEST_TIMEOUT);
+  delay(REQUEST_INTERVAL);
 } // void loop()
 
 // /////////////////////////////////
