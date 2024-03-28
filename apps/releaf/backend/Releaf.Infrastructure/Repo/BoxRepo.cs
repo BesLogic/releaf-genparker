@@ -2,6 +2,7 @@ using Releaf.Domain.Boxes;
 using Releaf.Domain.Devices;
 using Releaf.Domain.Repo;
 using Releaf.Shared;
+using System.Runtime.InteropServices;
 
 namespace Releaf.Infrastructure.Repo;
 
@@ -10,6 +11,7 @@ public class BoxRepo : IBoxRepo
   private static readonly UserId User1 = new UserId("mrbamboo");
   private static readonly BoxId User1Box1 = new BoxId(new Guid("64391FCC-DE19-4141-A688-9A72874C3D8E"));
   private static readonly BoxId User1Box2 = new BoxId(new Guid("9ED98717-C14E-4E5A-A64B-4C226E1F51AC"));
+  private static readonly BoxId User1Box3 = new BoxId(new Guid("D6AE485A-DFF4-43EF-A64B-621C50FE67C1"));
 
   public static Dictionary<BoxId, BoxVitals> UpdatedBoxVitals { get; private set; } = new Dictionary<BoxId, BoxVitals>();
 
@@ -26,8 +28,9 @@ public class BoxRepo : IBoxRepo
   private BoxAggregate[] GetBoxes()
   {
     BoxAggregate[] boxes = [
-      new BoxAggregate(User1Box2, User1, TreeRepo.HuckleberryId, DeviceRepo.DeviceId2, new DateTime(2024, 02, 29), GetSeeds(20), 2.3),
-      new BoxAggregate(User1Box1, User1, TreeRepo.PinCherryId, DeviceRepo.DeviceId1, new DateTime(2024, 03, 01), GetSeeds(20), 1.3),
+      new BoxAggregate(User1Box3, User1, TreeRepo.BigShellbarkHickoryId, DeviceRepo.DeviceId, new DateTime(2024, 01, 15), GetSeeds(20), 3.4),
+      new BoxAggregate(User1Box2, User1, TreeRepo.HuckleberryId, DeviceRepo.DeviceId, new DateTime(2024, 02, 29), GetSeeds(20), 2.3),
+      new BoxAggregate(User1Box1, User1, TreeRepo.PinCherryId, DeviceRepo.DeviceId, new DateTime(2024, 03, 01), GetSeeds(20), 1.2),
     ];
 
     KeepSavedVitals(boxes);

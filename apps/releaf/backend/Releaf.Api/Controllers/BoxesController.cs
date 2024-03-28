@@ -7,13 +7,13 @@ namespace Releaf.Backend.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class BoxsController : ControllerBase
+public class BoxesController : ControllerBase
 {
   private readonly ILogger<TreesController> _logger;
   private readonly IBoxRepo boxRepo;
   private readonly ICurrentUser currentUser;
 
-  public BoxsController(
+  public BoxesController(
     ILogger<TreesController> logger,
     IBoxRepo boxRepo,
     ICurrentUser currentUser)

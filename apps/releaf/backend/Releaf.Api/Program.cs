@@ -4,7 +4,7 @@ using Releaf.Application.DI;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddGenParker();
+builder.Services.AddGenParker(builder.Configuration);
 builder.Services.AddReleafAuth();
 builder.Services.AddReleafApp();
 
