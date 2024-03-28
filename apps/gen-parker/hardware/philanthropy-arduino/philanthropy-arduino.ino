@@ -49,7 +49,7 @@ DHT_Unified dht(DHTPIN, DHTTYPE);
 #define dPHOTO A0           // Pin photocell
 
 // Variable globale à usage multiple. Faire attention
-String sG1; String sG2;
+String sG1;
 int iHu = 0;    // Humidité
 int iTe = 0;    // Température
 int iPhoto = 0; // Photocell
@@ -83,8 +83,7 @@ void setup() {
     mlog("a-sG1 :"); mlog(sG1); mlog(" lengh :"); mlogln((String)sG1.length());
     if (sG1.length() <= 2) continue;
 
-    sG2 = sG1.substring(0,3);
-    int iG1 = sG2.toInt();
+    int iG1 = sG1.substring(0,3).toInt();
     mlog("b-iGl :"); mlogln(iG1);
     // G.1.5 prendre action selon code reçu
     if (iG1 != ESP01_POWER_UP) continue;
@@ -113,8 +112,7 @@ void setup() {
     sG1 = Serial.readString();
     if (sG1.length() <= 2) continue;
     
-    sG2 = sG1.substring(0,3);
-    int iG1 = sG2.toInt();
+    int iG1 = sG1.substring(0,3).toInt();
     // G.1.5 prendre action selon code reçu
     if (iG1 != ESP01_SYNC) continue;
     
@@ -167,7 +165,7 @@ void loop() {
   mlogln("Valeur analog :" + String(iVal));
   int igCM_V12_sec = 450; // calibration
   int igCM_V12_eau = 928; // calibration
-  iHuSol = map(iVal,igCM_V12_sec,igCM_V12_eau,0,100);
+  iHuSol = map(iVal, igCM_V12_sec, igCM_V12_eau, 0, 100);
   mlog("iHuSol :");  mlogln(iHuSol);
 
 
