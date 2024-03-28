@@ -14,6 +14,6 @@ public static class AddReleafAppExtension
     services.AddScoped<ITreeRepo, TreeRepo>();
     services.AddScoped<IBoxRepo, BoxRepo>();
     services.AddMediatR(m => m.RegisterServicesFromAssembly(typeof(AddReleafAppExtension).Assembly));
-    services.Configure<MongoDbSettings>(s => configuration.GetSection("GenParker:MongoDbSettings").Bind(s));
+    services.Configure<MongoDbSettings>(s => configuration.GetSection("Releaf:MongoDbSettings").Bind(s));
   }
 }
