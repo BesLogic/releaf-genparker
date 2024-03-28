@@ -10,6 +10,9 @@ const kafkaClient = process.env.SERVER
   : FakeKafkaClient;
 
 export const logEvent = (req) => {
+  const mac = req.header('Mac');
+  const token = req.header('Token');
+
   const messages = req.body
     .map((x) => {
       if (x.log == null || x.mess == null) return null;
@@ -29,6 +32,8 @@ export const logEvent = (req) => {
     messages.map((x) => ({
       key: 'log',
       value: JSON.stringify({
+        mac,
+        token,
         log: x.log,
         mess: x.mess,
         timestamp,
