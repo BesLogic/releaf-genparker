@@ -1,0 +1,18 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  namespace: kafka
+  name: connector-mongodb-sink-releaf-device
+  labels:
+    strimzi.io/cluster: mongodb-sink-connect-cluster
+spec:
+  class: com.mongodb.kafka.connect.MongoSinkConnector
+  tasksMax: 1
+  config:
+    topics: genparker-philantropy-topic-module
+    connection.uri: 'to add'
+    database: kafka
+    collection: device
+    key.converter: org.apache.kafka.connect.storage.StringConverter
+    value.converter: org.apache.kafka.connect.json.JsonConverter
+    value.converter.schemas.enable: false

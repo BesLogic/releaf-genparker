@@ -11,7 +11,14 @@ const kafkaClient = process.env.SERVER
 export const moduleSignup = async (req) => {
   const mac = req.header('Mac');
   const ip = req.ip;
-  const user = req.user;
+  const key = req.header('Token');
 
-  // CREATE MODULE THROUGH KAFKA
+  kafkaClient.publishMessage([{
+    key: `${mac}~${key}`,
+    value: JSON.stringify({
+      mac,
+      ip,
+      key
+    }),
+  }]);
 };
