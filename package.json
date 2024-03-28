@@ -6,7 +6,10 @@
     "ng": "nx",
     "build": "nx build gen-parker-frontend-browser-platform --configuration=production",
     "test": "nx test",
-    "prepare": "nx g @nx-dotnet/core:restore"
+    "prepare": "nx g @nx-dotnet/core:restore",
+    "start:releaf-mobile": "nx run releaf-mobile-app:serve:development",
+    "start:releaf-backend": "nx run releaf-backend:serve",
+    "start:genparker-backend": "nx run gen-parker-backend-platform:serve"
   },
   "private": true,
   "dependencies": {
