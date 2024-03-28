@@ -16,6 +16,10 @@ DHT_Unified dht(DHTPIN, DHTTYPE);
 #define TESTMODE 0       // 0 = production mode, 1 = test mode
 #define DEBUG 0          // 0 = production mode, enlève commentaires pour debuger, 1 = commentaires pour debugger
 
+#define REQUEST_TIMEOUT 50000 // 50 secondes
+#define ESP01_POWER_UP 191 // Message sent by ESP-01 5 seconds after power-up.
+#define ESP01_SYNC 192 // Message sent by ESP-01 to confirm connection.
+
 // /////////////////////////////////////
 #if MOD_HW == 1
 #define LogSerial Serial  //V4.8
@@ -51,7 +55,7 @@ int iTe = 0;    // Température
 int iPhoto = 0; // Photocell
 int iHuSol = 0; // Humidité du sol
 
-#include "samplemoothing.h"
+#include "samplesmoothing.h"
 
 // Every sample count for 7%
 SampleSmoothing temperatureSmoothing(0.07f);
@@ -67,71 +71,58 @@ void setup() {
 
   // Note: ESP-01 envoie message 191 après 5 secondes de power-up assurer que Arduino écoute
   delay(1500);
-  vClignote(2,500);
-
-  boolean bExit = false;
-  boolean bRecu = false;
+  vClignote(2, 500);
 
   // Écoute ESP-01, une fois code 191 reçu, envoie SSID et mot de passe
   // Note: Ne pas activer "mlog" lors de synchronisation avec ESP-01.
-  while(!bExit){
-    while (Serial.available()) {
-      sG1 = Serial.readString();
-      mlog("a-sG1 :");mlog(sG1); mlog(" lengh :");mlogln((String)sG1.length());
-      if(sG1.length() > 2){bRecu = true;}
-      if(bRecu){
-        sG2 = sG1.substring(0,3);
-        int iG1 = sG2.toInt();
-        mlog("b-iGl :");mlogln(iG1);
-        switch (iG1) {     // G.1.5 prendre action selon code reçu
-        case 191:
-          // envoie SSID
-          sG1 = "292:" + (String)cSSID;
-          mlog("c-sG1 :");mlogln(sG1);
-          Serial.println(sG1);
-          delay(2000);
-          // Envoie mot de passe
-          sG1 = "293:" + (String)cPassw;
-          mlog("d-sG1 :");mlogln(sG1);
-          Serial.println(sG1);
-          delay(2000);
-          bExit=true; // sortir de l'initialisation
-          break;
-        default:
-          break;
-        } // end switch
+  while(true) {
+    // It may be wise to perform a sleep here to save power
+    if (!Serial.available()) continue;
 
-       } // endif(bRecu)
+    sG1 = Serial.readString();
+    mlog("a-sG1 :"); mlog(sG1); mlog(" lengh :"); mlogln((String)sG1.length());
+    if (sG1.length() <= 2) continue;
 
-    } //  while (Serial.available()
-    bRecu = false;
-  } // while (!bExit)
+    sG2 = sG1.substring(0,3);
+    int iG1 = sG2.toInt();
+    mlog("b-iGl :"); mlogln(iG1);
+    // G.1.5 prendre action selon code reçu
+    if (iG1 != ESP01_POWER_UP) continue;
 
+    // envoie SSID
+    sG1 = "292:" + (String)cSSID;
+    mlog("c-sG1 :"); mlogln(sG1);
+    Serial.println(sG1);
+    delay(2000);
+
+    // Envoie mot de passe
+    sG1 = "293:" + (String)cPassw;
+    mlog("d-sG1 :"); mlogln(sG1);
+    Serial.println(sG1);
+    delay(2000);
+
+    // Connection confirmed
+    break;
+  } // while true
 
   // Attends confirmation connection pour se synchroniser
-  bRecu = false;
-  bExit = false;
+  while(true) {
+    // It may be wise to perform a sleep here to save power
+    if (!Serial.available()) continue;
 
-    while(!bExit){
-      while (Serial.available()) {
-        sG1 = Serial.readString();
-        if(sG1.length() > 2){bRecu = true;}
-        if(bRecu){
-          sG2 = sG1.substring(0,3);
-          int iG1 = sG2.toInt();
-          switch (iG1) {     // G.1.5 prendre action selon code reçu
-            case 192:
-                bExit = true;
-              break;
-            default:
-              break;
-         } // end switch
-        } // enf if reçu
-      } // end while (Serial.available())
-      bRecu = false;
-    } // while(!bExit){
+    sG1 = Serial.readString();
+    if (sG1.length() <= 2) continue;
+    
+    sG2 = sG1.substring(0,3);
+    int iG1 = sG2.toInt();
+    // G.1.5 prendre action selon code reçu
+    if (iG1 != ESP01_SYNC) continue;
+    
+    // Sync confirmed
+    break;
+  } // while (true)
 
-  vClignote(6,500);
+  vClignote(6, 500);
   delay(10000);
 } // end set-up
 
@@ -153,7 +144,7 @@ void loop() {
     sensors_event_t event;
     dht.temperature().getEvent(&event);
     if (isnan(event.temperature)) {
-       iTe = -99;
+      iTe = -99;
     }
     else {
       iTe = event.temperature;
@@ -171,7 +162,7 @@ void loop() {
   } // if(true)
 
   // A2 - Humidité Sol
-//    iHuSol = 30;
+  // iHuSol = 30;
   int iVal = analogRead(dHUMIDTESOL);
   mlogln("Valeur analog :" + String(iVal));
   int igCM_V12_sec = 450; // calibration
@@ -181,10 +172,10 @@ void loop() {
 
 
   // A2 - Photosensible
-//    iPhoto = 67;
-  iPhoto =  analogRead(dPHOTO);
+  // iPhoto = 67;
+  iPhoto = analogRead(dPHOTO);
   mlog("iPhoto :");  mlogln(iPhoto);
-//  convertion en lux...
+  // conversion en lux...
 
   // Il faut envoyer 4 valeurs (301, 302, 304 & 399)
   // B - Envoyer valeur au ESP-01
@@ -203,23 +194,24 @@ void loop() {
   delay(3000);
   sG1 = "399:Fin.";
   LogSerial.println(sG1);
-  vClignote(3,1000);
+  vClignote(3, 1000);
 
   // Attendre avant de renvoyer l'info
-  delay(50000);
-
+  delay(REQUEST_TIMEOUT);
 } // void loop()
 
 // /////////////////////////////////
-void vClignote(int nF, int nTemps){
+void vClignote(int compte, int duree){
+  if (compte <= 0) return;
 
-  if(nF >0){
-    for(int i=0; i<nF; i++){
-      digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-      delay(nTemps);                       // wait for a second
-      digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-      delay(nTemps);                       // wait for a second
-    }
-  } // end if(nF >0)
+  for(int i = 0; i < compte; i++){
+    blink(duree);
+  }
+} // void vClignote(int compte, int duree)
 
-} // end vClignote(int nF, int nTemps)
+inline void blink(int duration) {
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(duration);
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(duration);
+}
