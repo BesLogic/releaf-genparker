@@ -4,14 +4,13 @@ import {
   KafkaClient,
 } from '@gen-parker/shared-js/util';
 
-// setup kafka properly
 const kafkaClient = process.env.SERVER
   ? new KafkaClient(process.env.KAFKA_SERVER, process.env.KAFKA_TOPIC_LOG, 'genparker')
   : FakeKafkaClient;
 
 export const logEvent = (req) => {
   const mac = req.header('Mac');
-  const token = req.header('Token');
+  const key = req.header('Token');
 
   const messages = req.body
     .map((x) => {
@@ -26,14 +25,16 @@ export const logEvent = (req) => {
     .filter(Boolean);
 
   if (!messages.length) throw new BadRequest('no logs has been sent');
+  if (!mac) throw new BadRequest('Mac is required');
+  if (!key) throw new BadRequest('Token is required');
 
   const timestamp = new Date();
   kafkaClient.publishMessage(
     messages.map((x) => ({
-      key: 'log',
+      key: `${mac}~${key}`,
       value: JSON.stringify({
         mac,
-        token,
+        key,
         log: x.log,
         mess: x.mess,
         timestamp,

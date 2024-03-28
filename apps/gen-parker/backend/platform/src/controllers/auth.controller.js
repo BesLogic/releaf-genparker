@@ -1,4 +1,5 @@
 import {
+  BadRequest,
   FakeKafkaClient,
   KafkaClient,
 } from '@gen-parker/shared-js/util';
@@ -12,16 +13,18 @@ const kafkaClient = process.env.SERVER
 export const moduleSignup = async (req) => {
   const mac = req.header('Mac');
   const ip = req.ip;
-  const token = req.header('Token');
+  const key = req.header('Token');
 
   const tree = new Tree(req.body.treeId, req.body.treeNumber);
+  if (!mac) throw new BadRequest('Mac is required');
+  if (!key) throw new BadRequest('Token is required');
 
   kafkaClient.publishMessage([{
-    key: `${mac}~${token}`,
+    key: `${mac}~${key}`,
     value: JSON.stringify({
       mac,
       ip,
-      token,
+      key,
       treeId: tree.treeId,
       treeNumber: tree.treeNumber,
     }),
