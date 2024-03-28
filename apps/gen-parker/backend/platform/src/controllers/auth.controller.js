@@ -15,18 +15,12 @@ export const moduleSignup = async (req) => {
   const ip = req.ip;
   const key = req.header('Token');
 
-  const tree = new Tree(req.body.treeId, req.body.treeNumber);
-  if (!mac) throw new BadRequest('Mac is required');
-  if (!key) throw new BadRequest('Token is required');
-
   kafkaClient.publishMessage([{
     key: `${mac}~${key}`,
     value: JSON.stringify({
       mac,
       ip,
-      key,
-      treeId: tree.treeId,
-      treeNumber: tree.treeNumber,
+      key
     }),
   }]);
 };
