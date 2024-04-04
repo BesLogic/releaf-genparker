@@ -1,3 +1,4 @@
+using Bogus;
 using MediatR;
 using Releaf.Domain.Exceptions;
 using Releaf.Domain.Repo;
@@ -27,7 +28,7 @@ public class BoxAggregate
     GerminationDay = germinationDay;
     Seeds = seeds;
     SeedsAverageInchHeight = averageInchHeight;
-    Vitals = boxVitals ?? new BoxVitals(BoxVitalValue.Empty(), BoxVitalValue.Empty(), BoxVitalValue.Empty(), BoxVitalValue.Empty());
+    Vitals = boxVitals ?? new BoxVitals(BoxVitalValue.Default, BoxVitalValue.Default, BoxVitalValue.Default, BoxVitalValue.Default);
   }
 
   public BoxId Id { get; }
