@@ -6,4 +6,6 @@ public interface ITreeRepo
 {
   IEnumerable<TreeDefinitionAggregate> GetAll();
   TreeDefinitionAggregate GetOne(TreeDefinitionId id);
+  TreeDefinitionId Create(TreeDefinitionAggregate treeDefinition);
+  long Count();
 }

@@ -7,6 +7,12 @@ public class TreeDefinitionAggregate
     Name = name;
   }
 
+  public TreeDefinitionAggregate(string name, IEnumerable<TreeInstruction> instructions)
+  {
+    Name = name;
+    Instructions = instructions;
+  }
+
   public TreeDefinitionAggregate(TreeDefinitionId id, string name)
   {
     Id = id;

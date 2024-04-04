@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Releaf.Domain.Trees;
 
 public class TreeInstruction
@@ -18,18 +12,20 @@ public class TreeInstruction
 
   public string Title { get; } = string.Empty;
   public DateTime PublishDate { get; }
-  public TreeInstructionAuthor Author { get; } = new TreeInstructionAuthor(string.Empty);
+  public TreeInstructionAuthor Author { get; } = new TreeInstructionAuthor(string.Empty, string.Empty);
   public IEnumerable<TreeInstructionStep> Steps { get; } = Enumerable.Empty<TreeInstructionStep>();
 }
 
 public class TreeInstructionAuthor
 {
-  public TreeInstructionAuthor(string fullName)
+  public TreeInstructionAuthor(string username, string displayName)
   {
-    FullName = fullName;
+    UserName = username;
+    DisplayName = displayName;
   }
 
-  public string FullName { get; }
+  public string UserName { get; }
+  public string DisplayName { get; }
 }
 
 public class TreeInstructionStep
