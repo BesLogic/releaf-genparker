@@ -1,10 +1,10 @@
 using Releaf.Shared;
 
-namespace Releaf.Domain.Devices;
+namespace Releaf.Domain.Boxes;
 
-public class DeviceId : ValueObject
+public class BoxPairingKey : ValueObject
 {
-  public DeviceId(string value)
+  public BoxPairingKey(string value)
   {
     Value = value;
   }

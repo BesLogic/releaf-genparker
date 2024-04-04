@@ -47,17 +47,17 @@ public class ReduceNewSensorLogsCmdHandler : IRequestHandler<ReduceNewSensorLogs
       var valueType = GetValueTypeOrEmpty(logVal);
       if (IsKnowType(valueType))
       {
-        var deviceSensorLogUpdated = new DeviceSensorLogUpdated(logVal.DeviceKey, logVal.TimeStamp, logVal.Value, valueType);
+        var deviceSensorLogUpdated = new DeviceSensorLogUpdated(logVal.PairingKey, logVal.TimeStamp, logVal.Value, valueType);
         Mediator.Publish(deviceSensorLogUpdated);
 
-        CleanBatchByDeviceKey(batch, logVal.DeviceKey);
+        CleanBatchByDeviceKey(batch, logVal.PairingKey);
       }
     }
   }
 
   private void CleanBatchByDeviceKey(List<DeviceSensorData> sensorDataBatch, string deviceKey)
   {
-    var allDataToClean = sensorDataBatch.Where(d => d.DeviceKey == deviceKey);
+    var allDataToClean = sensorDataBatch.Where(d => d.PairingKey == deviceKey);
     var idsToClean = allDataToClean.Select(d => d.Id).ToList();
 
     if (idsToClean.Any())

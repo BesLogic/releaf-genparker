@@ -1,9 +1,9 @@
 using GenParker.Events;
 using MediatR;
+using MongoDB.Driver.Core.Operations;
 using Releaf.Domain.Boxes;
-using Releaf.Domain.Devices;
 using Releaf.Domain.Repo;
-using System.Net.Http.Headers;
+using Releaf.Infrastructure.Repo;
 
 namespace Releaf.Application.EventHandlers;
 
@@ -23,21 +23,43 @@ public class DeviceSensorLogUpdatedHandler : INotificationHandler<DeviceSensorLo
 
   public Task Handle(DeviceSensorLogUpdated notification, CancellationToken cancellationToken)
   {
-    var deviceId = new DeviceId(notification.DeviceKey);
-    var box = BoxRepo.GetBoxPairedWithDevice(deviceId);
-
-    bool updated = false;
-    updated |= TryUpdateTemperature(box, notification);
-    updated |= TryUpdateAirHumidity(box, notification);
-    updated |= TryUpdateMoisture(box, notification);
-    updated |= TryUpdateLuminosity(box, notification);
-
-    if (updated)
-    {
-      BoxRepo.Update(box);
-    }
+    var pairingKey = new BoxPairingKey(notification.PairingKey);
+    var box = GetPairedBoxOrDefault(pairingKey);
+    UpdateBoxWhenPaired(notification, box);
 
     return Task.CompletedTask;
+  }
+
+  private BoxAggregate? GetPairedBoxOrDefault(BoxPairingKey pairingKey)
+  {
+    if (BoxRepo.BoxAlreadyPaired(pairingKey))
+    {
+      return BoxRepo.GetBoxWithPairingKey(pairingKey);
+    }
+
+    return default;
+  }
+
+  private void UpdateBoxWhenPaired(DeviceSensorLogUpdated notification, BoxAggregate? box)
+  {
+    if (IsPaired(box))
+    {
+      bool updated = false;
+      updated |= TryUpdateTemperature(box, notification);
+      updated |= TryUpdateAirHumidity(box, notification);
+      updated |= TryUpdateMoisture(box, notification);
+      updated |= TryUpdateLuminosity(box, notification);
+
+      if (updated)
+      {
+        BoxRepo.Update(box);
+      }
+    }
+  }
+
+  private static bool IsPaired(BoxAggregate? box)
+  {
+    return box != default;
   }
 
   // NOT TESTED YET

@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using Releaf.Domain.Repo;
@@ -16,7 +17,7 @@ public class TreeRepo : ITreeRepo
     BsonClassMap.RegisterClassMap<TreeDefinitionModel>(cm =>
     {
       cm.AutoMap();
-      cm.MapCreator(t => new TreeDefinitionModel(t.Name, t.Id, t.Instructions));
+      cm.MapCreator(t => new TreeDefinitionModel(t.Name, t.Id, t.EstimatedGerminationDurationDays, t.Instructions));
     });
   }
 
@@ -63,6 +64,17 @@ public class TreeRepo : ITreeRepo
   {
     var filter = Builders<TreeDefinitionModel>.Filter.Empty;
     return GetCollection().Find(filter).CountDocuments();
+  }
+
+  public bool Exists(TreeDefinitionId id)
+  {
+    if (ObjectId.TryParse(id.Value, out ObjectId objId))
+    {
+      var filter = Builders<TreeDefinitionModel>.Filter.Eq(t => t.Id, objId);
+      return GetCollection().Find(filter).CountDocuments() > 0;
+    }
+
+    return false;
   }
 
   private IMongoCollection<TreeDefinitionModel> GetCollection()

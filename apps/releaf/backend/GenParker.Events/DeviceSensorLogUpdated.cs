@@ -13,9 +13,9 @@ public class DeviceSensorLogUpdated : DomainEvent
     public const string BatteryCharge = "battery_charge";
   }
 
-  public DeviceSensorLogUpdated(string deviceKey, DateTime timeStamp, double value, string valueType)
+  public DeviceSensorLogUpdated(string pairingKey, DateTime timeStamp, double value, string valueType)
   {
-    DeviceKey = deviceKey;
+    PairingKey = pairingKey;
     TimeStamp = timeStamp;
     Value = value;
 
@@ -38,7 +38,7 @@ public class DeviceSensorLogUpdated : DomainEvent
     }
   }
 
-  public string DeviceKey { get; }
+  public string PairingKey { get; }
   public DateTime TimeStamp { get; }
   public double Value { get; }
   public string ValueType { get; } = string.Empty;

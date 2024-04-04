@@ -5,10 +5,10 @@ namespace Releaf.Application.Seeds;
 internal class ReleafDbSeeds
 {
   internal static TreeDefinitionAggregate[] GetTreeDefinitionsSeed() => [
-      new TreeDefinitionAggregate("Pin Cherry", PinCherryInstructions),
-    new TreeDefinitionAggregate("Red Maple", RedMapleInstructions),
-    new TreeDefinitionAggregate("Huckleberry", HuckleberryInstructions),
-    new TreeDefinitionAggregate("Big Shellbark Hickory", BigShellbarkHickoryInstructions),
+    new TreeDefinitionAggregate("Pin Cherry", 9, PinCherryInstructions),
+    new TreeDefinitionAggregate("Red Maple", 19, RedMapleInstructions),
+    new TreeDefinitionAggregate("Huckleberry", 29, HuckleberryInstructions),
+    new TreeDefinitionAggregate("Big Shellbark Hickory", 39, BigShellbarkHickoryInstructions),
   ];
 
   private static TreeInstructionAuthor AnonymousAuthor = new TreeInstructionAuthor("anonymous", "Anony Mous");

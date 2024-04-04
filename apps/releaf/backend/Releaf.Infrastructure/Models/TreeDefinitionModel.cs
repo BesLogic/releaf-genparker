@@ -8,27 +8,42 @@ public class TreeDefinitionModel
   public TreeDefinitionModel(
     string name,
     ObjectId id,
+    int estimatedGerminationDurationDays,
     TreeInstruction[] instructions)
   {
     Name = name;
     Id = id;
+    EstimatedGerminationDurationDays = estimatedGerminationDurationDays;
     Instructions = instructions;
   }
 
   public string Name { get; } = string.Empty;
 
   public ObjectId Id { get; }
-
+  public int EstimatedGerminationDurationDays { get; }
   public TreeInstruction[] Instructions { get; } = Array.Empty<TreeInstruction>();
 
   public static TreeDefinitionModel From(TreeDefinitionAggregate treeDefinition)
   {
+    var id = new ObjectId(treeDefinition.Id.Value);
+    return FromInternal(treeDefinition, id);
+  }
+
+  public static TreeDefinitionModel FromNew(TreeDefinitionAggregate treeDefinition)
+  {
     var id = GetIdOrNew(treeDefinition);
-    return new TreeDefinitionModel(
-      treeDefinition.Name,
-      id,
-      treeDefinition.Instructions.ToArray()
-    );
+    return FromInternal(treeDefinition, id);
+  }
+
+  private static TreeDefinitionModel FromInternal(TreeDefinitionAggregate treeDefinition, ObjectId id)
+  {
+    return
+      new TreeDefinitionModel(
+        treeDefinition.Name,
+        id,
+        treeDefinition.EstimatedGerminationDurationDays,
+        treeDefinition.Instructions.ToArray()
+      );
   }
 
   private static ObjectId GetIdOrNew(TreeDefinitionAggregate treeDefinition)
@@ -47,6 +62,7 @@ public class TreeDefinitionModel
       new TreeDefinitionAggregate(
         id,
         Name,
+        EstimatedGerminationDurationDays,
         Instructions);
   }
 }

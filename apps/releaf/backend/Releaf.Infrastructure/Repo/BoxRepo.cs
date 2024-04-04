@@ -2,8 +2,8 @@ using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Releaf.Domain.Boxes;
-using Releaf.Domain.Devices;
 using Releaf.Domain.Repo;
+using Releaf.Domain.Trees;
 using Releaf.Infrastructure.Exceptions;
 using Releaf.Infrastructure.Models;
 using Releaf.Infrastructure.Settings;
@@ -22,7 +22,7 @@ public class BoxRepo : IBoxRepo
 
   public IEnumerable<BoxAggregate> GetBoxesForUser(UserId ownerId)
   {
-    var boxesCollection = GetBoxCollection();
+    var boxesCollection = GetCollection();
 
     var ownerIdEq = Builders<BoxModel>.Filter.Eq(b => b.OwnerId, ownerId.Value);
     var boxes = boxesCollection.Find(ownerIdEq).ToList();
@@ -32,7 +32,7 @@ public class BoxRepo : IBoxRepo
 
   public BoxAggregate GetBox(UserId ownerId, BoxId boxId)
   {
-    var boxesCollection = GetBoxCollection();
+    var boxesCollection = GetCollection();
 
     var boxIdEq = Builders<BoxModel>.Filter.Eq(b => b.Id, new ObjectId(boxId.Value));
     var boxes = boxesCollection.Find(boxIdEq).Limit(1).ToList().Where(b => b.OwnerId == ownerId.Value).ToList();
@@ -40,35 +40,44 @@ public class BoxRepo : IBoxRepo
     return boxes.First().ToBox();
   }
 
-  private IMongoCollection<BoxModel> GetBoxCollection()
+  private IMongoCollection<BoxModel> GetCollection()
   {
     var client = new MongoClient(Options.Value.ConnectionString);
     var boxesCollection = client.GetDatabase(Options.Value.DbName).GetCollection<BoxModel>("boxes");
     return boxesCollection;
   }
 
-  public BoxAggregate GetBoxPairedWithDevice(DeviceId deviceId)
+  public BoxAggregate GetBoxWithPairingKey(BoxPairingKey pairingKey)
   {
-    var boxesCollection = GetBoxCollection();
-
-    var deviceEq = Builders<BoxModel>.Filter.Eq(b => b.DeviceId, deviceId.Value);
-    var box = boxesCollection.Find(deviceEq).Limit(1).First();
+    var deviceEq = Builders<BoxModel>.Filter.Eq(b => b.PairingKey, pairingKey.Value);
+    var box = GetCollection().Find(deviceEq).Limit(1).First();
 
     return box.ToBox();
+  }
+
+  public bool BoxAlreadyPaired(BoxPairingKey pairingKey)
+  {
+    var filter = Builders<BoxModel>.Filter.Eq(b => b.PairingKey, pairingKey.Value);
+    return GetCollection().Find(filter).Limit(1).CountDocuments() > 0;
   }
 
   public void Update(BoxAggregate box)
   {
     var model = BoxModel.From(box);
 
-    var boxesCollection = GetBoxCollection();
-
     var filter = Builders<BoxModel>.Filter.Eq(b => b.Id, model.Id);
 
-    var result = boxesCollection.ReplaceOne(filter, model);
+    var result = GetCollection().ReplaceOne(filter, model);
     if (result.ModifiedCount != 1)
     {
       throw new BoxUpdateException(1, result.ModifiedCount);
     }
+  }
+
+  public BoxId Create(BoxAggregate box)
+  {
+    var model = BoxModel.FromNew(box);
+    GetCollection().InsertOne(model);
+    return new BoxId(model.Id.ToString());
   }
 }
