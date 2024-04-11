@@ -2,10 +2,12 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Serve GenParker",
+      "label": "Serve GenParker-Releaf",
       "dependsOrder": "parallel",
       "dependsOn": [
-        "serve-backend-platform"
+        "serve-backend-platform",
+        "serve-releaf-mobile",
+        "serve-releaf-Mckendobile"
       ],
       "group": {
         "kind": "build",
@@ -15,20 +17,29 @@
     {
       "label": "serve-backend-platform",
       "type": "shell",
-      "command": "npx nx run gen-parker-backend-platform:serve",
+      "command": "npm run start:genparker-backend",
       "presentation": {
-        "panel": "dedicated",
-        "group": "GenParker BE"
-      }
+        "panel": "shared",
+        "group": "GenParker"
+      },
     },
     {
-      "label": "serve-backend-releaf-mobile",
+      "label": "serve-releaf-mobile",
       "type": "shell",
-      "command": "npx nx run releaf-mobile-app:serve:development",
+      "command": "npm run start:releaf-mobile",
       "presentation": {
-        "panel": "dedicated",
-        "group": "Releaf Mobile"
-      }
+        "panel": "shared",
+        "group": "Releaf"
+      },
+    },
+    {
+      "label": "serve-releaf-Mckendobile",
+      "type": "shell",
+      "command": "npm run start:releaf-backend",
+      "presentation": {
+        "panel": "shared",
+        "group": "Releaf"
+      },
     }
   ]
 }

@@ -70,7 +70,7 @@ To be able to run the project you will need the following things installed:
 - Node
 - NX Console (Plugin)
 - Docker
-- React native for mobile
+- Dotnet (install from [installer](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-8.0.203-windows-x64-installer))
 - TODO (Add with further decisions)
 
 Before starting the project make sure to run the command `npm install` on the root folder.

@@ -1,0 +1,20 @@
+{
+  "name": "releaf-backend",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/releaf/backend",
+  "projectType": "application",
+  "targets": {
+    "swagger": {
+      "executor": "@nx-dotnet/core:update-swagger",
+      "outputs": [
+        "{workspaceRoot}/libs/generated/backend-swagger/swagger.json"
+      ],
+      "options": {
+        "output": "libs/generated/backend-swagger/swagger.json"
+      },
+      "dependsOn": [ "build" ]
+
+    }
+  },
+  "tags": []
+}

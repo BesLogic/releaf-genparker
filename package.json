@@ -5,7 +5,11 @@
   "scripts": {
     "ng": "nx",
     "build": "nx build gen-parker-frontend-browser-platform --configuration=production",
-    "test": "nx test"
+    "test": "nx test",
+    "prepare": "nx g @nx-dotnet/core:restore",
+    "start:releaf-mobile": "nx run releaf-mobile-app:serve:development",
+    "start:releaf-backend": "nx run releaf-backend:serve",
+    "start:genparker-backend": "nx run gen-parker-backend-platform:serve"
   },
   "private": true,
   "dependencies": {
@@ -26,6 +30,7 @@
   "devDependencies": {
     "@babel/core": "^7.14.5",
     "@babel/preset-react": "^7.14.5",
+    "@nx-dotnet/core": "^2.2.0",
     "@nx-tools/container-metadata": "^5.1.0",
     "@nx-tools/nx-container": "^5.1.0",
     "@nx/angular": "18.1.2",

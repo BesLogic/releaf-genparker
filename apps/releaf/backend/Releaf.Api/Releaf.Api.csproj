@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>a3ca529f-a2fe-4db1-bfb8-db13078440ba</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.5" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GenParker.Application\GenParker.Application.csproj" />
+    <ProjectReference Include="..\Releaf.Application\Releaf.Application.csproj" />
+    <ProjectReference Include="..\Releaf.Auth\Releaf.Auth.csproj" />
+    <ProjectReference Include="..\Releaf.Domain\Releaf.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
