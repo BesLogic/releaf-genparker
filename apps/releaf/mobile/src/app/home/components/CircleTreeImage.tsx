@@ -1,5 +1,6 @@
 
 import { View, StyleSheet } from 'react-native';
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import Arbre from '@releaf-mobile/assets/images/Rectangle_6.svg';
 
 const styles = StyleSheet.create({
