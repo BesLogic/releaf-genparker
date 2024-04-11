@@ -73,6 +73,8 @@ public class BoxVitalValue
   {
     Value = value;
     LastUpdate = lastUpdate;
+    BatteryLevel = batteryLevel;
+    BatteryLastUpdate = batteryLastUpdate;
   }
 
   public double Value { get; }

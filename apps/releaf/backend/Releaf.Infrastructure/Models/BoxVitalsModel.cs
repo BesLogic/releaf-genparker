@@ -23,10 +23,10 @@ public class BoxVitalsModel
   internal BoxVitals ToBoxVitals()
   {
     return new BoxVitals(
-      temperature: new BoxVitalValue(Temperature.Value, Temperature.LastUpdate),
-      airHumidityPercent: new BoxVitalValue(AirHumidityPercent.Value, AirHumidityPercent.LastUpdate),
-      soilMoisturePercent: new BoxVitalValue(SoilMoisturePercent.Value, SoilMoisturePercent.LastUpdate),
-      luminosityPercent: new BoxVitalValue(LuminosityPercent.Value, LuminosityPercent.LastUpdate)
+      temperature: new BoxVitalValue(Temperature.Value, Temperature.LastUpdate, Temperature.BatteryLevel, Temperature.BatteryLastUpdate),
+      airHumidityPercent: new BoxVitalValue(AirHumidityPercent.Value, AirHumidityPercent.LastUpdate, AirHumidityPercent.BatteryLevel, AirHumidityPercent.BatteryLastUpdate),
+      soilMoisturePercent: new BoxVitalValue(SoilMoisturePercent.Value, SoilMoisturePercent.LastUpdate, SoilMoisturePercent.BatteryLevel, SoilMoisturePercent.BatteryLastUpdate),
+      luminosityPercent: new BoxVitalValue(LuminosityPercent.Value, LuminosityPercent.LastUpdate, LuminosityPercent.BatteryLevel, LuminosityPercent.BatteryLastUpdate)
     );
   }
 }

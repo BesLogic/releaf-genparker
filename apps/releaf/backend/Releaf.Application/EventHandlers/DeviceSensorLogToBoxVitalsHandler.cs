@@ -1,20 +1,18 @@
 using GenParker.Events;
 using MediatR;
-using MongoDB.Driver.Core.Operations;
 using Releaf.Domain.Boxes;
 using Releaf.Domain.Repo;
-using Releaf.Infrastructure.Repo;
 
 namespace Releaf.Application.EventHandlers;
 
-public class DeviceSensorLogUpdatedHandler : INotificationHandler<DeviceSensorLogUpdated>
+public class DeviceSensorLogToBoxVitalsHandler : INotificationHandler<DeviceSensorLogUpdated>
 {
   public double Temperature { get; }
   public double AirHumidity { get; }
   public double SoilMoisture { get; }
   public double Luminosity { get; }
 
-  public DeviceSensorLogUpdatedHandler(IBoxRepo boxRepo)
+  public DeviceSensorLogToBoxVitalsHandler(IBoxRepo boxRepo)
   {
     BoxRepo = boxRepo;
   }

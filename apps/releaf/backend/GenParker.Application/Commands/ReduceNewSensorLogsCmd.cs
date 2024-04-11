@@ -2,6 +2,7 @@
 using GenParker.Domain.DeviceSensorDatas;
 using GenParker.Domain.Repo;
 using GenParker.Events;
+using GenParker.Infrastructure.Models;
 using MediatR;
 
 namespace GenParker.Application.Commands;
@@ -12,20 +13,22 @@ public class ReduceNewSensorLogsCmd : IRequest<string>
 
 public class ReduceNewSensorLogsCmdHandler : IRequestHandler<ReduceNewSensorLogsCmd, string>
 {
-  public ReduceNewSensorLogsCmdHandler(IMediator mediator, ISensorDataRepo sensorLogsRepo)
+  public ReduceNewSensorLogsCmdHandler(IMediator mediator, ISensorDataRepo sensorLogsRepo, ISensorPositionCacheRepo sensorPositionCacheRepo)
   {
     Mediator = mediator;
     SensorDataRepo = sensorLogsRepo;
+    SensorPositionCacheRepo = sensorPositionCacheRepo;
   }
 
-  public IMediator Mediator { get; }
-  public ISensorDataRepo SensorDataRepo { get; }
+  private IMediator Mediator { get; }
+  private ISensorDataRepo SensorDataRepo { get; }
+  private ISensorPositionCacheRepo SensorPositionCacheRepo { get; }
 
   public Task<string> Handle(ReduceNewSensorLogsCmd request, CancellationToken cancellationToken)
   {
     var sensorDataBatch = SensorDataRepo.GetNextBatch();
     var lastLogPerDevice = LastLogByDeviceSensor(sensorDataBatch);
-    RaiseEventPerDeviceSensor(lastLogPerDevice, sensorDataBatch);
+    RaiseEventForAllDeviceSensors(lastLogPerDevice, sensorDataBatch);
 
     return Task.FromResult(string.Empty);
   }
@@ -38,20 +41,47 @@ public class ReduceNewSensorLogsCmdHandler : IRequestHandler<ReduceNewSensorLogs
       .ToDictionary(l => l.UniqueDeviceSensorKey(), l => l);
   }
 
-  private void RaiseEventPerDeviceSensor(Dictionary<string, DeviceSensorData> lastLogPerDevice, IEnumerable<DeviceSensorData> sensorDataBatch)
+  private void RaiseEventForAllDeviceSensors(Dictionary<string, DeviceSensorData> lastLogPerDevice, IEnumerable<DeviceSensorData> sensorDataBatch)
   {
     var batch = sensorDataBatch.ToList();
     foreach (var log in lastLogPerDevice)
     {
       var logVal = log.Value;
-      var valueType = GetValueTypeOrEmpty(logVal);
-      if (IsKnowType(valueType))
-      {
-        var deviceSensorLogUpdated = new DeviceSensorLogUpdated(logVal.PairingKey, logVal.TimeStamp, logVal.Value, valueType);
-        Mediator.Publish(deviceSensorLogUpdated);
+      CheckToRaiseEventForDeviceSensor(logVal);
+      CleanBatchByDeviceKey(batch, logVal.PairingKey);
+    }
+  }
 
-        CleanBatchByDeviceKey(batch, logVal.PairingKey);
-      }
+  private void CheckToRaiseEventForDeviceSensor(DeviceSensorData data)
+  {
+    if (ShouldRaiseEvent(data))
+    {
+      RaiseEventForDeviceSensor(data);
+    }
+  }
+
+  private bool ShouldRaiseEvent(DeviceSensorData data)
+  {
+    var valueType = GetValueTypeOrEmpty(data);
+    return IsKnowType(valueType);
+  }
+
+  private void RaiseEventForDeviceSensor(DeviceSensorData data)
+  {
+    var valueType = GetValueTypeOrEmpty(data);
+    if (!string.IsNullOrEmpty(valueType))
+    {
+      var deviceSensorLogUpdated = new DeviceSensorLogUpdated(data.PairingKey, data.TimeStamp, data.Value, valueType);
+      Mediator.Publish(deviceSensorLogUpdated);
+      UpdateCache(data, valueType);
+    }
+  }
+
+  private void UpdateCache(DeviceSensorData data, string valueType)
+  {
+    if (data.SensorType != SensorTypes.BatteryChargePercent)
+    {
+      SensorPositionCacheRepo.SetCachedTypeForPosition(data.PairingKey, data.Position, valueType);
     }
   }
 
@@ -83,9 +113,27 @@ public class ReduceNewSensorLogsCmdHandler : IRequestHandler<ReduceNewSensorLogs
       case SensorTypes.SoilMoisturePercent:
         return DeviceSensorLogUpdated.ValueTypes.SoilMoisture;
       case SensorTypes.BatteryChargePercent:
-        return DeviceSensorLogUpdated.ValueTypes.BatteryCharge;
+        return SelectBatteryChargeType(logVal.PairingKey, logVal.Position);
       case SensorTypes.LuminosityLux:
         return DeviceSensorLogUpdated.ValueTypes.Luminosity;
+      default:
+        return string.Empty;
+    }
+  }
+
+  private string SelectBatteryChargeType(string pairingKey, string position)
+  {
+    var lastType = SensorPositionCacheRepo.GetCachedTypeForPosition(pairingKey, position);
+    switch (lastType)
+    {
+      case DeviceSensorLogUpdated.ValueTypes.Luminosity:
+        return DeviceSensorLogUpdated.ValueTypes.LuminosityBatteryCharge;
+      case DeviceSensorLogUpdated.ValueTypes.AirHumidity:
+        return DeviceSensorLogUpdated.ValueTypes.AirHumidityBatteryCharge;
+      case DeviceSensorLogUpdated.ValueTypes.SoilMoisture:
+        return DeviceSensorLogUpdated.ValueTypes.SoilMoistureBatteryCharge;
+      case DeviceSensorLogUpdated.ValueTypes.Temperature:
+        return DeviceSensorLogUpdated.ValueTypes.TemperatureBatteryCharge;
       default:
         return string.Empty;
     }
