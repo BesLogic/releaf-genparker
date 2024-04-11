@@ -16,7 +16,7 @@ public class Data
   public DeviceSensorData ToSensorLog()
   {
     var timeStamp = DateTime.UnixEpoch.AddMilliseconds(date);
-    return new DeviceSensorData(Id.ToString(), key, mac, timeStamp, (SensorTypes)sensor, value);
+    return new DeviceSensorData(Id.ToString(), key, mac, timeStamp, (SensorTypes)sensor, position, value);
   }
 }
 

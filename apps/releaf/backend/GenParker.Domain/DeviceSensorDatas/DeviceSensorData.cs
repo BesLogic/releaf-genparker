@@ -8,6 +8,7 @@ public class DeviceSensorData
     string macAddress,
     DateTime timeStamp,
     SensorTypes sensorType,
+    string position,
     double value)
   {
     Id = id;
@@ -15,6 +16,7 @@ public class DeviceSensorData
     MacAddress = macAddress;
     TimeStamp = timeStamp;
     SensorType = sensorType;
+    Position = position;
     Value = value;
   }
 
@@ -23,11 +25,12 @@ public class DeviceSensorData
   public string MacAddress { get; }
   public DateTime TimeStamp { get; }
   public SensorTypes SensorType { get; }
+  public string Position { get; }
   public double Value { get; }
 
   public string UniqueDeviceSensorKey()
   {
-    return $"{PairingKey}{SensorType}";
+    return $"{PairingKey}-{Position}-{SensorType}";
   }
 }
 

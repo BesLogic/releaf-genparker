@@ -14,6 +14,8 @@ public static class AddGenParkerExtension
     services.AddScoped<ISensorDataRepo, SensorDataRepo>();
     services.AddMediatR(conf => conf.RegisterServicesFromAssembly(typeof(AddGenParkerExtension).Assembly));
     services.AddHostedService<SensorLogsBackgroundService>();
-    services.Configure<MongoDbSettings>(s => configuration.GetSection("GenParker:MongoDbSettings").Bind(s));
+    services.Configure<KafkaMongoDbSettings>(s => configuration.GetSection("GenParker:KafkaMongoDbSettings").Bind(s));
+    services.Configure<GenParkerMongoDbSettings>(s => configuration.GetSection("GenParker:GenParkerMongoDbSettings").Bind(s));
+    services.Configure<SensorDataSettings>(s => configuration.GetSection("GenParker:SensorDataSettings").Bind(s));
   }
 }
