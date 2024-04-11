@@ -14,6 +14,7 @@ module.exports = function (api) {
           },
         ],
       ],
+      plugins: ["nativewind/babel"],
     };
   }
 
@@ -21,5 +22,6 @@ module.exports = function (api) {
     presets: [
       ['module:@react-native/babel-preset', { useTransformReactJSX: true }],
     ],
+    plugins: ["nativewind/babel"],
   };
 };
