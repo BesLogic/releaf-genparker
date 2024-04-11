@@ -18,6 +18,7 @@
     "baseUrl": ".",
     "paths": {
       "@gen-parker/shared-js/util": ["libs/shared-js/util/src/index.js"],
+      "@releaf-mobile/assets/*": ["apps/releaf/mobile/src/assets/*"],
       "generated/backend-types": ["libs/generated/backend-types/src/index.ts"]
     }
   },
