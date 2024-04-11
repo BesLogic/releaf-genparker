@@ -88,7 +88,8 @@
           "apps/releaf/mobile/src/favicon.ico",
           "apps/releaf/mobile/src/assets"
         ],
-        "webpackConfig": "apps/releaf/mobile/webpack.config.js"
+        "webpackConfig": "apps/releaf/mobile/webpack.config.js",
+        "postcssConfig": "apps/releaf/mobile/postcss.config.js"
       },
       "configurations": {
         "development": {
