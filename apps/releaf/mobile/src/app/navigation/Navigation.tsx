@@ -1,6 +1,5 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { Home } from '../home/Home';
-import { BoxDetails } from '../box-details/Box-Details';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { IconType, Icons } from './components/Icons';
@@ -12,7 +11,7 @@ import { Notifications } from '../notifications/Notifications';
 // Screen names
 const orderName = 'Order';
 const knowledgeName = 'Knowledge';
-const boxDetailsName = 'Box Details';
+const homeName = 'Home';
 const notificationsName = 'Notifications';
 const profileName = 'Profile';
 
@@ -21,7 +20,7 @@ export const Navigation = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName={boxDetailsName}
+        initialRouteName={homeName}
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             const rn = route.name;
@@ -32,7 +31,7 @@ export const Navigation = () => {
               type = IconType.StoreFront;
             } else if (rn === knowledgeName) {
               type = IconType.MenuBook;
-            } else if (rn === boxDetailsName) {
+            } else if (rn === homeName) {
               type = IconType.PottedPlant;
             } else if (rn === notificationsName) {
               type = IconType.Notification;
@@ -56,8 +55,8 @@ export const Navigation = () => {
           options={{ headerShown: false, tabBarLabel: '' }}
         />
         <Tab.Screen
-          name={boxDetailsName}
-          component={BoxDetails}
+          name={homeName}
+          component={Home}
           options={{ headerShown: false, tabBarLabel: '' }}
         />
         <Tab.Screen

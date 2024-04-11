@@ -1,4 +1,4 @@
-import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
+import { View, StyleSheet, StyleProp, ViewStyle, Text } from 'react-native';
 
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import StoreFront from '@releaf-mobile/assets/images/storefront.svg';
@@ -37,40 +37,55 @@ const styles = StyleSheet.create({
 export const Icons = (props: { type: IconType; isSelected: boolean }) => {
   let componentStyles: StyleProp<ViewStyle> = {};
 
+  let color = '#FFFFFF';
+
   if (props.isSelected) {
     componentStyles = [styles.circle, styles.center];
+    color = '#009959';
   } else {
     componentStyles = [styles.center];
+    color = '#FFFFFF';
   }
 
   if (props.type === IconType.StoreFront) {
     return (
       <View style={componentStyles}>
-        <StoreFront></StoreFront>
+        <StoreFront fill={color} />
+        <Text style={{ color: color }}>{!props.isSelected ? 'Order' : ''}</Text>
       </View>
     );
   } else if (props.type === IconType.Face) {
     return (
       <View style={componentStyles}>
-        <Face></Face>
+        <Face fill={color} />
+        <Text style={{ color: color }}>{!props.isSelected ? 'Me' : ''}</Text>
       </View>
     );
   } else if (props.type === IconType.MenuBook) {
     return (
       <View style={componentStyles}>
-        <MenuBook></MenuBook>
+        <MenuBook fill={color} />
+        <Text style={{ color: color }}>
+          {!props.isSelected ? 'Knowledge' : ''}
+        </Text>
       </View>
     );
   } else if (props.type === IconType.Notification) {
     return (
       <View style={componentStyles}>
-        <Notification></Notification>
+        <Notification fill={color} />
+        <Text style={{ color: color }}>
+          {!props.isSelected ? 'Notification' : ''}
+        </Text>
       </View>
     );
   } else {
     return (
       <View style={componentStyles}>
-        <PottedPlant></PottedPlant>
+        <PottedPlant fill={color} />
+        <Text style={{ color: color }}>
+          {!props.isSelected ? 'Details' : ''}
+        </Text>
       </View>
     );
   }
