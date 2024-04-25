@@ -68,7 +68,7 @@ public class BoxRepo : IBoxRepo
     var filter = Builders<BoxModel>.Filter.Eq(b => b.Id, model.Id);
 
     var result = GetCollection().ReplaceOne(filter, model);
-    if (result.ModifiedCount != 1)
+    if (result.MatchedCount != 1)
     {
       throw new BoxUpdateException(1, result.ModifiedCount);
     }

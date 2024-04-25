@@ -2,7 +2,6 @@
 using GenParker.Domain.DeviceSensorDatas;
 using GenParker.Domain.Repo;
 using GenParker.Events;
-using GenParker.Infrastructure.Models;
 using MediatR;
 
 namespace GenParker.Application.Commands;
@@ -81,7 +80,7 @@ public class ReduceNewSensorLogsCmdHandler : IRequestHandler<ReduceNewSensorLogs
   {
     if (data.SensorType != SensorTypes.BatteryChargePercent)
     {
-      SensorPositionCacheRepo.SetCachedTypeForPosition(data.PairingKey, data.Position, valueType);
+      SensorPositionCacheRepo.SetCachedTypeForUniquePosition(data.PairingKey, data.UniquePosition, valueType);
     }
   }
 
@@ -113,7 +112,7 @@ public class ReduceNewSensorLogsCmdHandler : IRequestHandler<ReduceNewSensorLogs
       case SensorTypes.SoilMoisturePercent:
         return DeviceSensorLogUpdated.ValueTypes.SoilMoisture;
       case SensorTypes.BatteryChargePercent:
-        return SelectBatteryChargeType(logVal.PairingKey, logVal.Position);
+        return SelectBatteryChargeType(logVal.PairingKey, logVal.UniquePosition);
       case SensorTypes.LuminosityLux:
         return DeviceSensorLogUpdated.ValueTypes.Luminosity;
       default:
@@ -121,9 +120,9 @@ public class ReduceNewSensorLogsCmdHandler : IRequestHandler<ReduceNewSensorLogs
     }
   }
 
-  private string SelectBatteryChargeType(string pairingKey, string position)
+  private string SelectBatteryChargeType(string pairingKey, UniquePosition uniquePosition)
   {
-    var lastType = SensorPositionCacheRepo.GetCachedTypeForPosition(pairingKey, position);
+    var lastType = SensorPositionCacheRepo.GetCachedTypeForPosition(pairingKey, uniquePosition.Position, uniquePosition);
     switch (lastType)
     {
       case DeviceSensorLogUpdated.ValueTypes.Luminosity:

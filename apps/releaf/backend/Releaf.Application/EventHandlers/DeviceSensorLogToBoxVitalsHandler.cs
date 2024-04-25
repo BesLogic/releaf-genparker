@@ -64,15 +64,23 @@ public class DeviceSensorLogToBoxVitalsHandler : INotificationHandler<DeviceSens
   // Error on sensor reading will return -99 or the temperature value in celcius
   private bool TryUpdateTemperature(BoxAggregate box, DeviceSensorLogUpdated notification)
   {
-    if (notification.ValueType != DeviceSensorLogUpdated.ValueTypes.Temperature) return false;
-
-    if (notification.Value <= -99)
+    if (notification.ValueType == DeviceSensorLogUpdated.ValueTypes.Temperature)
     {
-      return false;
+      if (notification.Value <= -99)
+      {
+        return false;
+      }
+
+      box.UpdateTemperatureVitals(notification.TimeStamp, notification.Value);
+      return true;
+    }
+    else if (notification.ValueType == DeviceSensorLogUpdated.ValueTypes.TemperatureBatteryCharge)
+    {
+      box.UpdateTemperatureBatteryVitals(notification.TimeStamp, notification.Value);
+      return true;
     }
 
-    box.UpdateTemperatureVitals(notification.TimeStamp, notification.Value);
-    return true;
+    return false;
   }
 
   // NOT TESTED YET
@@ -80,15 +88,23 @@ public class DeviceSensorLogToBoxVitalsHandler : INotificationHandler<DeviceSens
   // value is between 0 and 100
   private bool TryUpdateAirHumidity(BoxAggregate box, DeviceSensorLogUpdated notification)
   {
-    if (notification.ValueType != DeviceSensorLogUpdated.ValueTypes.AirHumidity) return false;
-
-    if (notification.Value < 0 || notification.Value > 100)
+    if (notification.ValueType == DeviceSensorLogUpdated.ValueTypes.AirHumidity)
     {
-      return false;
+      if (notification.Value < 0 || notification.Value > 100)
+      {
+        return false;
+      }
+
+      box.UpdateAirHumidityPercentVitals(notification.TimeStamp, notification.Value / 100d);
+      return true;
+    }
+    else if (notification.ValueType == DeviceSensorLogUpdated.ValueTypes.AirHumidityBatteryCharge)
+    {
+      box.UpdateAirHumidityBatteryVitals(notification.TimeStamp, notification.Value);
+      return true;
     }
 
-    box.UpdateAirHumidityPercentVitals(notification.TimeStamp, notification.Value / 100d);
-    return true;
+    return false;
   }
 
   // NOT TESTED YET
@@ -99,19 +115,27 @@ public class DeviceSensorLogToBoxVitalsHandler : INotificationHandler<DeviceSens
   // - SoilMoisture is Water under 370
   private bool TryUpdateMoisture(BoxAggregate box, DeviceSensorLogUpdated notification)
   {
-    if (notification.ValueType != DeviceSensorLogUpdated.ValueTypes.SoilMoisture) return false;
-
-    // Disconnected
-    if (SoilMoistureDisconnected(notification))
+    if (notification.ValueType == DeviceSensorLogUpdated.ValueTypes.SoilMoisture)
     {
-      return false;
+      // Disconnected
+      if (SoilMoistureDisconnected(notification))
+      {
+        return false;
+      }
+
+      var perthousand = 1000d - notification.Value;
+      var soilMoisturePercent = perthousand / 1000d;
+
+      box.UpdateSoilMoisturePercentVitals(notification.TimeStamp, soilMoisturePercent);
+      return true;
+    }
+    else if (notification.ValueType == DeviceSensorLogUpdated.ValueTypes.SoilMoistureBatteryCharge)
+    {
+      box.UpdateSoilMoistureBatteryVitals(notification.TimeStamp, notification.Value);
+      return true;
     }
 
-    var perthousand = 1000d - notification.Value;
-    var soilMoisturePercent = perthousand / 1000d;
-
-    box.UpdateSoilMoisturePercentVitals(notification.TimeStamp, soilMoisturePercent);
-    return true;
+    return false;
   }
 
   // NOT TESTED YET
@@ -126,10 +150,18 @@ public class DeviceSensorLogToBoxVitalsHandler : INotificationHandler<DeviceSens
   // - Value between 0 and 1023
   private bool TryUpdateLuminosity(BoxAggregate box, DeviceSensorLogUpdated notification)
   {
-    if (notification.ValueType != DeviceSensorLogUpdated.ValueTypes.Luminosity) return false;
+    if (notification.ValueType == DeviceSensorLogUpdated.ValueTypes.Luminosity)
+    {
+      var luminosityPercent = notification.Value / 1023d;
+      box.UpdateLuminosityPercentVitals(notification.TimeStamp, luminosityPercent);
+      return true;
+    }
+    else if (notification.ValueType == DeviceSensorLogUpdated.ValueTypes.LuminosityBatteryCharge)
+    {
+      box.UpdateLuminosityPercentVitals(notification.TimeStamp, notification.Value);
+      return true;
+    }
 
-    var luminosityPercent = notification.Value / 1023d;
-    box.UpdateLuminosityPercentVitals(notification.TimeStamp, luminosityPercent);
-    return true;
+    return false;
   }
 }

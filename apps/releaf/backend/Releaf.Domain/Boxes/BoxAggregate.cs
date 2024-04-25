@@ -26,7 +26,7 @@ public class BoxAggregate
     GerminationDay = germinationDay;
     Seeds = seeds;
     SeedsAverageInchHeight = averageInchHeight;
-    Vitals = boxVitals ?? new BoxVitals(BoxVitalValue.Default, BoxVitalValue.Default, BoxVitalValue.Default, BoxVitalValue.Default);
+    Vitals = boxVitals ?? BoxVitals.Default;
   }
 
   public BoxId Id { get; }
@@ -43,9 +43,19 @@ public class BoxAggregate
     Vitals.UpdateTemperature(Round4digits(temperature), timeStamp);
   }
 
+  public void UpdateTemperatureBatteryVitals(DateTime timeStamp, double temperatureBattery)
+  {
+    Vitals.UpdateTemperatureBattery(Round4digits(temperatureBattery), timeStamp);
+  }
+
   public void UpdateAirHumidityPercentVitals(DateTime timeStamp, double airHumidityPercent)
   {
     Vitals.UpdateAirHumidityPercent(Round4digits(airHumidityPercent), timeStamp);
+  }
+
+  public void UpdateAirHumidityBatteryVitals(DateTime timeStamp, double airHumidityBattery)
+  {
+    Vitals.UpdateAirHumidityBattery(Round4digits(airHumidityBattery), timeStamp);
   }
 
   public void UpdateSoilMoisturePercentVitals(DateTime timeStamp, double soilMoisturePercent)
@@ -53,9 +63,19 @@ public class BoxAggregate
     Vitals.UpdateSoilMoisturePercent(Round4digits(soilMoisturePercent), timeStamp);
   }
 
+  public void UpdateSoilMoistureBatteryVitals(DateTime timeStamp, double soilMoistureBattery)
+  {
+    Vitals.UpdateSoilMoistureBattery(Round4digits(soilMoistureBattery), timeStamp);
+  }
+
   public void UpdateLuminosityPercentVitals(DateTime timeStamp, double luminosityPercent)
   {
     Vitals.UpdateLuminosityPercent(Round4digits(luminosityPercent), timeStamp);
+  }
+
+  public void UpdateLuminosityBatteryVitals(DateTime timeStamp, double luminosityBattery)
+  {
+    Vitals.UpdateLuminosityBattery(Round4digits(luminosityBattery), timeStamp);
   }
 
   private double Round4digits(double value)
@@ -74,7 +94,6 @@ public class BoxAggregate
     var seeds = Enumerable.Range(0, BoxCount).Select(i => new Seed(Seed.NewName())).ToList();
 
     return new BoxAggregate(BoxId.Empty, new UserId(ownerId), treeDefinitionId, pairingKey, germinationDay, seeds, 0, BoxVitals.Default);
-
   }
 
   private static void EnsureBoxNotAlreadyPaired(IBoxRepo boxRepo, BoxPairingKey pairingKey)

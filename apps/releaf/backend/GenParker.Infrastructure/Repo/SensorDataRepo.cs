@@ -29,7 +29,7 @@ public class SensorDataRepo : ISensorDataRepo
       .Limit(SensorDataSettings.SyncBatchSize)
       .ToList();
 
-    return page.Select(d => d.ToSensorLog());
+    return page.Select(d => d.ToSensorLog()).ToList();
   }
 
   public void DeleteBatchById(IEnumerable<string> ids)
