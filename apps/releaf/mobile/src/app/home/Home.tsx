@@ -1,5 +1,5 @@
-import { View, Text, ScrollView } from 'react-native';
-import { TreeStateCard } from './components/Tree-state-card';
+import { View, Text } from 'react-native';
+import { TreeStateCard } from './components/TreeStateCard';
 
 export class TreeState {
   name = '';

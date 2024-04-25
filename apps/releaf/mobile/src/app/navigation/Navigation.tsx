@@ -1,21 +1,75 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Home } from '../home/Home';
-import { BoxDetails } from '../box-details/Box-Details';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-const Stack = createNativeStackNavigator();
+import { IconType, Icons } from './components/Icons';
+import { Order } from '../order/Order';
+import { Knowledge } from '../knowledge/Knowledge';
+import { Profile } from '../profile/Profile';
+import { Notifications } from '../notifications/Notifications';
 
+// Screen names
+const orderName = 'Order';
+const knowledgeName = 'Knowledge';
+const homeName = 'Home';
+const notificationsName = 'Notifications';
+const profileName = 'Profile';
+
+const Tab = createBottomTabNavigator();
 export const Navigation = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
+      <Tab.Navigator
+        initialRouteName={homeName}
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            const rn = route.name;
+
+            let type = IconType.StoreFront;
+
+            if (rn === orderName) {
+              type = IconType.StoreFront;
+            } else if (rn === knowledgeName) {
+              type = IconType.MenuBook;
+            } else if (rn === homeName) {
+              type = IconType.PottedPlant;
+            } else if (rn === notificationsName) {
+              type = IconType.Notification;
+            } else {
+              type = IconType.Face;
+            }
+
+            return <Icons type={type} isSelected={focused} />;
+          },
+          tabBarStyle: { height: 100, backgroundColor: '#009959' },
+        })}
       >
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Details" component={BoxDetails} />
-      </Stack.Navigator>
+        <Tab.Screen
+          name={orderName}
+          component={Order}
+          options={{ headerShown: false, tabBarLabel: '' }}
+        />
+        <Tab.Screen
+          name={knowledgeName}
+          component={Knowledge}
+          options={{ headerShown: false, tabBarLabel: '' }}
+        />
+        <Tab.Screen
+          name={homeName}
+          component={Home}
+          options={{ headerShown: false, tabBarLabel: '' }}
+        />
+        <Tab.Screen
+          name={notificationsName}
+          component={Notifications}
+          options={{ headerShown: false, tabBarLabel: '' }}
+        />
+        <Tab.Screen
+          name={profileName}
+          component={Profile}
+          options={{ headerShown: false, tabBarLabel: '' }}
+        />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 };
