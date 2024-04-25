@@ -1,9 +1,9 @@
 import { View, Text } from 'react-native';
 
-export const BoxDetails = () => {
+export const Notifications = () => {
   return (
     <View>
-      <Text>BoxDetails</Text>
+      <Text>Notifications</Text>
     </View>
   );
 };

@@ -1,6 +1,9 @@
 import { View, Text, StyleSheet } from 'react-native';
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import Thermostat from '@releaf-mobile/assets/images/device_thermostat.svg';
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import Water from '@releaf-mobile/assets/images/water_drop.svg';
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import Light from '@releaf-mobile/assets/images/light_mode.svg';
 
 

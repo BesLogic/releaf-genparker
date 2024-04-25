@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native';
-import { CircleTreeImage } from './Circle-tree-image';
-import { CircleVitalStatus } from './Circle-vital-status';
+import { CircleVitalStatus } from './CircleVitalStatus';
+import { CircleTreeImage } from './CircleTreeImage';
 
 const styles = StyleSheet.create({
   textColor: {
