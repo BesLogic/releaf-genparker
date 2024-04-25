@@ -1,17 +1,17 @@
-﻿using Releaf.Shared;
+using Releaf.Shared;
 
 namespace Releaf.Domain.Trees;
 
 public class TreeDefinitionId : ValueObject
 {
-  public TreeDefinitionId(Guid value)
+  public TreeDefinitionId(string value)
   {
     Value = value;
   }
 
-  public Guid Value { get; }
+  public string Value { get; }
 
-  public static TreeDefinitionId New() => new TreeDefinitionId(Guid.NewGuid());
+  public static TreeDefinitionId Empty() => new TreeDefinitionId(string.Empty);
 
   protected override IEnumerable<object> GetEqualityComponents()
   {

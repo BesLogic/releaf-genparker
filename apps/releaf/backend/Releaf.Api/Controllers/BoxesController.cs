@@ -1,37 +1,52 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Releaf.Application.Commands;
 using Releaf.Auth;
 using Releaf.Domain.Boxes;
 using Releaf.Domain.Repo;
+using Releaf.Domain.Trees;
 
 namespace Releaf.Backend.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class BoxsController : ControllerBase
+public class BoxesController : ControllerBase
 {
   private readonly ILogger<TreesController> _logger;
+  private readonly IMediator mediator;
   private readonly IBoxRepo boxRepo;
   private readonly ICurrentUser currentUser;
 
-  public BoxsController(
+  public BoxesController(
     ILogger<TreesController> logger,
+    IMediator mediator,
     IBoxRepo boxRepo,
     ICurrentUser currentUser)
   {
     _logger = logger;
+    this.mediator = mediator;
     this.boxRepo = boxRepo;
     this.currentUser = currentUser;
   }
 
+  [HttpPost("Initialize")]
+  public async Task<InitializeBoxCmdResult> Initialize(string ownerId, string treeDefinitionId, string uniquePairingKey)
+  {
+    var cmd = new InitializeBoxCommand(ownerId, new TreeDefinitionId(treeDefinitionId), new BoxPairingKey(uniquePairingKey));
+    var result = await mediator.Send(cmd);
+
+    return result;
+  }
+
   [HttpGet]
-  public IEnumerable<Guid> GetAll()
+  public IEnumerable<string> GetAll()
   {
     IEnumerable<BoxAggregate> boxes = boxRepo.GetBoxesForUser(currentUser.Id);
     return boxes.Select(t => t.Id.Value);
   }
 
   [HttpGet("{id}")]
-  public BoxAggregate GetBoxDetails(Guid id)
+  public BoxAggregate GetBoxDetails(string id)
   {
     return boxRepo.GetBox(currentUser.Id, new BoxId(id));
   }

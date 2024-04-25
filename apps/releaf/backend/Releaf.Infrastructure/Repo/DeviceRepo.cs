@@ -1,10 +1,9 @@
-using Releaf.Domain.Devices;
+using Releaf.Domain.Boxes;
 using Releaf.Domain.Repo;
 
 namespace Releaf.Infrastructure.Repo;
 
 public class DeviceRepo : IDeviceRepo
 {
-  public static readonly DeviceId DeviceId1 = new DeviceId("00-B0-D0-63-C2-26");
-  public static readonly DeviceId DeviceId2 = new DeviceId("A1-B0-A0-B1-26-C2");
+  public static readonly BoxPairingKey DeviceId = new BoxPairingKey("123456789012345678901234567890123456789012345678901234567890AAA3");
 }

@@ -4,9 +4,9 @@ using Releaf.Application.DI;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddGenParker();
+builder.Services.AddGenParker(builder.Configuration);
 builder.Services.AddReleafAuth();
-builder.Services.AddReleafApp();
+builder.Services.AddReleafApp(builder.Configuration);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

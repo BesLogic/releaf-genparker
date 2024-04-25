@@ -2,6 +2,8 @@ namespace Releaf.Domain.Boxes;
 
 public class BoxVitals
 {
+  public static BoxVitals Default { get; } = new BoxVitals(BoxVitalValue.Default, BoxVitalValue.Default, BoxVitalValue.Default, BoxVitalValue.Default);
+
   public BoxVitalValue Temperature { get; private set; } = new BoxVitalValue(default, default);
 
   public BoxVitalValue AirHumidityPercent { get; private set; } = new BoxVitalValue(default, default);
@@ -9,6 +11,18 @@ public class BoxVitals
   public BoxVitalValue SoilMoisturePercent { get; private set; } = new BoxVitalValue(default, default);
 
   public BoxVitalValue LuminosityPercent { get; private set; } = new BoxVitalValue(default, default);
+
+  public BoxVitals(
+    BoxVitalValue temperature,
+    BoxVitalValue airHumidityPercent,
+    BoxVitalValue soilMoisturePercent,
+    BoxVitalValue luminosityPercent)
+  {
+    Temperature = temperature;
+    AirHumidityPercent = airHumidityPercent;
+    SoilMoisturePercent = soilMoisturePercent;
+    LuminosityPercent = luminosityPercent;
+  }
 
   internal void UpdateTemperature(double temperature, DateTime timeStamp)
   {
@@ -32,6 +46,8 @@ public class BoxVitals
 
 public class BoxVitalValue
 {
+  public static BoxVitalValue Default { get; } = new BoxVitalValue(0, DateTime.MinValue);
+
   public BoxVitalValue(double value, DateTime lastUpdate)
   {
     Value = value;
@@ -40,4 +56,6 @@ public class BoxVitalValue
 
   public double Value { get; }
   public DateTime LastUpdate { get; }
+
+  public static BoxVitalValue Empty() => new BoxVitalValue(0, DateTime.MinValue);
 }

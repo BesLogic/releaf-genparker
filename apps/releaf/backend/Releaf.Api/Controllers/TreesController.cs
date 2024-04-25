@@ -18,15 +18,15 @@ public class TreesController : ControllerBase
   }
 
   [HttpGet]
-  public IDictionary<Guid, string> GetAll()
+  public IDictionary<string, string> GetAll(int page, int size)
   {
-    IEnumerable<TreeDefinitionAggregate> trees = treeRepo.GetAll();
+    IEnumerable<TreeDefinitionAggregate> trees = treeRepo.GetAll(page, size);
     return trees.ToDictionary(t => t.Id.Value, t => t.Name);
   }
 
   [HttpGet("{id}")]
-  public TreeDefinitionAggregate GetTreeDefinition(Guid id)
+  public TreeDefinitionAggregate GetTreeDefinition(string id)
   {
-    return treeRepo.GetOne(id);
+    return treeRepo.GetOne(new TreeDefinitionId(id));
   }
 }

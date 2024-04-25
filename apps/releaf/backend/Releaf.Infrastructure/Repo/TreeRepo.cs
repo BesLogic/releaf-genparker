@@ -1,62 +1,85 @@
+using Microsoft.Extensions.Options;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Driver;
 using Releaf.Domain.Repo;
 using Releaf.Domain.Trees;
+using Releaf.Infrastructure.Exceptions;
+using Releaf.Infrastructure.Models;
+using Releaf.Infrastructure.Settings;
 
 namespace Releaf.Infrastructure.Repo;
 
 public class TreeRepo : ITreeRepo
 {
-  public static readonly TreeDefinitionId PinCherryId = new TreeDefinitionId(new Guid("81eeb67d-f469-4b27-9625-a4bbfe261a8e"));
-  public static readonly TreeDefinitionId RedMapleId = new TreeDefinitionId(new Guid("a511da78-696f-4db9-b55c-10abb2650ee0"));
-  public static readonly TreeDefinitionId HuckleberryId = new TreeDefinitionId(new Guid("75ea29f6-b3cf-4f57-8a95-8bdf59153438"));
-  public static readonly TreeDefinitionId BigShellbarkHickoryId = new TreeDefinitionId(new Guid("694aca76-0d90-4e65-8829-4ab97451c632"));
-
-  public IEnumerable<TreeDefinitionAggregate> GetAll()
+  public static void InitClassMap()
   {
-    return new TreeDefinitionAggregate[]
+    BsonClassMap.RegisterClassMap<TreeDefinitionModel>(cm =>
     {
-      new TreeDefinitionAggregate(PinCherryId, "Pin Cherry", PinCherryInstructions),
-      new TreeDefinitionAggregate(RedMapleId, "Red Maple", RedMapleInstructions),
-      new TreeDefinitionAggregate(HuckleberryId, "Huckleberry", HuckleberryInstructions),
-      new TreeDefinitionAggregate(BigShellbarkHickoryId, "Big Shellbark Hickory", BigShellbarkHickoryInstructions),
-    };
+      cm.AutoMap();
+      cm.MapCreator(t => new TreeDefinitionModel(t.Name, t.Id, t.EstimatedGerminationDurationDays, t.Instructions));
+    });
   }
 
-  public TreeDefinitionAggregate GetOne(Guid id)
+  private IOptions<MongoDbSettings> Options { get; }
+
+  public TreeRepo(IOptions<MongoDbSettings> options)
   {
-    return GetAll().Where(t => t.Id.Value == id).First();
+    Options = options;
   }
 
-  private static TreeInstructionAuthor NicoAuthor = new TreeInstructionAuthor("Nicolas");
+  public IEnumerable<TreeDefinitionAggregate> GetAll(int page, int pageSize)
+  {
+    if (page < 1 || pageSize < 1)
+    {
+      throw new InvalidPagingException();
+    }
 
-  private static TreeInstructionAuthor RaphAuthor = new TreeInstructionAuthor("Raphael");
+    var filter = Builders<TreeDefinitionModel>.Filter.Empty;
+    var treeDefinitionsModels =
+      GetCollection()
+        .Find(filter)
+          .Skip((page - 1) * pageSize)
+          .Limit(pageSize)
+        .ToList();
 
-  private static TreeInstructionAuthor AndrewAuthor = new TreeInstructionAuthor("Andrew");
+    return treeDefinitionsModels.Select(m => m.ToTreeDefinitionAggregate()).ToList();
+  }
 
-  private static TreeInstructionStep[] TreeInstructionSteps =
-  [
-    new TreeInstructionStep("Bla bla bla bla bla bla bla bla bla bla bla", new Uri("https://upload.wikimedia.org/wikipedia/commons/3/36/PaulowniaPrune.jpg"), "Tree Fork"),
-    new TreeInstructionStep("Bla bla bla bla bla bla bla bla bla bla bla", new Uri("https://upload.wikimedia.org/wikipedia/commons/3/36/PaulowniaPrune.jpg"), "Tree Fork"),
-    new TreeInstructionStep("Bla bla bla bla bla bla bla bla bla bla bla", new Uri("https://upload.wikimedia.org/wikipedia/commons/3/36/PaulowniaPrune.jpg"), "Tree Fork"),
-  ];
+  public TreeDefinitionAggregate GetOne(TreeDefinitionId id)
+  {
+    var filter = Builders<TreeDefinitionModel>.Filter.Eq(m => m.Id, new MongoDB.Bson.ObjectId(id.Value));
+    var treeDefinitionModel = GetCollection().Find(filter).Limit(1).FirstOrDefault();
+    return treeDefinitionModel.ToTreeDefinitionAggregate();
+  }
 
-  private static TreeInstruction[] PinCherryInstructions =
-  [
-    new TreeInstruction("Outdoor Planting Manual", new DateTime(2021, 03, 10), NicoAuthor, TreeInstructionSteps),
-    new TreeInstruction("Seeding Manual", new DateTime(2022, 07, 31), NicoAuthor, TreeInstructionSteps),
-  ];
+  public TreeDefinitionId Create(TreeDefinitionAggregate treeDefinition)
+  {
+    var model = TreeDefinitionModel.From(treeDefinition);
+    GetCollection().InsertOne(model);
+    return new TreeDefinitionId(model.Id.ToString());
+  }
 
-  private static TreeInstruction[] RedMapleInstructions =
-  [
-    new TreeInstruction("Seeding Manual", new DateTime(2023, 01, 11), RaphAuthor, TreeInstructionSteps),
-  ];
+  public long Count()
+  {
+    var filter = Builders<TreeDefinitionModel>.Filter.Empty;
+    return GetCollection().Find(filter).CountDocuments();
+  }
 
-  private static TreeInstruction[] HuckleberryInstructions =
-  [
-    new TreeInstruction("Seeding Manual", new DateTime(2023, 10, 13), AndrewAuthor, TreeInstructionSteps),
-  ];
+  public bool Exists(TreeDefinitionId id)
+  {
+    if (ObjectId.TryParse(id.Value, out ObjectId objId))
+    {
+      var filter = Builders<TreeDefinitionModel>.Filter.Eq(t => t.Id, objId);
+      return GetCollection().Find(filter).CountDocuments() > 0;
+    }
 
-  private static TreeInstruction[] BigShellbarkHickoryInstructions =
-  [
-    new TreeInstruction("Seeding Manual", new DateTime(2024, 02, 29), RaphAuthor, TreeInstructionSteps),
-  ];
+    return false;
+  }
+
+  private IMongoCollection<TreeDefinitionModel> GetCollection()
+  {
+    var client = new MongoClient(Options.Value.ConnectionString);
+    return client.GetDatabase(Options.Value.DbName).GetCollection<TreeDefinitionModel>("tree_definitions");
+  }
 }
