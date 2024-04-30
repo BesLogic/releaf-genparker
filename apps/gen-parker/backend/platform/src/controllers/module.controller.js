@@ -9,6 +9,8 @@ const kafkaClient = process.env.SERVER
   : FakeKafkaClient;
 
 kafkaClient.connectProducer(undefined);
+const BATTERY_SENSOR_TYPE = 13;
+
 const addSensorData = async (req) => {
   const mac = req.header('Mac');
   const key = req.header('Token');
@@ -24,14 +26,25 @@ const addSensorData = async (req) => {
     };
   });
 
+  const dataWithBattery = data.reduce((acc, x, i) => {
+    acc.push(x);
+    acc.push({ 
+      val: Number(((i / data.length) * 100).toFixed(2)),
+      senseur: BATTERY_SENSOR_TYPE,
+      position: x.position 
+    });
+    return acc;
+  }, []);
+
   console.log(req.body)
   const currentDate = Date.now();
   await kafkaClient.publishMessage(
-    data.map((x) => ({
+    dataWithBattery.map((x) => ({
       key: `${mac}~${key}`,
       value: JSON.stringify({
         value: x.val,
         sensor: x.senseur,
+        position: x.position,
         date: currentDate,
         mac,
         key
