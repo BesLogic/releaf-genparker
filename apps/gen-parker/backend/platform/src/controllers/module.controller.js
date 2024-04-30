@@ -26,13 +26,20 @@ const addSensorData = async (req) => {
     };
   });
 
+  // TODO: To be removed
+  // This is a temporary fix to add battery data to the data sent by the sensors
   const dataWithBattery = data.reduce((acc, x, i) => {
-    acc.push(x);
-    acc.push({ 
-      val: Number(((i / data.length) * 100).toFixed(2)),
-      senseur: BATTERY_SENSOR_TYPE,
-      position: x.position 
-    });
+    if (acc.find((sensor) => sensor.position === x.position)) {
+      acc.push(x)
+    } else {
+      acc.push(x);
+      acc.push({ 
+        val: Number(((i / data.length) * 100).toFixed(2)),
+        senseur: BATTERY_SENSOR_TYPE,
+        position: x.position 
+      });
+    }
+    
     return acc;
   }, []);
 
