@@ -9,6 +9,18 @@
     "react": "*",
     "react-native": "*",
     "react-native-svg": "*",
-    "metro-config": "*"
-  }
+    "metro-config": "*",
+    "react-native-svg-transformer": "*",
+    "@react-navigation/native": "*",
+    "@react-navigation/bottom-tabs": "*",   
+    "react-native-gesture-handler": "*",
+    "react-native-reanimated": "*",
+    "react-native-safe-area-context": "*",
+    "react-native-screens": "*",
+    "react-dom": "*",
+    "@nx/react": "*",
+    "nativewind": "*",
+    "@nx/webpack": "*"
+  },
+  "devDependencies": {}
 }
