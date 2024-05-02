@@ -43,14 +43,13 @@ public class DeviceSensorLogToBoxVitalsHandler : INotificationHandler<DeviceSens
     if (IsPaired(box))
     {
       bool updated = false;
-      updated |= TryUpdateTemperature(box, notification);
-      updated |= TryUpdateAirHumidity(box, notification);
-      updated |= TryUpdateMoisture(box, notification);
-      updated |= TryUpdateLuminosity(box, notification);
+      updated |= TryUpdateTemperature(box!, notification);
+      updated |= TryUpdateMoisture(box!, notification);
+      updated |= TryUpdateLuminosity(box!, notification);
 
       if (updated)
       {
-        BoxRepo.Update(box);
+        BoxRepo.Update(box!);
       }
     }
   }
@@ -77,30 +76,6 @@ public class DeviceSensorLogToBoxVitalsHandler : INotificationHandler<DeviceSens
     else if (notification.ValueType == DeviceSensorLogUpdated.ValueTypes.TemperatureBatteryCharge)
     {
       box.UpdateTemperatureBatteryVitals(notification.TimeStamp, notification.Value);
-      return true;
-    }
-
-    return false;
-  }
-
-  // NOT TESTED YET
-  // https://www.circuitbasics.com/how-to-set-up-the-dht11-humidity-sensor-on-an-arduino/
-  // value is between 0 and 100
-  private bool TryUpdateAirHumidity(BoxAggregate box, DeviceSensorLogUpdated notification)
-  {
-    if (notification.ValueType == DeviceSensorLogUpdated.ValueTypes.AirHumidity)
-    {
-      if (notification.Value < 0 || notification.Value > 100)
-      {
-        return false;
-      }
-
-      box.UpdateAirHumidityPercentVitals(notification.TimeStamp, notification.Value / 100d);
-      return true;
-    }
-    else if (notification.ValueType == DeviceSensorLogUpdated.ValueTypes.AirHumidityBatteryCharge)
-    {
-      box.UpdateAirHumidityBatteryVitals(notification.TimeStamp, notification.Value);
       return true;
     }
 
@@ -158,7 +133,7 @@ public class DeviceSensorLogToBoxVitalsHandler : INotificationHandler<DeviceSens
     }
     else if (notification.ValueType == DeviceSensorLogUpdated.ValueTypes.LuminosityBatteryCharge)
     {
-      box.UpdateLuminosityPercentVitals(notification.TimeStamp, notification.Value);
+      box.UpdateLuminosityBatteryVitals(notification.TimeStamp, notification.Value);
       return true;
     }
 

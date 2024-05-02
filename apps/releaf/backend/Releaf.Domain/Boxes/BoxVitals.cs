@@ -2,11 +2,9 @@ namespace Releaf.Domain.Boxes;
 
 public class BoxVitals
 {
-  public static BoxVitals Default { get; } = new BoxVitals(BoxVitalValue.Default, BoxVitalValue.Default, BoxVitalValue.Default, BoxVitalValue.Default);
+  public static BoxVitals Default { get; } = new BoxVitals(BoxVitalValue.Default, BoxVitalValue.Default, BoxVitalValue.Default);
 
   public BoxVitalValue Temperature { get; private set; } = BoxVitalValue.Default;
-
-  public BoxVitalValue AirHumidityPercent { get; private set; } = BoxVitalValue.Default;
 
   public BoxVitalValue SoilMoisturePercent { get; private set; } = BoxVitalValue.Default;
 
@@ -14,12 +12,10 @@ public class BoxVitals
 
   public BoxVitals(
     BoxVitalValue temperature,
-    BoxVitalValue airHumidityPercent,
     BoxVitalValue soilMoisturePercent,
     BoxVitalValue luminosityPercent)
   {
     Temperature = temperature ?? BoxVitalValue.Default;
-    AirHumidityPercent = airHumidityPercent ?? BoxVitalValue.Default;
     SoilMoisturePercent = soilMoisturePercent ?? BoxVitalValue.Default;
     LuminosityPercent = luminosityPercent ?? BoxVitalValue.Default;
   }
@@ -32,16 +28,6 @@ public class BoxVitals
   internal void UpdateTemperatureBattery(double batteryLevel, DateTime timeStamp)
   {
     Temperature = Temperature.ChangeBatteryLevel(batteryLevel, timeStamp);
-  }
-
-  internal void UpdateAirHumidityPercent(double airHumidityPercent, DateTime timeStamp)
-  {
-    AirHumidityPercent = AirHumidityPercent.ChangeValue(airHumidityPercent, timeStamp);
-  }
-
-  internal void UpdateAirHumidityBattery(double batteryLevel, DateTime timeStamp)
-  {
-    AirHumidityPercent = AirHumidityPercent.ChangeBatteryLevel(batteryLevel, timeStamp);
   }
 
   internal void UpdateSoilMoisturePercent(double soilMoisturePercent, DateTime timeStamp)

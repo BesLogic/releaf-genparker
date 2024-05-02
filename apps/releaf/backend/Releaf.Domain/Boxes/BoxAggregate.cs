@@ -48,16 +48,6 @@ public class BoxAggregate
     Vitals.UpdateTemperatureBattery(Round4digits(temperatureBattery), timeStamp);
   }
 
-  public void UpdateAirHumidityPercentVitals(DateTime timeStamp, double airHumidityPercent)
-  {
-    Vitals.UpdateAirHumidityPercent(Round4digits(airHumidityPercent), timeStamp);
-  }
-
-  public void UpdateAirHumidityBatteryVitals(DateTime timeStamp, double airHumidityBattery)
-  {
-    Vitals.UpdateAirHumidityBattery(Round4digits(airHumidityBattery), timeStamp);
-  }
-
   public void UpdateSoilMoisturePercentVitals(DateTime timeStamp, double soilMoisturePercent)
   {
     Vitals.UpdateSoilMoisturePercent(Round4digits(soilMoisturePercent), timeStamp);
