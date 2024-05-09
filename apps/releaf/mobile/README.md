@@ -3,9 +3,16 @@
 ## Android
 
 1. Android studio installed
+   1. Download Android 34
+   2. Download the UpsideDownCake API
 2. Ensure you have JAVA_HOME in your environment variables
-3. Ensure you have a place for the ANDROID_HOME && ANDROID_SDK_ROOT in the environment variables
+  1. Make sure the path to java executable is in your environment variable
+  2. Same path should be under the JAVA_HOME key
+3. Ensure you have a place for the ANDROID_HOME in the environment variables
+   1. The ANDROID_HOME value can be found in the sdk manager SDK location
 4. Ensure you have adb installed
+   1. Setup the path to the adb executable (C:/.../Android/Sdk/platform-tools)
+   2. Running the command `adb` should return a list of options
 5. Setup your android phone
    1. Set the developer mode
    2. Allow usb debugging
