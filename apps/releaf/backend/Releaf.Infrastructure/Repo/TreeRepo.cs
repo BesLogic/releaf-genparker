@@ -55,7 +55,7 @@ public class TreeRepo : ITreeRepo
 
   public TreeDefinitionId Create(TreeDefinitionAggregate treeDefinition)
   {
-    var model = TreeDefinitionModel.From(treeDefinition);
+    var model = TreeDefinitionModel.FromNew(treeDefinition);
     GetCollection().InsertOne(model);
     return new TreeDefinitionId(model.Id.ToString());
   }

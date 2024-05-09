@@ -1,20 +1,18 @@
 using GenParker.Events;
 using MediatR;
-using MongoDB.Driver.Core.Operations;
 using Releaf.Domain.Boxes;
 using Releaf.Domain.Repo;
-using Releaf.Infrastructure.Repo;
 
 namespace Releaf.Application.EventHandlers;
 
-public class DeviceSensorLogUpdatedHandler : INotificationHandler<DeviceSensorLogUpdated>
+public class DeviceSensorLogToBoxVitalsHandler : INotificationHandler<DeviceSensorLogUpdated>
 {
   public double Temperature { get; }
   public double AirHumidity { get; }
   public double SoilMoisture { get; }
   public double Luminosity { get; }
 
-  public DeviceSensorLogUpdatedHandler(IBoxRepo boxRepo)
+  public DeviceSensorLogToBoxVitalsHandler(IBoxRepo boxRepo)
   {
     BoxRepo = boxRepo;
   }
@@ -45,14 +43,13 @@ public class DeviceSensorLogUpdatedHandler : INotificationHandler<DeviceSensorLo
     if (IsPaired(box))
     {
       bool updated = false;
-      updated |= TryUpdateTemperature(box, notification);
-      updated |= TryUpdateAirHumidity(box, notification);
-      updated |= TryUpdateMoisture(box, notification);
-      updated |= TryUpdateLuminosity(box, notification);
+      updated |= TryUpdateTemperature(box!, notification);
+      updated |= TryUpdateMoisture(box!, notification);
+      updated |= TryUpdateLuminosity(box!, notification);
 
       if (updated)
       {
-        BoxRepo.Update(box);
+        BoxRepo.Update(box!);
       }
     }
   }
@@ -66,31 +63,23 @@ public class DeviceSensorLogUpdatedHandler : INotificationHandler<DeviceSensorLo
   // Error on sensor reading will return -99 or the temperature value in celcius
   private bool TryUpdateTemperature(BoxAggregate box, DeviceSensorLogUpdated notification)
   {
-    if (notification.ValueType != DeviceSensorLogUpdated.ValueTypes.Temperature) return false;
-
-    if (notification.Value <= -99)
+    if (notification.ValueType == DeviceSensorLogUpdated.ValueTypes.Temperature)
     {
-      return false;
+      if (notification.Value <= -99)
+      {
+        return false;
+      }
+
+      box.UpdateTemperatureVitals(notification.TimeStamp, notification.Value);
+      return true;
+    }
+    else if (notification.ValueType == DeviceSensorLogUpdated.ValueTypes.TemperatureBatteryCharge)
+    {
+      box.UpdateTemperatureBatteryVitals(notification.TimeStamp, notification.Value);
+      return true;
     }
 
-    box.UpdateTemperatureVitals(notification.TimeStamp, notification.Value);
-    return true;
-  }
-
-  // NOT TESTED YET
-  // https://www.circuitbasics.com/how-to-set-up-the-dht11-humidity-sensor-on-an-arduino/
-  // value is between 0 and 100
-  private bool TryUpdateAirHumidity(BoxAggregate box, DeviceSensorLogUpdated notification)
-  {
-    if (notification.ValueType != DeviceSensorLogUpdated.ValueTypes.AirHumidity) return false;
-
-    if (notification.Value < 0 || notification.Value > 100)
-    {
-      return false;
-    }
-
-    box.UpdateAirHumidityPercentVitals(notification.TimeStamp, notification.Value / 100d);
-    return true;
+    return false;
   }
 
   // NOT TESTED YET
@@ -101,19 +90,27 @@ public class DeviceSensorLogUpdatedHandler : INotificationHandler<DeviceSensorLo
   // - SoilMoisture is Water under 370
   private bool TryUpdateMoisture(BoxAggregate box, DeviceSensorLogUpdated notification)
   {
-    if (notification.ValueType != DeviceSensorLogUpdated.ValueTypes.SoilMoisture) return false;
-
-    // Disconnected
-    if (SoilMoistureDisconnected(notification))
+    if (notification.ValueType == DeviceSensorLogUpdated.ValueTypes.SoilMoisture)
     {
-      return false;
+      // Disconnected
+      if (SoilMoistureDisconnected(notification))
+      {
+        return false;
+      }
+
+      var perthousand = 1000d - notification.Value;
+      var soilMoisturePercent = perthousand / 1000d;
+
+      box.UpdateSoilMoisturePercentVitals(notification.TimeStamp, soilMoisturePercent);
+      return true;
+    }
+    else if (notification.ValueType == DeviceSensorLogUpdated.ValueTypes.SoilMoistureBatteryCharge)
+    {
+      box.UpdateSoilMoistureBatteryVitals(notification.TimeStamp, notification.Value);
+      return true;
     }
 
-    var perthousand = 1000d - notification.Value;
-    var soilMoisturePercent = perthousand / 1000d;
-
-    box.UpdateSoilMoisturePercentVitals(notification.TimeStamp, soilMoisturePercent);
-    return true;
+    return false;
   }
 
   // NOT TESTED YET
@@ -128,10 +125,18 @@ public class DeviceSensorLogUpdatedHandler : INotificationHandler<DeviceSensorLo
   // - Value between 0 and 1023
   private bool TryUpdateLuminosity(BoxAggregate box, DeviceSensorLogUpdated notification)
   {
-    if (notification.ValueType != DeviceSensorLogUpdated.ValueTypes.Luminosity) return false;
+    if (notification.ValueType == DeviceSensorLogUpdated.ValueTypes.Luminosity)
+    {
+      var luminosityPercent = notification.Value / 1023d;
+      box.UpdateLuminosityPercentVitals(notification.TimeStamp, luminosityPercent);
+      return true;
+    }
+    else if (notification.ValueType == DeviceSensorLogUpdated.ValueTypes.LuminosityBatteryCharge)
+    {
+      box.UpdateLuminosityBatteryVitals(notification.TimeStamp, notification.Value);
+      return true;
+    }
 
-    var luminosityPercent = notification.Value / 1023d;
-    box.UpdateLuminosityPercentVitals(notification.TimeStamp, luminosityPercent);
-    return true;
+    return false;
   }
 }

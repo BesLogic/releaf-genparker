@@ -8,6 +8,7 @@ public class DeviceSensorData
     string macAddress,
     DateTime timeStamp,
     SensorTypes sensorType,
+    UniquePosition uniquePosition,
     double value)
   {
     Id = id;
@@ -15,6 +16,7 @@ public class DeviceSensorData
     MacAddress = macAddress;
     TimeStamp = timeStamp;
     SensorType = sensorType;
+    UniquePosition = uniquePosition;
     Value = value;
   }
 
@@ -23,29 +25,30 @@ public class DeviceSensorData
   public string MacAddress { get; }
   public DateTime TimeStamp { get; }
   public SensorTypes SensorType { get; }
+  public UniquePosition UniquePosition { get; }
   public double Value { get; }
 
   public string UniqueDeviceSensorKey()
   {
-    return $"{PairingKey}{SensorType}";
+    return $"{PairingKey}-{UniquePosition}-{SensorType}";
   }
 }
 
 public enum SensorTypes : int
 {
   None = 0,
-  AirTemperatureC = 1,
-  AirHumidityPercent = 2,
+  AirTemperatureC = 1,//o
+  AirHumidityPercent = 2,//2
   COppm = 3,
   PropanePpm = 4,
   WaterLevelMm = 5,
   WaterLevelPh = 6,
-  SoilMoisturePercent = 7,
+  SoilMoisturePercent = 7,//o
   TemperatureC = 8,
   UniversalRawData = 9,
   DistanceCm = 10,
   TemperatureLiquidF = 11,
   AlertBool = 12,
   BatteryChargePercent = 13,
-  LuminosityLux = 14
+  LuminosityLux = 14 //o
 }

@@ -11,12 +11,14 @@ namespace GenParker.Infrastructure.Repo;
 
 public class SensorDataRepo : ISensorDataRepo
 {
-  public SensorDataRepo(IOptions<MongoDbSettings> options)
+  public SensorDataRepo(IOptions<KafkaMongoDbSettings> mongoDbSettings, IOptions<SensorDataSettings> sensorDataSettings)
   {
-    Options = options;
+    MongoDbSettings = mongoDbSettings.Value;
+    SensorDataSettings = sensorDataSettings.Value;
   }
 
-  private IOptions<MongoDbSettings> Options { get; }
+  private KafkaMongoDbSettings MongoDbSettings { get; }
+  private SensorDataSettings SensorDataSettings { get; }
 
   public IEnumerable<DeviceSensorData> GetNextBatch()
   {
@@ -24,10 +26,10 @@ public class SensorDataRepo : ISensorDataRepo
     var page = dataCollection
       .Find(Builders<Data>.Filter.Empty)
       .SortBy(d => d.date)
-      .Limit(10)
+      .Limit(SensorDataSettings.SyncBatchSize)
       .ToList();
 
-    return page.Select(d => d.ToSensorLog());
+    return page.Select(d => d.ToSensorLog()).ToList();
   }
 
   public void DeleteBatchById(IEnumerable<string> ids)
@@ -51,7 +53,7 @@ public class SensorDataRepo : ISensorDataRepo
 
   private IMongoCollection<Data> GetDataCollection()
   {
-    var client = new MongoClient(Options.Value.ConnectionString);
-    return client.GetDatabase(Options.Value.DbName).GetCollection<Data>("data");
+    var client = new MongoClient(MongoDbSettings.ConnectionString);
+    return client.GetDatabase(MongoDbSettings.DbName).GetCollection<Data>("data");
   }
 }

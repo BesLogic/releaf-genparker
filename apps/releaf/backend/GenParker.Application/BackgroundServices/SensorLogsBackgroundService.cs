@@ -1,21 +1,29 @@
+using Amazon.Runtime.Internal.Util;
 using GenParker.Application.Commands;
+using GenParker.Infrastructure.Settings;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace GenParker.Application.BackgroundServices;
 
 public class SensorLogsBackgroundService : BackgroundService
 {
-  public SensorLogsBackgroundService(ILogger<SensorLogsBackgroundService> logger, IServiceProvider serviceProvider)
+  public SensorLogsBackgroundService(
+    ILogger<SensorLogsBackgroundService> logger,
+    IServiceProvider serviceProvider,
+    IOptions<SensorDataSettings> sensorDataSettingsOptions)
   {
     Logger = logger;
     ServiceProvider = serviceProvider;
+    SensorDataSettingsOptions = sensorDataSettingsOptions;
   }
 
-  public ILogger<SensorLogsBackgroundService> Logger { get; }
-  public IServiceProvider ServiceProvider { get; }
+  private ILogger<SensorLogsBackgroundService> Logger { get; }
+  private IServiceProvider ServiceProvider { get; }
+  private IOptions<SensorDataSettings> SensorDataSettingsOptions { get; }
 
   protected override async Task ExecuteAsync(CancellationToken stoppingToken)
   {
@@ -31,7 +39,8 @@ public class SensorLogsBackgroundService : BackgroundService
       }
       finally
       {
-        await Task.Delay((int)TimeSpan.FromMinutes(15).TotalMilliseconds);
+        var settings = SensorDataSettingsOptions.Value;
+        await Task.Delay((int)TimeSpan.FromSeconds(settings.SyncSpeedInSecs).TotalMilliseconds);
       }
     }
   }
@@ -42,6 +51,8 @@ public class SensorLogsBackgroundService : BackgroundService
     // BackgroundService should create a new scope every 15 mins when running
     using var scope = ServiceProvider.CreateScope();
     var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+
+    Logger.LogInformation("SyncSensorData (cmd: ReduceNewSensorLogsCmd)");
     mediator.Send(new ReduceNewSensorLogsCmd());
   }
 }
