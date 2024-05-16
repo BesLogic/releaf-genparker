@@ -8,7 +8,8 @@
     "publish-docker": {
       "executor": "@nx-tools/nx-container:build",
       "options": {
-        "push": true
+        "push": true,
+        "context": "apps/releaf/backend"
       },
       "configurations": {
         "production": {
