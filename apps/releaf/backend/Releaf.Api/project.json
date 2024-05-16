@@ -20,7 +20,8 @@
     "publish-docker": {
       "executor": "@nx-tools/nx-container:build",
       "options": {
-        "push": true
+        "push": true,
+        "file": ".."
       },
       "configurations": {
         "production": {
