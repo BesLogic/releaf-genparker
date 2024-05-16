@@ -3,11 +3,10 @@ services:
   backend:
     image: ghcr.io/beslogic/releaf_backend_philantropy:latest
     restart: always
-    entrypoint: [ '/bin/sh', '-c', '\
-      export GenParker__KafkaMongoDbSettings__ConnectionString=$$(cat /run/secrets/releaf-genparker-mongodb) ;\
-      export GenParker__GenParkerMongoDbSettings__ConnectionString=$$(cat /run/secrets/releaf-genparker-mongodb) ;\
-      export Releaf__MongoDbSettings__ConnectionString=$$(cat /run/secrets/releaf-genparker-mongodb) ;\
-      source /entrypoint.sh' ]
+    environment:
+      - GenParker__KafkaMongoDbSettings__ConnectionString=/run/secrets/releaf-genparker-mongodb
+      - GenParker__GenParkerMongoDbSettings__ConnectionString=/run/secrets/releaf-genparker-mongodb
+      - Releaf__MongoDbSettings__ConnectionString=/run/secrets/releaf-genparker-mongodb
     secrets:
       - releaf-genparker-mongodb
 
