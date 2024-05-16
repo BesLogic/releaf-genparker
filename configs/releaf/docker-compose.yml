@@ -1,0 +1,4 @@
+services:
+  backend:
+    image: ghcr.io/beslogic/releaf_backend_philantropy:latest
+    restart: always
