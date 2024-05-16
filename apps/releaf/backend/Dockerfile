@@ -9,6 +9,7 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
+
 COPY ["Releaf.Api/Releaf.Api.csproj", "Releaf.Api/"]
 COPY ["GenParker.Application/GenParker.Application.csproj", "GenParker.Application/"]
 COPY ["GenParker.Domain/GenParker.Domain.csproj", "GenParker.Domain/"]
