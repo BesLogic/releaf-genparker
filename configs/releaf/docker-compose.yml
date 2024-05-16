@@ -3,3 +3,13 @@ services:
   backend:
     image: ghcr.io/beslogic/releaf_backend_philantropy:latest
     restart: always
+    environment:
+      - GenParker__KafkaMongoDbSettings__ConnectionString=/run/secrets/releaf-genparker-mongodb
+      - GenParker__GenParkerMongoDbSettings__ConnectionString=/run/secrets/releaf-genparker-mongodb
+      - Releaf__MongoDbSettings__ConnectionString=/run/secrets/releaf-genparker-mongodb
+    secrets:
+      - releaf-genparker-mongodb
+
+secrets:
+    releaf-genparker-mongodb:
+      external: true
