@@ -21,7 +21,7 @@
       "executor": "@nx-tools/nx-container:build",
       "options": {
         "push": true,
-        "file": ".."
+        "file": "../Dockerfile"
       },
       "configurations": {
         "production": {
