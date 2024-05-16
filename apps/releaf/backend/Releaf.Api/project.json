@@ -12,8 +12,23 @@
       "options": {
         "output": "libs/generated/backend-swagger/swagger.json"
       },
-      "dependsOn": [ "build" ]
-
+      "dependsOn": [
+        "build"
+      ]
+    },
+    "setup": {},
+    "publish-docker": {
+      "executor": "@nx-tools/nx-container:build",
+      "options": {
+        "push": true
+      },
+      "configurations": {
+        "production": {
+          "tags": [
+            "ghcr.io/beslogic/releaf_backend_philantropy:latest"
+          ]
+        }
+      }
     }
   },
   "tags": []
