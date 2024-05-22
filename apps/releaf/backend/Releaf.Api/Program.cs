@@ -2,7 +2,7 @@ using GenParker.Application.DI;
 using Releaf.Application.DI;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Configuration.AddKeyPerFile(directoryPath: "/run/secrets", optional: true);
+//builder.Configuration.AddKeyPerFile(directoryPath: "/run/secrets", optional: true);
 Console.WriteLine(builder.Configuration.GetValue<string>("releaf-genparker-mongodb"));
 
 // Add services to the container.
