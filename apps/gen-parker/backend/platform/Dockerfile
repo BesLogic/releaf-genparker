@@ -5,5 +5,4 @@ WORKDIR /usr/src/app
 # Adding node_modules
 COPY /dist/apps/gen-parker/backend/platform .
 
-ENTRYPOINT ["tail", "-f", "/dev/null"]
-# CMD ["node", "./main.js"]
+CMD ["node", "./main.js"]

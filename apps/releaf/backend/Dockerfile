@@ -32,4 +32,6 @@ RUN dotnet publish "./Releaf.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Releaf.Api.dll"]
+# ENTRYPOINT ["dotnet", "Releaf.Api.dll"]
+
+ENTRYPOINT ["tail", "-f", "/dev/null"]
