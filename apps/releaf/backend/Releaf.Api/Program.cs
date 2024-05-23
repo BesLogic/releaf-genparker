@@ -2,10 +2,7 @@ using GenParker.Application.DI;
 using Releaf.Application.DI;
 
 var builder = WebApplication.CreateBuilder(args);
-if (builder.Environment.IsProduction())
-{
-  builder.Configuration.AddKeyPerFile(directoryPath: "/run/secrets", optional: false);
-}
+builder.Configuration.AddKeyPerFile(directoryPath: "/run/secrets", optional: true);
 
 // Add services to the container.
 builder.Services.AddGenParker(builder.Configuration);
