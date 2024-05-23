@@ -1,5 +1,6 @@
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { TreeStateCard } from './components/TreeStateCard';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export class TreeState {
   name = '';
@@ -31,27 +32,31 @@ const trees = [
 
 export const Home = () => {
   return (
-    <View style={{ backgroundColor: '#ffffff' }}>
-      <View
-        style={{
-          margin: 10,
-        }}
-      >
-        <Text>Home</Text>
-      </View>
+    <SafeAreaView>
+      <ScrollView>
+        <View style={{ backgroundColor: '#ffffff' }}>
+          <View
+            style={{
+              margin: 10,
+            }}
+          >
+            <Text>Home</Text>
+          </View>
 
-      {trees.map((tree, index) => (
-        <View
-          key={index}
-          style={{
-            marginBottom: index !== trees.length - 1 ? 15 : 0,
-            marginLeft: 20,
-            marginRight: 20,
-          }}
-        >
-          <TreeStateCard treeState={tree}></TreeStateCard>
+          {trees.map((tree, index) => (
+            <View
+              key={index}
+              style={{
+                marginBottom: index !== trees.length - 1 ? 15 : 0,
+                marginLeft: 20,
+                marginRight: 20,
+              }}
+            >
+              <TreeStateCard treeState={tree}></TreeStateCard>
+            </View>
+          ))}
         </View>
-      ))}
-    </View >
+      </ScrollView>
+    </SafeAreaView>
   );
 };

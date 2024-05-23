@@ -39,6 +39,8 @@ export const Icons = (props: { type: IconType; isSelected: boolean }) => {
 
   let color = '#FFFFFF';
 
+  const fontSize = 12;
+
   if (props.isSelected) {
     componentStyles = [styles.circle, styles.center];
     color = '#009959';
@@ -51,21 +53,25 @@ export const Icons = (props: { type: IconType; isSelected: boolean }) => {
     return (
       <View style={componentStyles}>
         <StoreFront fill={color} />
-        <Text style={{ color: color }}>{!props.isSelected ? 'Order' : ''}</Text>
+        <Text style={{ fontSize: fontSize, color: color }}>
+          {!props.isSelected ? 'Order' : ''}
+        </Text>
       </View>
     );
   } else if (props.type === IconType.Face) {
     return (
       <View style={componentStyles}>
         <Face fill={color} />
-        <Text style={{ color: color }}>{!props.isSelected ? 'Me' : ''}</Text>
+        <Text style={{ fontSize: fontSize, color: color }}>
+          {!props.isSelected ? 'Me' : ''}
+        </Text>
       </View>
     );
   } else if (props.type === IconType.MenuBook) {
     return (
       <View style={componentStyles}>
         <MenuBook fill={color} />
-        <Text style={{ color: color }}>
+        <Text style={{ fontSize: fontSize, color: color }}>
           {!props.isSelected ? 'Knowledge' : ''}
         </Text>
       </View>
@@ -74,7 +80,7 @@ export const Icons = (props: { type: IconType; isSelected: boolean }) => {
     return (
       <View style={componentStyles}>
         <Notification fill={color} />
-        <Text style={{ color: color }}>
+        <Text style={{ fontSize: fontSize, color: color }}>
           {!props.isSelected ? 'Notification' : ''}
         </Text>
       </View>
@@ -83,7 +89,7 @@ export const Icons = (props: { type: IconType; isSelected: boolean }) => {
     return (
       <View style={componentStyles}>
         <PottedPlant fill={color} />
-        <Text style={{ color: color }}>
+        <Text style={{ fontSize: fontSize, color: color }}>
           {!props.isSelected ? 'Details' : ''}
         </Text>
       </View>
