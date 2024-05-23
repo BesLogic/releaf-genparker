@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   backend:
-    image: ubuntu:latest
+    image: alpine:3.14
     restart: always
     environment:
       - GenParker__KafkaMongoDbSettings__ConnectionString=/run/secrets/GenParker__KafkaMongoDbSettings__ConnectionString
