@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   backend:
-    image: alpine:3.14
+    image: ghcr.io/beslogic/releaf_backend_philantropy:latest
     restart: always
     environment:
       - GenParker__KafkaMongoDbSettings__ConnectionString=/run/secrets/GenParker__KafkaMongoDbSettings__ConnectionString
