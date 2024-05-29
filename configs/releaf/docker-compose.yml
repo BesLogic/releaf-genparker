@@ -3,10 +3,15 @@ services:
   backend:
     image: ghcr.io/beslogic/releaf_backend_philantropy:latest
     restart: always
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:4000
     secrets:
       - GenParker__KafkaMongoDbSettings__ConnectionString
       - GenParker__GenParkerMongoDbSettings__ConnectionString
       - Releaf__MongoDbSettings__ConnectionString
+    ports:
+      - "4000:4000"
 
 secrets:
     GenParker__KafkaMongoDbSettings__ConnectionString:
