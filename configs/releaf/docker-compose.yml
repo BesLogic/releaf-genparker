@@ -2,6 +2,7 @@ version: '3.7'
 services:
   backend:
     image: ghcr.io/beslogic/releaf_backend_philantropy:latest
+    network_mode: bridge
     restart: always
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
