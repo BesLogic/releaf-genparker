@@ -6,6 +6,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:4000
+      - VIRTUAL_HOST=genparker.releaf.com
     secrets:
       - GenParker__KafkaMongoDbSettings__ConnectionString
       - GenParker__GenParkerMongoDbSettings__ConnectionString
