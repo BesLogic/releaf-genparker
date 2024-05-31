@@ -2,12 +2,14 @@ version: '3.7'
 services:
   backend:
     image: ghcr.io/beslogic/releaf_backend_philantropy:latest
-    network_mode: bridge
     restart: always
+    networks:
+      - nginx
+      - releaf-genparker_default
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:4000
-      - VIRTUAL_HOST=genparker.releaf.com
+      - VIRTUAL_HOST=api.genparker.releaftrees.life
     secrets:
       - GenParker__KafkaMongoDbSettings__ConnectionString
       - GenParker__GenParkerMongoDbSettings__ConnectionString
