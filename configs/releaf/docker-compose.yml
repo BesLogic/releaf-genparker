@@ -25,5 +25,5 @@ secrets:
       external: true
 
 networks:
-  nginx:
+  nginx-genparker:
     external: true
