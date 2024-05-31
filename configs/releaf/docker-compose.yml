@@ -3,9 +3,6 @@ services:
   backend:
     image: ghcr.io/beslogic/releaf_backend_philantropy:latest
     restart: always
-    networks:
-      - nginx
-      - releaf-genparker_default
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:4000
