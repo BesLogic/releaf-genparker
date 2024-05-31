@@ -3,6 +3,8 @@ services:
   backend:
     image: ghcr.io/beslogic/releaf_backend_philantropy:latest
     restart: always
+    networks:
+      - nginx
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:4000
@@ -21,3 +23,7 @@ secrets:
       external: true
     Releaf__MongoDbSettings__ConnectionString:
       external: true
+
+networks:
+  nginx:
+    external: true
