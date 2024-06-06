@@ -36,8 +36,8 @@ public class BoxModel
       OwnerId = b.OwnerId.Value,
       Seeds = b.Seeds.Select(SeedModel.From).ToArray(),
       PairingKey = b.PairingKey.Value,
-      GerminationDay = b.GerminationDay,
-      SeedsAverageInchHeight = b.SeedsAverageInchHeight,
+      GerminationDay = b.GrowthInfo.GerminationDay,
+      SeedsAverageInchHeight = b.GrowthInfo.SeedsAverageInchHeight,
       Vitals = BoxVitalsModel.From(b.Vitals),
     };
   }
