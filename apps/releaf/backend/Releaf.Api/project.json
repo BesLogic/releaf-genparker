@@ -4,16 +4,20 @@
   "sourceRoot": "apps/releaf/backend",
   "projectType": "application",
   "targets": {
-    "swagger": {
-      "executor": "@nx-dotnet/core:update-swagger",
-      "outputs": [
-        "{workspaceRoot}/libs/generated/backend-swagger/swagger.json"
-      ],
+    "setup": {},
+    "publish-docker": {
+      "executor": "@nx-tools/nx-container:build",
       "options": {
-        "output": "libs/generated/backend-swagger/swagger.json"
+        "push": true,
+        "context": "apps/releaf/backend"
       },
-      "dependsOn": [ "build" ]
-
+      "configurations": {
+        "production": {
+          "tags": [
+            "ghcr.io/beslogic/releaf_backend_philantropy:latest"
+          ]
+        }
+      }
     }
   },
   "tags": []

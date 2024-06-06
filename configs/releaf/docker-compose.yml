@@ -1,0 +1,29 @@
+version: '3.7'
+services:
+  backend:
+    image: ghcr.io/beslogic/releaf_backend_philantropy:latest
+    restart: always
+    networks:
+      - nginx-genparker
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:4000
+      - VIRTUAL_HOST=api.genparker.releaftrees.life
+    secrets:
+      - GenParker__KafkaMongoDbSettings__ConnectionString
+      - GenParker__GenParkerMongoDbSettings__ConnectionString
+      - Releaf__MongoDbSettings__ConnectionString
+    ports:
+      - "4000:4000"
+
+secrets:
+    GenParker__KafkaMongoDbSettings__ConnectionString:
+      external: true
+    GenParker__GenParkerMongoDbSettings__ConnectionString:
+      external: true
+    Releaf__MongoDbSettings__ConnectionString:
+      external: true
+
+networks:
+  nginx-genparker:
+    external: true
