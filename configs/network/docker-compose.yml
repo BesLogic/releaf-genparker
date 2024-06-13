@@ -1,3 +1,4 @@
+# https://github.com/nginx-proxy/nginx-proxy
 version: '3.7'
 services:
   nginx-proxy:
@@ -9,6 +10,7 @@ services:
       - nginx-genparker
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
+      - /etc/letsencrypt/live/releaftrees.life:/etc/nginx/certs
     ports:
       - "80:80"
       - "443:443"
