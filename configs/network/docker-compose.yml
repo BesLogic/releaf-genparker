@@ -18,18 +18,11 @@ services:
   nginx-proxy-acme:
     image: nginxproxy/acme-companion
     restart: always
-    networks:
-      - nginx
-      - nginx-canopeum
-      - nginx-genparker
     environment:
-      - ACME_HTTP_CHALLENGE_LOCATION=true
+      - DEFAULT_EMAIL=andrew.parker@beslogic.com
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - nginx:/etc/acme.sh
-    ports:
-      - "80:80"
-      - "443:443"
 volumes:
   nginx:
 
