@@ -24,6 +24,7 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - /etc/letsencrypt/live/releaftrees.life:/etc/nginx/certs
+      - nginx:/usr/share/nginx/html
     ports:
       - "80:80"
       - "443:443"
@@ -36,14 +37,17 @@ services:
       - nginx
       - nginx-canopeum
       - nginx-genparker
+    depends_on:
+      - nginx-proxy
     environment:
       - NGINX_PROXY_CONTAINER=nginx-proxy
       - NGINX_DOCKER_GEN_CONTAINER=nginx-proxy-gen
       - DEFAULT_EMAIL=andrew.parker@beslogic.com
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - nginx:/etc/acme.sh
       - /etc/letsencrypt/live/releaftrees.life:/etc/nginx/certs
+      - nginx:/etc/acme.sh
+      - nginx:/usr/share/nginx/html
 
 volumes:
   nginx:
