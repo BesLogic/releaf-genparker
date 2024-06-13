@@ -11,7 +11,7 @@ services:
       - nginx-genparker
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:rw
-      - /tmp/templates:/etc/docker-gen/templates
+      - nginx-template:/etc/docker-gen/templates
 
   nginx-proxy:
     image: nginxproxy/nginx-proxy
@@ -54,6 +54,8 @@ volumes:
   nginx-acme:
     external: true
   nginx-html:
+    external: true
+  nginx-template:
     external: true
 
 networks:
