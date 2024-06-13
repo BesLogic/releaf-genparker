@@ -21,7 +21,7 @@ services:
     environment:
       - DEFAULT_EMAIL=andrew.parker@beslogic.com
     volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
       - nginx:/etc/acme.sh
 volumes:
   nginx:
