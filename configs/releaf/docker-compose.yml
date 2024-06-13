@@ -9,6 +9,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:4000
       - VIRTUAL_HOST=api.genparker.releaftrees.life
+      - LETSENCRYPT_HOST=api.genparker.releaftrees.life
     secrets:
       - GenParker__KafkaMongoDbSettings__ConnectionString
       - GenParker__GenParkerMongoDbSettings__ConnectionString
