@@ -39,6 +39,7 @@ services:
       - nginx-genparker
     depends_on:
       - nginx-proxy
+      - nginx-proxy-gen
     environment:
       - NGINX_PROXY_CONTAINER=nginx-proxy
       - NGINX_DOCKER_GEN_CONTAINER=nginx-proxy-gen
