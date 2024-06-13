@@ -50,4 +50,13 @@ public class BoxesController : ControllerBase
   {
     return boxRepo.GetBox(currentUser.Id, new BoxId(id));
   }
+
+  [HttpPatch("{boxId}/GrowthInfo")]
+  public BoxAggregate UpdateGrowthInfo(string boxId, GrowthInfo growthInfo)
+  {
+    var box = boxRepo.GetBox(currentUser.Id, new BoxId(boxId));
+    box.ChangeGrowthInfo(growthInfo);
+    boxRepo.Update(box);
+    return box;
+  }
 }

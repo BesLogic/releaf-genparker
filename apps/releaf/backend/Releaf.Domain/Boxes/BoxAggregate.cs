@@ -23,9 +23,8 @@ public class BoxAggregate
     OwnerId = ownerId;
     TreeDefinitionId = treeDefinitionId;
     PairingKey = pairingKey;
-    GerminationDay = germinationDay;
     Seeds = seeds;
-    SeedsAverageInchHeight = averageInchHeight;
+    GrowthInfo = new GrowthInfo(averageInchHeight, germinationDay);
     Vitals = boxVitals ?? BoxVitals.Default;
   }
 
@@ -33,10 +32,9 @@ public class BoxAggregate
   public UserId OwnerId { get; }
   public TreeDefinitionId TreeDefinitionId { get; }
   public BoxPairingKey PairingKey { get; }
-  public DateTime GerminationDay { get; }
   public IEnumerable<Seed> Seeds { get; }
-  public double SeedsAverageInchHeight { get; }
   public BoxVitals Vitals { get; }
+  public GrowthInfo GrowthInfo { get; private set; }
 
   public void UpdateTemperatureVitals(DateTime timeStamp, double temperature)
   {
@@ -100,5 +98,15 @@ public class BoxAggregate
     {
       throw new TreeWithIdNotFoundException(treeDefinitionId);
     }
+  }
+
+  public void ChangeGrowthInfo(GrowthInfo growthInfo)
+  {
+    if (growthInfo == null || growthInfo.SeedsAverageInchHeight == default || growthInfo.GerminationDay == default)
+    {
+      throw new InvalidGrowthInfoException();
+    }
+
+    GrowthInfo = growthInfo;
   }
 }
