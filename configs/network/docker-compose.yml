@@ -29,6 +29,7 @@ services:
       - nginx:/etc/acme.sh
 volumes:
   nginx:
+    external: true
 
 networks:
   nginx:
