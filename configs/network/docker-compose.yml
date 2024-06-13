@@ -18,6 +18,10 @@ services:
   nginx-proxy-acme:
     image: nginxproxy/acme-companion
     restart: always
+    networks:
+      - nginx
+      - nginx-canopeum
+      - nginx-genparker
     environment:
       - DEFAULT_EMAIL=andrew.parker@beslogic.com
     volumes:
