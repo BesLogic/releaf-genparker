@@ -10,7 +10,8 @@ services:
       - nginx-genparker
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - /etc/letsencrypt/live/releaftrees.life:/etc/nginx/certs
+      - /etc/letsencrypt/live/releaftrees.life/privkey.pem:/etc/nginx/certs/releaftree.life.key
+      - /etc/letsencrypt/live/releaftrees.life/fullchain.pem:/etc/nginx/certs/releaftree.life.crt
     ports:
       - "80:80"
       - "443:443"
