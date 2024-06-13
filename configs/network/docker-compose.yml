@@ -8,6 +8,8 @@ services:
       - nginx
       - nginx-canopeum
       - nginx-genparker
+    environment:
+      ACME_HTTP_CHALLENGE_LOCATION: true
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - /etc/letsencrypt/live/releaftrees.life/privkey.pem:/etc/nginx/certs/releaftree.life.key
