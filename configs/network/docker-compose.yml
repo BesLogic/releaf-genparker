@@ -24,7 +24,7 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - /etc/letsencrypt/live/releaftrees.life:/etc/nginx/certs
-      - nginx/html:/usr/share/nginx/html
+      - nginx-html:/usr/share/nginx/html
     ports:
       - "80:80"
       - "443:443"
@@ -46,11 +46,13 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /etc/letsencrypt/live/releaftrees.life:/etc/nginx/certs
-      - nginx/acme.sh:/etc/acme.sh
-      - nginx/html:/usr/share/nginx/html
+      - nginx-acme:/etc/acme.sh
+      - nginx-html:/usr/share/nginx/html
 
 volumes:
-  nginx:
+  nginx-acme:
+    external: true
+  nginx-html:
     external: true
 
 networks:
