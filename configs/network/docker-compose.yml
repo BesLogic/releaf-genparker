@@ -2,7 +2,21 @@
 version: '3.7'
 services:
   nginx-proxy:
-    image: nginxproxy/nginx-proxy:1.6
+    image: nginxproxy/nginx-proxy
+    restart: always
+    networks:
+      - nginx
+      - nginx-canopeum
+      - nginx-genparker
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - nginx:/etc/nginx/certs
+    ports:
+      - "80:80"
+      - "443:443"
+
+  nginx-proxy-acme:
+    image: nginxproxy/acme-companion
     restart: always
     networks:
       - nginx
@@ -12,11 +26,12 @@ services:
       - ACME_HTTP_CHALLENGE_LOCATION=true
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - /etc/letsencrypt/live/releaftrees.life/privkey.pem:/etc/nginx/certs/releaftree.life.key
-      - /etc/letsencrypt/live/releaftrees.life/fullchain.pem:/etc/nginx/certs/releaftree.life.crt
+      - nginx:/etc/acme.sh
     ports:
       - "80:80"
       - "443:443"
+volumes:
+  nginx:
 
 networks:
   nginx:
