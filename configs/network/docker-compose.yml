@@ -17,6 +17,9 @@ services:
     image: nginxproxy/nginx-proxy
     restart: always
     container_name: nginx-proxy-test
+    deploy:
+      labels:
+        com.github.nginx-proxy.nginx: com.github.nginx-proxy.nginx
     networks:
       - nginx
       - nginx-canopeum
