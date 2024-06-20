@@ -1,21 +1,21 @@
 # https://github.com/nginx-proxy/nginx-proxy
 version: '3.7'
 services:
-  nginx-docker-gen:
-    image: nginxproxy/docker-gen
-    restart: always
-    container_name: nginx-proxy-gen
-    labels:
-      - "com.github.nginx-proxy.docker-gen"
-    networks:
-      - nginx
-      - nginx-canopeum
-      - nginx-genparker
-    volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:rw
-      - nginx-template:/etc/docker-gen/templates
-      - /var/run/nginx/nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro
-      - nginx-config:/etc/nginx/conf.d
+  # nginx-docker-gen:
+  #   image: nginxproxy/docker-gen
+  #   restart: always
+  #   container_name: nginx-proxy-gen
+  #   labels:
+  #     - "com.github.nginx-proxy.docker-gen"
+  #   networks:
+  #     - nginx
+  #     - nginx-canopeum
+  #     - nginx-genparker
+  #   volumes:
+  #     - /var/run/docker.sock:/tmp/docker.sock:rw
+  #     - nginx-template:/etc/docker-gen/templates
+  #     - /var/run/nginx/nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro
+  #     - nginx-config:/etc/nginx/conf.d
 
   nginx-proxy:
     image: nginxproxy/nginx-proxy
