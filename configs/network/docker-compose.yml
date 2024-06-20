@@ -16,7 +16,7 @@ services:
   nginx-proxy:
     image: nginxproxy/nginx-proxy
     restart: always
-    container_name: nginx-proxy-test
+    container_name: nginx-proxy
     deploy:
       labels:
         com.github.nginx-proxy.nginx: com.github.nginx-proxy.nginx
@@ -44,7 +44,6 @@ services:
       - nginx-proxy
       # - nginx-proxy-gen
     environment:
-      - NGINX_PROXY_CONTAINER=nginx-proxy-test
       - NGINX_DOCKER_GEN_CONTAINER=nginx-proxy-gen
       - DEFAULT_EMAIL=andrew.parker@beslogic.com
     volumes:
