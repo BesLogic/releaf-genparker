@@ -74,7 +74,7 @@ public class BoxAggregate
   public static BoxAggregate Initialize(ITreeRepo treeRepo, IBoxRepo boxRepo, UserId ownerId, TreeDefinitionId treeDefinitionId, BoxPairingKey pairingKey)
   {
     EnsureTreeExists(treeRepo, treeDefinitionId);
-    EnsureBoxNotAlreadyPaired(boxRepo, pairingKey, ownerId);
+    EnsureBoxNotAlreadyPaired(boxRepo, pairingKey);
 
     var treeDef = treeRepo.GetOne(treeDefinitionId);
     var germinationDay = DateTime.Now.AddDays(treeDef.EstimatedGerminationDurationDays);
@@ -84,9 +84,9 @@ public class BoxAggregate
     return new BoxAggregate(BoxId.Empty, ownerId, treeDefinitionId, pairingKey, germinationDay, seeds, 0, BoxVitals.Default);
   }
 
-  private static void EnsureBoxNotAlreadyPaired(IBoxRepo boxRepo, BoxPairingKey pairingKey, UserId ownerId)
+  private static void EnsureBoxNotAlreadyPaired(IBoxRepo boxRepo, BoxPairingKey pairingKey)
   {
-    if (boxRepo.BoxAlreadyPaired(ownerId, pairingKey))
+    if (boxRepo.BoxAlreadyPaired(pairingKey))
     {
       throw new BoxAlreadyPairedException(pairingKey);
     }

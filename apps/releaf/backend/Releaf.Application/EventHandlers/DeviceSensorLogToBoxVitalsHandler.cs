@@ -1,6 +1,5 @@
 using GenParker.Events;
 using MediatR;
-using Releaf.Auth;
 using Releaf.Domain.Boxes;
 using Releaf.Domain.Repo;
 
@@ -13,14 +12,12 @@ public class DeviceSensorLogToBoxVitalsHandler : INotificationHandler<DeviceSens
   public double SoilMoisture { get; }
   public double Luminosity { get; }
 
-  public DeviceSensorLogToBoxVitalsHandler(IBoxRepo boxRepo, ICurrentUser currentUser)
+  public DeviceSensorLogToBoxVitalsHandler(IBoxRepo boxRepo)
   {
     BoxRepo = boxRepo;
-    CurrentUser = currentUser;
   }
 
   public IBoxRepo BoxRepo { get; }
-  public ICurrentUser CurrentUser { get; }
 
   public Task Handle(DeviceSensorLogUpdated notification, CancellationToken cancellationToken)
   {
@@ -33,9 +30,9 @@ public class DeviceSensorLogToBoxVitalsHandler : INotificationHandler<DeviceSens
 
   private BoxAggregate? GetPairedBoxOrDefault(BoxPairingKey pairingKey)
   {
-    if (BoxRepo.BoxAlreadyPaired(CurrentUser.Id, pairingKey))
+    if (BoxRepo.BoxAlreadyPaired(pairingKey))
     {
-      return BoxRepo.GetBoxWithPairingKey(CurrentUser.Id, pairingKey);
+      return BoxRepo.GetBoxWithPairingKey(pairingKey);
     }
 
     return default;
@@ -52,7 +49,7 @@ public class DeviceSensorLogToBoxVitalsHandler : INotificationHandler<DeviceSens
 
       if (updated)
       {
-        BoxRepo.Update(CurrentUser.Id, box!);
+        BoxRepo.UpdateBoxWithPairingKey(new BoxPairingKey(notification.PairingKey), box!);
       }
     }
   }

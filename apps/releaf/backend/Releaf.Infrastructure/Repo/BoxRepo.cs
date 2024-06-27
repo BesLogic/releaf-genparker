@@ -46,33 +46,43 @@ public class BoxRepo : IBoxRepo
     return boxesCollection;
   }
 
-  public BoxAggregate GetBoxWithPairingKey(UserId ownerId, BoxPairingKey pairingKey)
+  public BoxAggregate GetBoxWithPairingKey(BoxPairingKey pairingKey)
   {
-    var ownerEq = Builders<BoxModel>.Filter.Eq(b => b.OwnerId, ownerId.Value);
-    var deviceEq = Builders<BoxModel>.Filter.Eq(b => b.PairingKey, pairingKey.Value);
-
-    var filter = ownerEq & deviceEq;
+    var filter = Builders<BoxModel>.Filter.Eq(b => b.PairingKey, pairingKey.Value);
     var box = GetCollection().Find(filter).Limit(1).First();
 
     return box.ToBox();
   }
 
-  public bool BoxAlreadyPaired(UserId ownerId, BoxPairingKey pairingKey)
+  public bool BoxAlreadyPaired(BoxPairingKey pairingKey)
   {
-    var ownerEq = Builders<BoxModel>.Filter.Eq(b => b.OwnerId, ownerId.Value);
-    var pairingKeyEq = Builders<BoxModel>.Filter.Eq(b => b.PairingKey, pairingKey.Value);
-
-    var filter = ownerEq & pairingKeyEq;
+    var filter = Builders<BoxModel>.Filter.Eq(b => b.PairingKey, pairingKey.Value);
     return GetCollection().Find(filter).Limit(1).CountDocuments() > 0;
   }
 
   public void Update(UserId ownerId, BoxAggregate box)
   {
-    if(box.OwnerId != ownerId)
+    if (box.OwnerId != ownerId)
     {
       throw new Exception("You can't update a box that doesn't belong to you");
     }
 
+    InternalUpdate(box);
+  }
+
+  public void UpdateBoxWithPairingKey(BoxPairingKey pairingKey, BoxAggregate box)
+  {
+    var ogBox = GetBoxWithPairingKey(pairingKey);
+    if(ogBox.OwnerId == box.OwnerId)
+    {
+      throw new Exception("You can't update a box that doesn't belong to the pairingKey's owner");
+    }
+
+    InternalUpdate(box);
+  }
+
+  private void InternalUpdate(BoxAggregate box)
+  {
     var model = BoxModel.From(box);
 
     var filter = Builders<BoxModel>.Filter.Eq(b => b.Id, model.Id);
