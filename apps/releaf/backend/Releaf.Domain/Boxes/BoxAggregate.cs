@@ -71,22 +71,22 @@ public class BoxAggregate
     return Math.Round(value, 4);
   }
 
-  public static BoxAggregate Initialize(ITreeRepo treeRepo, IBoxRepo boxRepo, string ownerId, TreeDefinitionId treeDefinitionId, BoxPairingKey pairingKey)
+  public static BoxAggregate Initialize(ITreeRepo treeRepo, IBoxRepo boxRepo, UserId ownerId, TreeDefinitionId treeDefinitionId, BoxPairingKey pairingKey)
   {
     EnsureTreeExists(treeRepo, treeDefinitionId);
-    EnsureBoxNotAlreadyPaired(boxRepo, pairingKey);
+    EnsureBoxNotAlreadyPaired(boxRepo, pairingKey, ownerId);
 
     var treeDef = treeRepo.GetOne(treeDefinitionId);
     var germinationDay = DateTime.Now.AddDays(treeDef.EstimatedGerminationDurationDays);
 
     var seeds = Enumerable.Range(0, BoxCount).Select(i => new Seed(Seed.NewName())).ToList();
 
-    return new BoxAggregate(BoxId.Empty, new UserId(ownerId), treeDefinitionId, pairingKey, germinationDay, seeds, 0, BoxVitals.Default);
+    return new BoxAggregate(BoxId.Empty, ownerId, treeDefinitionId, pairingKey, germinationDay, seeds, 0, BoxVitals.Default);
   }
 
-  private static void EnsureBoxNotAlreadyPaired(IBoxRepo boxRepo, BoxPairingKey pairingKey)
+  private static void EnsureBoxNotAlreadyPaired(IBoxRepo boxRepo, BoxPairingKey pairingKey, UserId ownerId)
   {
-    if (boxRepo.BoxAlreadyPaired(pairingKey))
+    if (boxRepo.BoxAlreadyPaired(ownerId, pairingKey))
     {
       throw new BoxAlreadyPairedException(pairingKey);
     }

@@ -3,7 +3,6 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using Releaf.Domain.Boxes;
 using Releaf.Domain.Repo;
-using Releaf.Domain.Trees;
 using Releaf.Infrastructure.Exceptions;
 using Releaf.Infrastructure.Models;
 using Releaf.Infrastructure.Settings;
@@ -47,22 +46,33 @@ public class BoxRepo : IBoxRepo
     return boxesCollection;
   }
 
-  public BoxAggregate GetBoxWithPairingKey(BoxPairingKey pairingKey)
+  public BoxAggregate GetBoxWithPairingKey(UserId ownerId, BoxPairingKey pairingKey)
   {
+    var ownerEq = Builders<BoxModel>.Filter.Eq(b => b.OwnerId, ownerId.Value);
     var deviceEq = Builders<BoxModel>.Filter.Eq(b => b.PairingKey, pairingKey.Value);
-    var box = GetCollection().Find(deviceEq).Limit(1).First();
+
+    var filter = ownerEq & deviceEq;
+    var box = GetCollection().Find(filter).Limit(1).First();
 
     return box.ToBox();
   }
 
-  public bool BoxAlreadyPaired(BoxPairingKey pairingKey)
+  public bool BoxAlreadyPaired(UserId ownerId, BoxPairingKey pairingKey)
   {
-    var filter = Builders<BoxModel>.Filter.Eq(b => b.PairingKey, pairingKey.Value);
+    var ownerEq = Builders<BoxModel>.Filter.Eq(b => b.OwnerId, ownerId.Value);
+    var pairingKeyEq = Builders<BoxModel>.Filter.Eq(b => b.PairingKey, pairingKey.Value);
+
+    var filter = ownerEq & pairingKeyEq;
     return GetCollection().Find(filter).Limit(1).CountDocuments() > 0;
   }
 
-  public void Update(BoxAggregate box)
+  public void Update(UserId ownerId, BoxAggregate box)
   {
+    if(box.OwnerId != ownerId)
+    {
+      throw new Exception("You can't update a box that doesn't belong to you");
+    }
+
     var model = BoxModel.From(box);
 
     var filter = Builders<BoxModel>.Filter.Eq(b => b.Id, model.Id);
@@ -74,8 +84,13 @@ public class BoxRepo : IBoxRepo
     }
   }
 
-  public BoxId Create(BoxAggregate box)
+  public BoxId Create(UserId ownerId, BoxAggregate box)
   {
+    if (box.OwnerId != ownerId)
+    {
+      throw new Exception("You can't create a box that doesn't belong to you");
+    }
+
     var model = BoxModel.FromNew(box);
     GetCollection().InsertOne(model);
     return new BoxId(model.Id.ToString());

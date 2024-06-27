@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GenParker.Events\GenParker.Events.csproj" />
+    <ProjectReference Include="..\Releaf.Auth\Releaf.Auth.csproj" />
     <ProjectReference Include="..\Releaf.Domain\Releaf.Domain.csproj" />
     <ProjectReference Include="..\Releaf.Infrastructure\Releaf.Infrastructure.csproj" />
   </ItemGroup>

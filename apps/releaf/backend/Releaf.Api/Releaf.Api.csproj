@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\GenParker.Application\GenParker.Application.csproj" />
     <ProjectReference Include="..\Releaf.Application\Releaf.Application.csproj" />
+    <ProjectReference Include="..\Releaf.Auth.AspNetCore\Releaf.Auth.AspNetCore.csproj" />
     <ProjectReference Include="..\Releaf.Auth\Releaf.Auth.csproj" />
     <ProjectReference Include="..\Releaf.Domain\Releaf.Domain.csproj" />
   </ItemGroup>

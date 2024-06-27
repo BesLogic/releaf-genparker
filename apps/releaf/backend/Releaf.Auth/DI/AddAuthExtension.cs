@@ -1,4 +1,5 @@
 
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Releaf.Auth;
 using Releaf.Auth.Impl;
@@ -10,5 +11,6 @@ public static class AddAuthExtension
   public static void AddReleafAuth(this IServiceCollection services)
   {
     services.AddScoped<ICurrentUser, MockCurrentUser>();
+    services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
   }
 }
