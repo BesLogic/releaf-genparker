@@ -1,53 +1,43 @@
-import { useEffect, useState } from 'react';
-import { View, Text, FlatList } from 'react-native';
-import { BoxService } from '../infrastructure/domain/services/box.service';
-import { Box } from '../infrastructure/domain/entities/box';
-
-// 1. REUSSIR UN CALL ASYNC
-
-// 2. DI
-// https://medium.com/@mr.kashif.samman/understanding-dependency-injection-in-react-native-patterns-and-benefits-c5f95f11a838
-// PropType ca sort de ou ?
-// En ce moment boxService est encore undefined
-// Est ce que ca prendrais dequoi sur le service un decorator ?
+import { useCallback, useEffect, useState } from 'react';
+import { Text, SafeAreaView, FlatList } from 'react-native';
+import { BoxService } from '../infrastructure/services/box.service';
+import React from 'react';
+import { Loading } from '../shared/Loading';
 
 export const Order = () => {
-  const boxService: BoxService = new BoxService();
+  const boxService = new BoxService();
 
-  const [isLoading, setLoading] = useState(true);
-  const [data, setData] = useState<Box[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [boxes, setBoxes] = useState<string[]>([]);
 
-  const getAllBoxes = async () => {
+  const fetchBoxes = useCallback(async () => {
+    setIsLoading(true);
     try {
-      const response = await fetch(
-        'https://reactnative.dev/movies.json'
-        // http://199.188.220.99:4000/boxes
-      );
-      const json = await response.json();
-      console.log(json);
-      setData(json.boxes);
-    } catch (error) {
+      const allBoxes = await boxService.getAll();
+      console.log(allBoxes);
+      setBoxes(allBoxes);
+    } catch {
       console.error('jai mal');
-      console.error(error);
-    } finally {
-      setLoading(false);
     }
-  };
-
-  const value = boxService.test();
-
-  useEffect(() => {
-    getAllBoxes();
+    setIsLoading(false);
   }, []);
 
+  useEffect((): void => {
+    void fetchBoxes();
+  }, [fetchBoxes]);
+
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
+
   return (
-    <View>
-      <Text>Order {value}</Text>
+    <SafeAreaView>
+      <Text>{boxes?.length ?? 'null'}</Text>
       <FlatList
-        data={data}
-        keyExtractor={({ id }) => id}
-        renderItem={({ item }) => <Text>{item.id}</Text>}
+        data={boxes ?? []}
+        renderItem={({ item }) => <Text style={{ color: 'red' }}>{item}</Text>}
+        keyExtractor={(item) => item}
       />
-    </View>
+    </SafeAreaView>
   );
 };
