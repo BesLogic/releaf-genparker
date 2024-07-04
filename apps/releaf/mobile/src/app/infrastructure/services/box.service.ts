@@ -6,9 +6,6 @@ export interface IBoxService {
 }
 
 export class BoxService {
-  test() : string {
-    return "test";
-  }
 
   async getAll(): Promise<string[]> {
     try {
@@ -20,7 +17,6 @@ export class BoxService {
       }
       );
       const boxes = await response.json();
-      console.log(boxes);
       return boxes;
     } catch (error) {
       console.error(error);
