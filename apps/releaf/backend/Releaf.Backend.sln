@@ -27,7 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenParker.Domain", "GenPark
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenParker.Infrastructure", "GenParker.Infrastructure\GenParker.Infrastructure.csproj", "{AC4902F0-D2D9-4323-AE93-1C501CEC35A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenParker.Events", "GenParker.Events\GenParker.Events.csproj", "{1B79A782-A4B5-4FA3-9CAD-99CC87C6B6AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenParker.Events", "GenParker.Events\GenParker.Events.csproj", "{1B79A782-A4B5-4FA3-9CAD-99CC87C6B6AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Releaf.Auth.AspNetCore", "Releaf.Auth.AspNetCore\Releaf.Auth.AspNetCore.csproj", "{5685E65C-6F91-410F-BC64-E8613AEDAEED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,10 @@ Global
 		{1B79A782-A4B5-4FA3-9CAD-99CC87C6B6AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B79A782-A4B5-4FA3-9CAD-99CC87C6B6AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B79A782-A4B5-4FA3-9CAD-99CC87C6B6AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5685E65C-6F91-410F-BC64-E8613AEDAEED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5685E65C-6F91-410F-BC64-E8613AEDAEED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5685E65C-6F91-410F-BC64-E8613AEDAEED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5685E65C-6F91-410F-BC64-E8613AEDAEED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -89,6 +95,7 @@ Global
 		{BA4418C0-56B2-46A6-AF84-ACD932773B75} = {3767EF47-A4B1-410F-978B-6030D49C22C0}
 		{AC4902F0-D2D9-4323-AE93-1C501CEC35A1} = {3767EF47-A4B1-410F-978B-6030D49C22C0}
 		{1B79A782-A4B5-4FA3-9CAD-99CC87C6B6AB} = {3767EF47-A4B1-410F-978B-6030D49C22C0}
+		{5685E65C-6F91-410F-BC64-E8613AEDAEED} = {3C684CC1-D820-4DD5-86C4-39155E69DBF7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {246A0FAF-C02C-4830-ABED-12085C3C2AC5}

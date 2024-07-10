@@ -3,7 +3,6 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using Releaf.Domain.Boxes;
 using Releaf.Domain.Repo;
-using Releaf.Domain.Trees;
 using Releaf.Infrastructure.Exceptions;
 using Releaf.Infrastructure.Models;
 using Releaf.Infrastructure.Settings;
@@ -49,8 +48,8 @@ public class BoxRepo : IBoxRepo
 
   public BoxAggregate GetBoxWithPairingKey(BoxPairingKey pairingKey)
   {
-    var deviceEq = Builders<BoxModel>.Filter.Eq(b => b.PairingKey, pairingKey.Value);
-    var box = GetCollection().Find(deviceEq).Limit(1).First();
+    var filter = Builders<BoxModel>.Filter.Eq(b => b.PairingKey, pairingKey.Value);
+    var box = GetCollection().Find(filter).Limit(1).First();
 
     return box.ToBox();
   }
@@ -61,7 +60,28 @@ public class BoxRepo : IBoxRepo
     return GetCollection().Find(filter).Limit(1).CountDocuments() > 0;
   }
 
-  public void Update(BoxAggregate box)
+  public void Update(UserId ownerId, BoxAggregate box)
+  {
+    if (box.OwnerId != ownerId)
+    {
+      throw new Exception("You can't update a box that doesn't belong to you");
+    }
+
+    InternalUpdate(box);
+  }
+
+  public void UpdateBoxWithPairingKey(BoxPairingKey pairingKey, BoxAggregate box)
+  {
+    var ogBox = GetBoxWithPairingKey(pairingKey);
+    if(ogBox.OwnerId == box.OwnerId)
+    {
+      throw new Exception("You can't update a box that doesn't belong to the pairingKey's owner");
+    }
+
+    InternalUpdate(box);
+  }
+
+  private void InternalUpdate(BoxAggregate box)
   {
     var model = BoxModel.From(box);
 
@@ -74,8 +94,13 @@ public class BoxRepo : IBoxRepo
     }
   }
 
-  public BoxId Create(BoxAggregate box)
+  public BoxId Create(UserId ownerId, BoxAggregate box)
   {
+    if (box.OwnerId != ownerId)
+    {
+      throw new Exception("You can't create a box that doesn't belong to you");
+    }
+
     var model = BoxModel.FromNew(box);
     GetCollection().InsertOne(model);
     return new BoxId(model.Id.ToString());
