@@ -16,7 +16,7 @@
   },
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "targetDefaults": {
-    "publish-docker": {
+    "publish": {
       "dependsOn": ["setup", "build"]
     },
     "setup": {

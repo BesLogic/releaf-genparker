@@ -5,7 +5,12 @@
   "projectType": "application",
   "targets": {
     "setup": {},
-    "publish-docker": {},
+    "publish": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": []
+      }
+    },
     "start": {
       "executor": "@nx/react-native:start",
       "dependsOn": [],
