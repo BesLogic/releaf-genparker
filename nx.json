@@ -23,7 +23,7 @@
       "dependsOn": ["build"]
     },
     "build": {
-      "dependsOn": ["^build", "codegen", "^codegen"],
+      "dependsOn": ["^build", "codegen", "^codegen", "build-android"],
       "inputs": ["production", "^production"],
       "cache": true
     },

@@ -4,6 +4,8 @@
   "sourceRoot": "apps/releaf/mobile/src",
   "projectType": "application",
   "targets": {
+    "setup": {},
+    "publish-docker": {},
     "start": {
       "executor": "@nx/react-native:start",
       "dependsOn": [],
@@ -38,7 +40,10 @@
         "{projectRoot}/android/app/build/outputs/apk"
       ],
       "dependsOn": [],
-      "options": {}
+      "options": {
+        "tasks": ["bundleRelease"],
+        "mode": "release"
+      }
     },
     "build-ios": {
       "executor": "@nx/react-native:build-ios",
