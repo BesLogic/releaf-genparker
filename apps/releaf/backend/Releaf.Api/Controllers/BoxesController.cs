@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Releaf.Application.Commands;
 using Releaf.Auth;
@@ -9,6 +10,7 @@ using Releaf.Domain.Trees;
 namespace Releaf.Backend.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("[controller]")]
 public class BoxesController : ControllerBase
 {
@@ -30,9 +32,9 @@ public class BoxesController : ControllerBase
   }
 
   [HttpPost("Initialize")]
-  public async Task<InitializeBoxCmdResult> Initialize(string ownerId, string treeDefinitionId, string uniquePairingKey)
+  public async Task<InitializeBoxCmdResult> Initialize(string treeDefinitionId, string uniquePairingKey)
   {
-    var cmd = new InitializeBoxCommand(ownerId, new TreeDefinitionId(treeDefinitionId), new BoxPairingKey(uniquePairingKey));
+    var cmd = new InitializeBoxCommand(currentUser.Id, new TreeDefinitionId(treeDefinitionId), new BoxPairingKey(uniquePairingKey));
     var result = await mediator.Send(cmd);
 
     return result;
@@ -49,5 +51,14 @@ public class BoxesController : ControllerBase
   public BoxAggregate GetBoxDetails(string id)
   {
     return boxRepo.GetBox(currentUser.Id, new BoxId(id));
+  }
+
+  [HttpPatch("{boxId}/GrowthInfo")]
+  public BoxAggregate UpdateGrowthInfo(string boxId, GrowthInfo growthInfo)
+  {
+    var box = boxRepo.GetBox(currentUser.Id, new BoxId(boxId));
+    box.ChangeGrowthInfo(growthInfo);
+    boxRepo.Update(currentUser.Id, box);
+    return box;
   }
 }

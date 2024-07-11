@@ -5,7 +5,7 @@
   "projectType": "application",
   "targets": {
     "setup": {},
-    "publish-docker": {
+    "publish": {
       "executor": "@nx-tools/nx-container:build",
       "options": {
         "push": true,

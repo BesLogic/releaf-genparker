@@ -23,9 +23,8 @@ public class BoxAggregate
     OwnerId = ownerId;
     TreeDefinitionId = treeDefinitionId;
     PairingKey = pairingKey;
-    GerminationDay = germinationDay;
     Seeds = seeds;
-    SeedsAverageInchHeight = averageInchHeight;
+    GrowthInfo = new GrowthInfo(averageInchHeight, germinationDay);
     Vitals = boxVitals ?? BoxVitals.Default;
   }
 
@@ -33,10 +32,9 @@ public class BoxAggregate
   public UserId OwnerId { get; }
   public TreeDefinitionId TreeDefinitionId { get; }
   public BoxPairingKey PairingKey { get; }
-  public DateTime GerminationDay { get; }
   public IEnumerable<Seed> Seeds { get; }
-  public double SeedsAverageInchHeight { get; }
   public BoxVitals Vitals { get; }
+  public GrowthInfo GrowthInfo { get; private set; }
 
   public void UpdateTemperatureVitals(DateTime timeStamp, double temperature)
   {
@@ -73,7 +71,7 @@ public class BoxAggregate
     return Math.Round(value, 4);
   }
 
-  public static BoxAggregate Initialize(ITreeRepo treeRepo, IBoxRepo boxRepo, string ownerId, TreeDefinitionId treeDefinitionId, BoxPairingKey pairingKey)
+  public static BoxAggregate Initialize(ITreeRepo treeRepo, IBoxRepo boxRepo, UserId ownerId, TreeDefinitionId treeDefinitionId, BoxPairingKey pairingKey)
   {
     EnsureTreeExists(treeRepo, treeDefinitionId);
     EnsureBoxNotAlreadyPaired(boxRepo, pairingKey);
@@ -83,7 +81,7 @@ public class BoxAggregate
 
     var seeds = Enumerable.Range(0, BoxCount).Select(i => new Seed(Seed.NewName())).ToList();
 
-    return new BoxAggregate(BoxId.Empty, new UserId(ownerId), treeDefinitionId, pairingKey, germinationDay, seeds, 0, BoxVitals.Default);
+    return new BoxAggregate(BoxId.Empty, ownerId, treeDefinitionId, pairingKey, germinationDay, seeds, 0, BoxVitals.Default);
   }
 
   private static void EnsureBoxNotAlreadyPaired(IBoxRepo boxRepo, BoxPairingKey pairingKey)
@@ -100,5 +98,15 @@ public class BoxAggregate
     {
       throw new TreeWithIdNotFoundException(treeDefinitionId);
     }
+  }
+
+  public void ChangeGrowthInfo(GrowthInfo growthInfo)
+  {
+    if (growthInfo == null || growthInfo.SeedsAverageInchHeight == default || growthInfo.GerminationDay == default)
+    {
+      throw new InvalidGrowthInfoException();
+    }
+
+    GrowthInfo = growthInfo;
   }
 }

@@ -34,7 +34,7 @@ react {
     // bundleConfig = file(../rn-cli.config.js)
     //
     //   The name of the generated asset file containing your JS bundle
-    // bundleAssetName = "MyApplication.android.bundle"
+    // bundleAssetName = "RELEAF.android.bundle"
     //
     //   The entry file for bundle generation. Default is 'index.android.js' or 'index.js'
     entryFile = file("../../src/main.tsx")
@@ -89,6 +89,14 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            if (project.hasProperty('RELEAF_UPLOAD_STORE_FILE')) {
+                storeFile file(RELEAF_UPLOAD_STORE_FILE)
+                storePassword RELEAF_UPLOAD_STORE_PASSWORD
+                keyAlias RELEAF_UPLOAD_KEY_ALIAS
+                keyPassword RELEAF_UPLOAD_KEY_PASSWORD
+            }
+        }
     }
     buildTypes {
         debug {
@@ -97,7 +105,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }

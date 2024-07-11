@@ -47,8 +47,13 @@ jobs:
       - name: Install dependencies
         run: npm i --ignore-scripts
 
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'microsoft'
+          java-version: '17'
+
       - name: publish affected
-        run: npx nx affected --target=publish-docker --head=${{needs.init.outputs.branch}} --base=$BEFORE_SHA --configuration=${{needs.init.outputs.environment}} --parallel=5
+        run: npx nx affected --target=publish --head=${{needs.init.outputs.branch}} --base=$BEFORE_SHA --configuration=${{needs.init.outputs.environment}} --parallel=5
 
       - name: 'cp for kustomize'
         run: |

@@ -49,7 +49,7 @@ public class DeviceSensorLogToBoxVitalsHandler : INotificationHandler<DeviceSens
 
       if (updated)
       {
-        BoxRepo.Update(box!);
+        BoxRepo.UpdateBoxWithPairingKey(new BoxPairingKey(notification.PairingKey), box!);
       }
     }
   }

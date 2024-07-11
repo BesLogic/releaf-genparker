@@ -4,7 +4,7 @@
   "sourceRoot": "apps/gen-parker/backend/platform/src",
   "projectType": "application",
   "targets": {
-    "publish-docker": {
+    "publish": {
       "executor": "@nx-tools/nx-container:build",
       "options": {
         "push": true
