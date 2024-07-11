@@ -1,9 +1,11 @@
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
-import { TreeStateCard } from './components/TreeStateCard';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { BoxService } from '../infrastructure/services/box.service';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { TreeStateCard } from './components/TreeStateCard';
 import { useCallback, useEffect, useState } from 'react';
 import { Loading } from '../shared/Loading';
+import { BoxService } from '../infrastructure/services/box.service';
+
 
 const styles = StyleSheet.create({
   title: {
@@ -13,7 +15,21 @@ const styles = StyleSheet.create({
   },
 });
 
-export const Home = () => {
+
+export const Box = () => {
+  return (
+    <SettingsStack.Navigator>
+      <SettingsStack.Screen name="Box" component={BoxScreen} />
+      <SettingsStack.Screen name="BoxDetails" component={BoxDetailsScreen} />
+    </SettingsStack.Navigator>
+  );
+};
+
+const SettingsStack = createNativeStackNavigator();
+
+
+function BoxScreen({ navigation }) {
+
   const boxService = new BoxService();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -61,11 +77,49 @@ export const Home = () => {
                 marginRight: 20,
               }}
             >
-              <TreeStateCard box={box}></TreeStateCard>
+              <TreeStateCard box={box} navigation={navigation}></TreeStateCard>
             </View>
           ))}
         </View>
       </ScrollView>
     </SafeAreaView>
   );
+}
+
+function BoxDetailsScreen() {
+  return (
+    <View>
+      <Text>Details Screen</Text>
+    </View>
+  );
+}
+
+/*
+export const Home = () => {
+  return (
+    <View style={{ backgroundColor: '#ffffff' }}>
+      <View
+        style={{
+          margin: 10,
+        }}
+      >
+        <Text>Home</Text>
+      </View>
+
+      {trees.map((tree, index) => (
+        <View
+          key={index}
+          style={{
+            marginBottom: index !== trees.length - 1 ? 15 : 0,
+            marginLeft: 20,
+            marginRight: 20,
+          }}
+        >
+          <TreeCardStack />
+        </View>
+      ))}
+    </View >
+  );
 };
+*/
+// <TreeStateCard treeState={tree} navigation={navigation}  ></TreeStateCard>

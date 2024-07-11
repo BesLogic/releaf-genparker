@@ -1,5 +1,5 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { Home } from '../home/Home';
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { IconType, Icons } from './components/Icons';
@@ -7,6 +7,11 @@ import { Order } from '../order/Order';
 import { Knowledge } from '../knowledge/Knowledge';
 import { Profile } from '../profile/Profile';
 import { Notifications } from '../notifications/Notifications';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Box } from '../box/Box';
+
+
+
 
 // Screen names
 const orderName = 'Order';
@@ -56,7 +61,7 @@ export const Navigation = () => {
         />
         <Tab.Screen
           name={homeName}
-          component={Home}
+          component={Box}
           options={{ headerShown: false, tabBarLabel: '' }}
         />
         <Tab.Screen
@@ -70,6 +75,7 @@ export const Navigation = () => {
           options={{ headerShown: false, tabBarLabel: '' }}
         />
       </Tab.Navigator>
+
     </NavigationContainer>
   );
 };
