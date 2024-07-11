@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Button } from 'react-native';
 import { CircleVitalStatus } from './CircleVitalStatus';
 import { CircleTreeImage } from './CircleTreeImage';
 
@@ -44,7 +44,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export const TreeStateCard = ({ treeState }) => {
+
+export const TreeStateCard = ({ treeState, navigation }) => {
   return (
     <View style={styles.mainCard}>
       <View style={styles.topSection}>
@@ -64,6 +65,12 @@ export const TreeStateCard = ({ treeState }) => {
         <CircleVitalStatus type={'water'}></CircleVitalStatus>
         <CircleVitalStatus type={'temperature'}></CircleVitalStatus>
         <CircleVitalStatus type={'light'}></CircleVitalStatus>
+      </View>
+      <View>
+        <Button
+          title="Go to BoxDetails"
+          onPress={() => navigation.navigate('BoxDetails')}
+        />
       </View>
     </View>
   );
