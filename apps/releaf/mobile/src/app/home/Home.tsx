@@ -24,8 +24,8 @@ export const Home = () => {
     try {
       const allBoxes = await boxService.getAll();
       setBoxes(allBoxes);
-    } catch {
-      console.error('jai mal');
+    } catch (error) {
+      console.error(error);
     }
     setIsLoading(false);
   }, []);
