@@ -47,7 +47,7 @@
       "dependsOn": [],
       "options": {
         "tasks": ["bundleRelease"],
-        "mode": "debug"
+        "mode": "release"
       }
     },
     "build-ios": {
