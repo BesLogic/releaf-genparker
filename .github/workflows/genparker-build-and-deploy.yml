@@ -52,6 +52,13 @@ jobs:
           distribution: 'microsoft'
           java-version: '17'
 
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v2
+        with:
+          api-level: 34
+          target: default
+          channel: stable
+
       - name: publish affected
         run: npx nx affected --target=publish --head=${{needs.init.outputs.branch}} --base=$BEFORE_SHA --configuration=${{needs.init.outputs.environment}} --parallel=5 --verbose
 
