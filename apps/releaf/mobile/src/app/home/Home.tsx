@@ -1,36 +1,43 @@
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { TreeStateCard } from './components/TreeStateCard';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { BoxService } from '../infrastructure/services/box.service';
+import { useCallback, useEffect, useState } from 'react';
+import { Loading } from '../shared/Loading';
 
-export class TreeState {
-  name = '';
-  germinationDate = new Date();
-  ageInDays = 0;
-  height = 0;
-}
-
-const trees = [
-  {
-    name: '20 Pin Cherry',
-    germinationDate: new Date('2023-10-11'),
-    ageInDays: 103,
-    height: 7,
-  } as TreeState,
-  {
-    name: '12 Huckleberry',
-    germinationDate: new Date('2023-10-11'),
-    ageInDays: 103,
-    height: 7,
-  } as TreeState,
-  {
-    name: '12 Red Maple',
-    germinationDate: new Date('2023-10-11'),
-    ageInDays: 103,
-    height: 7,
-  } as TreeState,
-];
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#2C4E3C',
+  },
+});
 
 export const Home = () => {
+  const boxService = new BoxService();
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [boxes, setBoxes] = useState<string[]>([]);
+
+  const fetchBoxes = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const allBoxes = await boxService.getAll();
+      setBoxes(allBoxes);
+    } catch {
+      console.error('jai mal');
+    }
+    setIsLoading(false);
+  }, []);
+
+  useEffect((): void => {
+    void fetchBoxes();
+  }, [fetchBoxes]);
+
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
+
   return (
     <SafeAreaView>
       <ScrollView>
@@ -40,19 +47,21 @@ export const Home = () => {
               margin: 10,
             }}
           >
-            <Text>Home</Text>
+            <Text style={[styles.title]}>
+              Mes Boîtes ({boxes?.length ?? 0})
+            </Text>
           </View>
 
-          {trees.map((tree, index) => (
+          {boxes.map((box, index) => (
             <View
               key={index}
               style={{
-                marginBottom: index !== trees.length - 1 ? 15 : 0,
+                marginBottom: index !== boxes.length - 1 ? 15 : 0,
                 marginLeft: 20,
                 marginRight: 20,
               }}
             >
-              <TreeStateCard treeState={tree}></TreeStateCard>
+              <TreeStateCard box={box}></TreeStateCard>
             </View>
           ))}
         </View>
