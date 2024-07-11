@@ -4,7 +4,7 @@ import { CircleTreeImage } from './CircleTreeImage';
 
 const styles = StyleSheet.create({
   textColor: {
-    color: '#2C4E3C'
+    color: '#2C4E3C',
   },
   title: {
     fontSize: 20,
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const TreeStateCard = ({ treeState }) => {
+export const TreeStateCard = ({ box }) => {
   return (
     <View style={styles.mainCard}>
       <View style={styles.topSection}>
@@ -52,11 +52,15 @@ export const TreeStateCard = ({ treeState }) => {
           <CircleTreeImage></CircleTreeImage>
         </View>
         <View>
-          <Text style={[styles.textColor, styles.title]}>{treeState.name}</Text>
+          <Text ellipsizeMode="tail" style={[styles.textColor, styles.title]}>
+            {box}
+          </Text>
           <View>
-            <Text style={[styles.textColor, styles.marginTop]}>Germination: {treeState.germinationDate.toDateString()}</Text>
-            <Text style={[styles.textColor, styles.marginTop]}>Age: {treeState.ageInDays}</Text>
-            <Text style={[styles.textColor, styles.marginTop]}>Height: {treeState.height}</Text>
+            <Text style={[styles.textColor, styles.marginTop]}>
+              Germination: 2024-07-03
+            </Text>
+            <Text style={[styles.textColor, styles.marginTop]}>Age: 4</Text>
+            <Text style={[styles.textColor, styles.marginTop]}>Height: 23</Text>
           </View>
         </View>
       </View>
