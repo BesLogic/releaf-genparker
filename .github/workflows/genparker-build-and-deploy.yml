@@ -81,6 +81,7 @@ jobs:
 
       - run: cp -r ${{ steps.kustomize.outputs.directory }} deployment_configs
 
+      - run: ls .
       - run: ls apps/releaf/mobile/android/app/build/outputs/bundle/release
 
       - name: Update with kustomize
