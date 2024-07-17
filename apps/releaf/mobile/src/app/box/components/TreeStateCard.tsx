@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const TreeStateCard = ({ box, navigation }) => {
+export const TreeStateCard = ({ boxId, navigation }) => {
   return (
     <View style={styles.mainCard}>
       <View style={styles.topSection}>
@@ -53,7 +53,7 @@ export const TreeStateCard = ({ box, navigation }) => {
         </View>
         <View>
           <Text ellipsizeMode="tail" style={[styles.textColor, styles.title]}>
-            {box}
+            {boxId}
           </Text>
           <View>
             <Text style={[styles.textColor, styles.marginTop]}>
@@ -72,7 +72,7 @@ export const TreeStateCard = ({ box, navigation }) => {
       <View>
         <Button
           title="Go to BoxDetails"
-          onPress={() => navigation.navigate('BoxDetails')}
+          onPress={() => navigation.navigate('BoxDetails', { id: boxId })}
         />
       </View>
     </View>
