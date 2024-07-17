@@ -8,6 +8,8 @@ on:
 env:
   BEFORE_SHA: ${{ github.event.before }}
   DOCKER_ENVIRONMENT: 'latest'
+  RELEAF_UPLOAD_STORE_PASSWORD: ${{ secrets.RELEAF_UPLOAD_STORE_PASSWORD }}
+  RELEAF_UPLOAD_KEY_PASSWORD: ${{ secrets.RELEAF_UPLOAD_KEY_PASSWORD }}
 jobs:
   init:
     runs-on: ubuntu-latest
