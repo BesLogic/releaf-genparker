@@ -5,6 +5,6 @@ export const App = () => {
   return <Navigation></Navigation>;
 };
 
-console.log('trigger build #21')
+console.log('trigger build #22')
 
 export default App;

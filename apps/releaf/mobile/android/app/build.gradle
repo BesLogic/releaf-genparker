@@ -92,9 +92,9 @@ android {
         release {
             if (project.hasProperty('RELEAF_UPLOAD_STORE_FILE')) {
                 storeFile file(RELEAF_UPLOAD_STORE_FILE)
-                storePassword findProperty('ORG_GRADLE_PROJECT_RELEAF_UPLOAD_STORE_PASSWORD') ?: ""
+                storePassword System.getenv('ORG_GRADLE_PROJECT_RELEAF_UPLOAD_STORE_PASSWORD') ?: ""
                 keyAlias RELEAF_UPLOAD_KEY_ALIAS
-                keyPassword findProperty('ORG_GRADLE_PROJECT_RELEAF_UPLOAD_KEY_PASSWORD') ?: ""
+                keyPassword System.getenv('ORG_GRADLE_PROJECT_RELEAF_UPLOAD_KEY_PASSWORD') ?: ""
             }
         }
     }
