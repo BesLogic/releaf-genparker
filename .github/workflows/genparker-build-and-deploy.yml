@@ -10,6 +10,7 @@ env:
   DOCKER_ENVIRONMENT: 'latest'
   RELEAF_UPLOAD_STORE_PASSWORD: ${{ secrets.RELEAF_UPLOAD_STORE_PASSWORD }}
   RELEAF_UPLOAD_KEY_PASSWORD: ${{ secrets.RELEAF_UPLOAD_KEY_PASSWORD }}
+  RELEAF_GENPARKER_KEYS: ${{ secrets.RELEAF_GENPARKER_KEYS }}
 jobs:
   init:
     runs-on: ubuntu-latest
@@ -63,6 +64,12 @@ jobs:
           api-level: 34
           target: default
           channel: stable
+
+      - name: get file
+        run: |
+          curl -H "Authorization: token ${RELEAF_GENPARKER_KEYS}" https://raw.githubusercontent.com/andy2great/releaf-genparker-keys/main/releaf.keystore
+
+      - run: ls
 
       - name: publish affected
         run: npx nx affected --target=publish --head=${{needs.init.outputs.branch}} --base=$BEFORE_SHA --configuration=${{needs.init.outputs.environment}} --parallel=5
