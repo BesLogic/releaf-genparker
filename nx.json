@@ -20,10 +20,10 @@
       "dependsOn": ["setup", "build"]
     },
     "setup": {
-      "dependsOn": ["build"]
+      "dependsOn": ["build", "build-android"]
     },
     "build": {
-      "dependsOn": ["^build", "codegen", "^codegen", "build-android"],
+      "dependsOn": ["^build", "codegen", "^codegen"],
       "inputs": ["production", "^production"],
       "cache": true
     },
