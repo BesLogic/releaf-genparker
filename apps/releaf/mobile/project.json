@@ -4,7 +4,12 @@
   "sourceRoot": "apps/releaf/mobile/src",
   "projectType": "application",
   "targets": {
-    "setup": {},
+    "setup": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": []
+      }
+    },
     "publish": {
       "executor": "nx:run-commands",
       "options": {
