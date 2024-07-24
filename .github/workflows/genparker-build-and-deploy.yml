@@ -11,6 +11,7 @@ env:
   ORG_GRADLE_PROJECT_RELEAF_UPLOAD_STORE_PASSWORD: ${{ secrets.RELEAF_UPLOAD_STORE_PASSWORD }}
   ORG_GRADLE_PROJECT_RELEAF_UPLOAD_KEY_PASSWORD: ${{ secrets.RELEAF_UPLOAD_KEY_PASSWORD }}
   RELEAF_GENPARKER_KEYS: ${{ secrets.RELEAF_GENPARKER_KEYS }}
+  SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
 jobs:
   init:
     runs-on: ubuntu-latest
@@ -72,6 +73,21 @@ jobs:
       - name: publish affected
         run: npx nx affected --target=publish --head=${{needs.init.outputs.branch}} --base=$BEFORE_SHA --configuration=${{needs.init.outputs.environment}} --parallel=5
 
+      - run: ls apps/releaf/mobile/android/app/build/outputs/bundle/release
+
+      - uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ SERVICE_ACCOUNT_JSON }}
+          packageName: com.release
+          releaseFiles: apps/releaf/mobile/android/app/build/outputs/bundle/release/app-release.aab
+          track: alpha
+          status: completed
+          inAppUpdatePriority: 2
+          userFraction: 0.1
+          # whatsNewDirectory: distribution/whatsnew
+          # mappingFile: app/build/outputs/mapping/release/mapping.txt
+          # debugSymbols: app/intermediates/merged_native_libs/release/out/lib
+
       - name: 'cp for kustomize'
         run: |
           cp -r configs/genparker/base configs/genparker/overlay/philantropy/base & \
@@ -85,8 +101,6 @@ jobs:
           base-directory: 'configs/genparker'
 
       - run: cp -r ${{ steps.kustomize.outputs.directory }} deployment_configs
-
-      - run: ls apps/releaf/mobile/android/app/build/outputs/bundle/release
 
       - name: Update with kustomize
         run: |
