@@ -25,32 +25,12 @@ jobs:
           echo "::set-output name=environment::production"
           echo "::set-output name=branch::main"
 
-      - name: 'Build:checkout'
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-
-      - name: 'login'
-        uses: docker/login-action@v1
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: npm-${{ hashFiles('package-lock.json') }}
-          restore-keys: npm-
-      
-      - name: Install dependencies
-        run: npm i --ignore-scripts
-
   prepare-be:
     runs-on: ubuntu-latest
     needs: init
     steps:
+      - uses: BesLogic/releaf-genparker/.github/workflows/monorepo-setup.yml@main
+
       - name: publish affected
         run: npx nx affected --target=publish --head=${{needs.init.outputs.branch}} --base=$BEFORE_SHA --configuration=${{needs.init.outputs.environment}} --parallel=5
 
@@ -81,6 +61,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: init
     steps:
+      - uses: BesLogic/releaf-genparker/.github/workflows/monorepo-setup.yml@main
+
       - name: Install dependencies Mobile
         run: cd apps/releaf/mobile && npm i --ignore-scripts
 
