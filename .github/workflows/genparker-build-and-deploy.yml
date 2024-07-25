@@ -34,7 +34,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: publish affected
-        run: npx nx affected --target=publish --head=${{needs.init.outputs.branch}} --base=$BEFORE_SHA --configuration=${{needs.init.outputs. }} --parallel=5
+        run: npx nx affected --target=publish --head=${{needs.init.outputs.branch}} --base=$BEFORE_SHA --configuration=${{needs.init.outputs.environment }} --parallel=5
 
       - name: 'cp for kustomize'
         run: |
