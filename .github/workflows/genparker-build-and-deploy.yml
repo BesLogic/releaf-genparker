@@ -64,6 +64,8 @@ jobs:
     needs: init
     steps:
       - uses: BesLogic/releaf-genparker@v0.0.5
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install dependencies Mobile
         run: cd apps/releaf/mobile && npm i --ignore-scripts
