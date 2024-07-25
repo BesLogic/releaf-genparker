@@ -20,7 +20,7 @@
       "dependsOn": ["setup", "build"]
     },
     "setup": {
-      "dependsOn": ["build", "build-android"]
+      "dependsOn": ["build", "build-android", "bleh"]
     },
     "build": {
       "dependsOn": ["^build", "codegen", "^codegen"],
