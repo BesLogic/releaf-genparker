@@ -26,12 +26,9 @@ jobs:
           echo "::set-output name=branch::main"
 
   prepare-be:
-    runs-on: ubuntu-latest
+    uses: BesLogic/releaf-genparker/.github/workflows/monorepo-setup.yml@main
     needs: init
     steps:
-      - name: Install dependencies monorepo
-        uses: BesLogic/releaf-genparker/.github/workflows/monorepo-setup.yml@main
-
       - name: publish affected
         run: npx nx affected --target=publish --head=${{needs.init.outputs.branch}} --base=$BEFORE_SHA --configuration=${{needs.init.outputs.environment}} --parallel=5
 
@@ -59,12 +56,9 @@ jobs:
           git push -f origin main:deployment/philantropy
   
   prepare-mobile:
-    runs-on: ubuntu-latest
+    uses: BesLogic/releaf-genparker/.github/workflows/monorepo-setup.yml@main
     needs: init
     steps:
-      - name: Install dependencies monorepo
-        uses: BesLogic/releaf-genparker/.github/workflows/monorepo-setup.yml@main
-
       - name: Install dependencies Mobile
         run: cd apps/releaf/mobile && npm i --ignore-scripts
 
