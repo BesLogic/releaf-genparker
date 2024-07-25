@@ -1,4 +1,3 @@
-
 name: 'Monorepo setup'
 description: 'A way to install and cache dependencies for a monorepo'
 runs:
