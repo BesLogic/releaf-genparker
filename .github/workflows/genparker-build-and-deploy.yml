@@ -83,7 +83,7 @@ jobs:
           track: alpha
           status: completed
           inAppUpdatePriority: 2
-          userFraction: 0.1
+          # userFraction: 0.1
           # whatsNewDirectory: distribution/whatsnew
           # mappingFile: app/build/outputs/mapping/release/mapping.txt
           # debugSymbols: app/intermediates/merged_native_libs/release/out/lib
