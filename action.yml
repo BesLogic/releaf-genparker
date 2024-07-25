@@ -1,5 +1,9 @@
 name: 'Monorepo setup'
 description: 'A way to install and cache dependencies for a monorepo'
+inputs:
+  github_token: 
+    description: 'The token to authenticate with'
+    required: true
 runs:
   using: "composite"
   steps:
@@ -13,7 +17,7 @@ runs:
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+        password: ${{ inputs.github_token }}
 
     - name: Cache dependencies
       uses: actions/cache@v2
