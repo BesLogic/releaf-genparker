@@ -27,6 +27,10 @@
       "inputs": ["production", "^production"],
       "cache": true
     },
+    "build-mobile": {
+      "dependsOn": ["build-android"],
+      "cache": true
+    },
     "@nx/jest:jest": {
       "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
       "cache": true,
