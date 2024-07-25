@@ -3,24 +3,26 @@ on:
 
 jobs:
   reusable_workflow_job:
-    - name: 'Build:checkout'
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Build:checkout'
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
-    - name: 'login'
-      uses: docker/login-action@v1
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+      - name: 'login'
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Cache dependencies
-      uses: actions/cache@v2
-      with:
-        path: ~/.npm
-        key: npm-${{ hashFiles('package-lock.json') }}
-        restore-keys: npm-
-    
-    - name: Install dependencies
-      run: npm i --ignore-scripts
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: npm-
+      
+      - name: Install dependencies
+        run: npm i --ignore-scripts
