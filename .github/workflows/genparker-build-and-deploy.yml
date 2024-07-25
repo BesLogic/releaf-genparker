@@ -34,7 +34,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: publish affected
-        run: npx nx affected --target=publish --head=${{needs.init.outputs.branch}} --base=$BEFORE_SHA --configuration=${{needs.init.outputs.environment}} --parallel=5
+        run: npx nx affected --target=publish --head=${{needs.init.outputs.branch}} --base=$BEFORE_SHA --configuration=${{needs.init.outputs. }} --parallel=5
 
       - name: 'cp for kustomize'
         run: |
@@ -87,9 +87,10 @@ jobs:
           curl -o ./apps/releaf/mobile/android/app/releaf.keystore -H "Authorization: token ${RELEAF_GENPARKER_KEYS}" https://raw.githubusercontent.com/andy2great/releaf-genparker-keys/main/releaf.keystore
       
       - name: publish affected
-        run: npx nx affected --target=publish --head=${{needs.init.outputs.branch}} --base=$BEFORE_SHA --configuration=${{needs.init.outputs.environment}} --parallel=5
+        run: npx nx affected --target=build-mobile --head=${{needs.init.outputs.branch}} --base=$BEFORE_SHA --configuration=${{needs.init.outputs.environment}} --parallel=5
       
       - uses: r0adkll/upload-google-play@v1
+        if: ${{ hashFiles('apps/releaf/mobile/android/app/build/outputs/bundle/release/app-release.aab') != '' }}
         with:
           serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
           packageName: com.release
