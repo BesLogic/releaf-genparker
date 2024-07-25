@@ -2,8 +2,8 @@ on:
   workflow_call:
 
 jobs:
-  reusable_workflow_job:
-    runs-on: ubuntu-latest
+  setup_monorepo:
+    using: "composite"
     steps:
       - name: 'Build:checkout'
         uses: actions/checkout@v2
