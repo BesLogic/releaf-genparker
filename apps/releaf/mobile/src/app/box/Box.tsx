@@ -6,6 +6,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { Loading } from '../shared/Loading';
 import { BoxService } from '../infrastructure/services/box.service';
 import { BoxDetails } from '../infrastructure/entities/boxDetails';
+import { BoxItem } from '../infrastructure/entities/box';
+import { styled } from 'nativewind';
 
 const styles = StyleSheet.create({
   title: {
@@ -22,6 +24,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 });
+
+const StyledText = styled(Text)
+const StyledView = styled(View)
 
 export const Box = () => {
   return (
@@ -42,13 +47,30 @@ function BoxScreen({ navigation }) {
   const boxService = new BoxService();
 
   const [isLoading, setIsLoading] = useState(true);
-  const [boxes, setBoxes] = useState<string[]>([]);
+  const [boxes, setBoxes] = useState<BoxItem[]>([]);
 
   const fetchBoxes = useCallback(async () => {
     setIsLoading(true);
     try {
-      const allBoxes = await boxService.getAll();
+      //const allBoxes = await boxService.getAll();
+      const allBoxes = [];
+      for (let i = 0; i < 3; i++) {
+        const seeds = [];
+        for (let j = 0; j < 25; j++) {
+          seeds.push({ name: `seed-${i}-${j}` });
+        }
+        const box: BoxItem = {
+          id: `box-${i}`,
+          seeds: seeds,
+          growthInfo: {
+            seedsAverageInchHeight: Math.random() * 10, // Example random height
+            germinationDay: new Date()
+          }
+        };
+        allBoxes.push(box);
+      }
       setBoxes(allBoxes);
+      console.info(allBoxes);
     } catch (error) {
       console.error(error);
     }
@@ -64,6 +86,7 @@ function BoxScreen({ navigation }) {
   }
 
   return (
+    //icitte on va afficher les boites
     <SafeAreaView>
       <ScrollView>
         <View style={{ backgroundColor: '#ffffff' }}>
@@ -76,8 +99,9 @@ function BoxScreen({ navigation }) {
               Mes Boîtes ({boxes?.length ?? 0})
             </Text>
           </View>
+        </View>
 
-          {boxes.map((box, index) => (
+        {/* {boxes.map((box, index) => (
             <View
               key={index}
               style={{
@@ -86,13 +110,60 @@ function BoxScreen({ navigation }) {
                 marginRight: 20,
               }}
             >
-              <TreeStateCard
-                boxId={box}
-                navigation={navigation}
-              ></TreeStateCard>
+
+              {box.seeds.map((seed, index) =>
+                <StyledView className='w-1/5 aspect-square justify-center items-center border'>
+                  <Text>{seed.name}</Text></StyledView>
+              )}
+
             </View>
           ))}
-        </View>
+
+          <View>
+
+            <StyledText className='bg-releaf-green-100'>End of the list</StyledText>
+          </View> */}
+
+
+        <StyledView className='justify-center items-center p-3'>
+
+          {boxes.map((box, boxIndex) => (
+            <StyledView className='flex-wrap border-transparent rounded-lg flex-row justify-center bg-releaf-brown p-20 mb-5'>
+              {
+                box.seeds.map((seed, seedIndex) => (
+                  <StyledView
+                    key={`${boxIndex}-${seedIndex}`}
+                    className='w-1/6 aspect-square bg-white justify-center items-center border '
+                  >
+                    <Text>{seed.name}</Text>
+                  </StyledView>
+                ))
+              }
+            </StyledView>
+          ))}
+        </StyledView>
+
+        {/*
+        <StyledView className='flex-1 justify-center items-center p-4'>
+          <StyledView className='flex flex-wrap flex-row justify-center'>
+            {boxes.map((box, boxIndex) => (
+              <View key={`${boxIndex}`}>
+                {
+                  box.seeds.map((seed, seedIndex) => (
+                    <StyledView
+                      key={`${boxIndex}-${seedIndex}`}
+                      className='w-1/5 aspect-square justify-center items-center border m-2'
+                    >
+                      <Text>{seed.name}</Text>
+                    </StyledView>
+                  ))
+                }
+              </View>
+
+            ))}
+          </StyledView>
+        </StyledView>
+        */}
       </ScrollView>
     </SafeAreaView>
   );
@@ -173,3 +244,5 @@ function SeedDisplay({ seed }) {
     </View>
   );
 }
+
+

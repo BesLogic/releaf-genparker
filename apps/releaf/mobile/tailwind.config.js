@@ -21,7 +21,8 @@ module.exports = {
             700: "#009959",
             900: "#2C4E3C",
           },
-          orange: "#F28300"
+          orange: "#F28300",
+          brown: "#EAAD65",
         }
       },
       borderRadius: {
