@@ -19,8 +19,11 @@
     "publish": {
       "dependsOn": ["setup", "build"]
     },
+    "publish-fe": {
+      "dependsOn": ["setup", "build"]
+    },
     "setup": {
-      "dependsOn": ["build", "build-android", "bleh"]
+      "dependsOn": ["build", "build-android"]
     },
     "build": {
       "dependsOn": ["^build", "codegen", "^codegen"],

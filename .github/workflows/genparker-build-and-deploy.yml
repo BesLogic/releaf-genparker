@@ -25,6 +25,17 @@ jobs:
           echo "::set-output name=environment::production"
           echo "::set-output name=branch::main"
 
+  prepare-fe:
+    runs-on: ubuntu-latest
+    needs: init
+    steps:
+      - uses: BesLogic/releaf-genparker@v0.0.5
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: publish affected
+        run: npx nx affected --target=publish-fe --head=${{needs.init.outputs.branch}} --base=$BEFORE_SHA --configuration=${{needs.init.outputs.environment }} --parallel=5
+
   prepare-be:
     runs-on: ubuntu-latest
     needs: init
@@ -58,7 +69,7 @@ jobs:
 
           git commit -am "Updating the project's structure"
           git push -f origin main:deployment/philantropy
-  
+
   prepare-mobile:
     runs-on: ubuntu-latest
     needs: init
@@ -85,10 +96,10 @@ jobs:
       - name: get file
         run: |
           curl -o ./apps/releaf/mobile/android/app/releaf.keystore -H "Authorization: token ${RELEAF_GENPARKER_KEYS}" https://raw.githubusercontent.com/andy2great/releaf-genparker-keys/main/releaf.keystore
-      
+
       - name: publish affected
         run: npx nx affected --target=build-mobile --head=${{needs.init.outputs.branch}} --base=$BEFORE_SHA --configuration=${{needs.init.outputs.environment}} --parallel=5
-      
+
       - uses: r0adkll/upload-google-play@v1
         if: ${{ hashFiles('apps/releaf/mobile/android/app/build/outputs/bundle/release/app-release.aab') != '' }}
         with:
