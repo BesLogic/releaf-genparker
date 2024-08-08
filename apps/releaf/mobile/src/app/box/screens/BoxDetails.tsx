@@ -126,15 +126,17 @@ export function BoxDetailsScreen({ route, navigation }) {
         <SView className="mb-2 mt-16 mb-8 mx-12">
           <STouchableOpacity onPress={save}>
             <SView className="bg-green-600 px-8 py-5 rounded-lg">
-              <SText className="m-auto">Save</SText>
+              <SText className="m-auto font-semibold text-white">Save</SText>
             </SView>
           </STouchableOpacity>
           <STouchableOpacity
             className="mt-2"
             onPress={() => navigation.goBack()}
           >
-            <SView className="border-green-500 border-[1px] px-8 py-5 rounded-lg">
-              <SText className="text-green-500 m-auto">Cancel</SText>
+            <SView className="border-green-600 border-[1px] px-8 py-5 rounded-lg">
+              <SText className="text-green-600 font-semibold m-auto">
+                Cancel
+              </SText>
             </SView>
           </STouchableOpacity>
         </SView>
