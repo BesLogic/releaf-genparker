@@ -6,7 +6,7 @@ defineProps<{
 
 <template>
   <h1>
-    <span> Hello there, 2 </span> Welcome {{ title }} 👋
+    <span> Hello there, 3 </span> Welcome {{ title }} 👋
   </h1>
 </template>
 
