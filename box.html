@@ -1,72 +1,107 @@
 <style>
-	.main-box {
-      background: linear-gradient(#FABB72, #D49953);
-      border-radius: 20px;
-      box-shadow: rgba(0, 0, 0, 0.2) 0px -7px 1px inset;
-      
-      display: grid; 
-      grid-auto-columns: 1fr; 
-      grid-template-columns: 1fr 1fr 1fr 1fr 1fr; 
-      grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
-      gap: 5px 5px; 
-      grid-template-areas: 
-        "header header header header header"
-        ". . . . ."
-        ". . . . ."
-        ". . . . ."
-        ". . . . ."
-        ". . . . ."
-        "footer footer footer footer footer"; 
-      width: 100vw;
-      height: 140vw;
-      padding: 10px 70px;
-    }
-    .header { grid-area: header; }
-	.footer { grid-area: footer; }
-    
-    .outer-seed {
-      background: linear-gradient(#987851, #F1D4B1);
-      border-radius: 2vw;
-      box-shadow: rgba(0, 0, 0, 0.1) 0px 15px 1px inset;
-    }
-    
-    .seed {
-      background: #756757;
-      border-radius: 2vw;
-      box-shadow: rgba(0, 0, 0, 0.1) 0px 15px 1px inset;
-      height: calc(100% - 10px);
-      width: calc(100% -10px);
-      margin: 5px
-    }
-    
+  .main-box {
+    background: linear-gradient(#f9ba71, #d49853);
+    border-radius: 4vw;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px -2vw 0px inset;
+
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 0.25fr 1fr 1fr 1fr 1fr 1fr 0.5fr;
+    gap: 0.5vw 0.5vw;
+    grid-template-areas:
+      'title title title title days'
+      '. . . . .'
+      '. . . . .'
+      '. . . . .'
+      '. . . . .'
+      '. . . . .'
+      'logo height date date edit';
+    width: 75vw;
+    height: 86.25vw;
+    padding: 10px 70px;
+  }
+  .title {
+    grid-area: title;
+  }
+  .days {
+    grid-area: days;
+  }
+  .logo {
+    grid-area: logo;
+  }
+  .height {
+    grid-area: height;
+  }
+  .date {
+    grid-area: date;
+  }
+  .edit {
+    grid-area: edit;
+  }
+
+  .outer-seed {
+    background: linear-gradient(#987851, #f1d4b1);
+    border-radius: 2vw;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 15px 1px inset;
+  }
+
+  .seed {
+    background: #756757;
+    border-radius: 2vw;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 15px 1px inset;
+    height: calc(100% - 10px);
+    width: calc(100% - 10px);
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    font-size: 3vw;
+    color: #fcf3e8;
+    font-family: sans-serif;
+    flex-direction: column;
+  }
+
+  .face {
+    flex: 1;
+  }
 </style>
 
 <div class="main-box">
-  <div class="header"> erereeerrer </div>
-  <div class="outer-seed"><div class="seed"> </div></div>
-  <div class="outer-seed"><div class="seed"> </div></div>
-  <div class="outer-seed"><div class="seed"> </div></div>
-  <div class="outer-seed"><div class="seed"> </div></div>
-  <div class="outer-seed"><div class="seed"> </div></div>
-  <div class="outer-seed"><div class="seed"> </div></div>
-  <div class="outer-seed"><div class="seed"> </div></div>
-  <div class="outer-seed"><div class="seed"> </div></div>
-  <div class="outer-seed"><div class="seed"> </div></div>
-  <div class="outer-seed"><div class="seed"> </div></div>
-  <div class="outer-seed"><div class="seed"> </div></div>
-  <div class="outer-seed"><div class="seed"> </div></div>
-  <div class="outer-seed"><div class="seed"> </div></div>
-  <div class="outer-seed"><div class="seed"> </div></div>
-  <div class="outer-seed"><div class="seed"> </div></div>
-  <div class="outer-seed"><div class="seed"> </div></div>
-  <div class="outer-seed"><div class="seed"> </div></div>
-  <div class="outer-seed"><div class="seed"> </div></div>
-  <div class="outer-seed"><div class="seed"> </div></div>
-  <div class="outer-seed"><div class="seed"> </div></div>
-  <div class="outer-seed"><div class="seed"> </div></div>
-  <div class="outer-seed"><div class="seed"> </div></div>
-  <div class="outer-seed"><div class="seed"> </div></div>
-  <div class="outer-seed"><div class="seed"> </div></div>
-  <div class="outer-seed"><div class="seed"> </div></div>
-  <div class="footer"> 2</div>
+  <div class="title">title</div>
+  <div class="days">days</div>
+  <div class="outer-seed">
+    <div class="seed">
+      <div class="face"></div>
+      <div class="name">Jacques</div>
+    </div>
+  </div>
+  <div class="outer-seed"><div class="seed"></div></div>
+  <div class="outer-seed"><div class="seed"></div></div>
+  <div class="outer-seed"><div class="seed"></div></div>
+  <div class="outer-seed"><div class="seed"></div></div>
+  <div class="outer-seed"><div class="seed"></div></div>
+  <div class="outer-seed"><div class="seed"></div></div>
+  <div class="outer-seed"><div class="seed"></div></div>
+  <div class="outer-seed"><div class="seed"></div></div>
+  <div class="outer-seed"><div class="seed"></div></div>
+  <div class="outer-seed"><div class="seed"></div></div>
+  <div class="outer-seed"><div class="seed"></div></div>
+  <div class="outer-seed"><div class="seed"></div></div>
+  <div class="outer-seed"><div class="seed"></div></div>
+  <div class="outer-seed"><div class="seed"></div></div>
+  <div class="outer-seed"><div class="seed"></div></div>
+  <div class="outer-seed"><div class="seed"></div></div>
+  <div class="outer-seed"><div class="seed"></div></div>
+  <div class="outer-seed"><div class="seed"></div></div>
+  <div class="outer-seed"><div class="seed"></div></div>
+  <div class="outer-seed"><div class="seed"></div></div>
+  <div class="outer-seed"><div class="seed"></div></div>
+  <div class="outer-seed"><div class="seed"></div></div>
+  <div class="outer-seed"><div class="seed"></div></div>
+  <div class="outer-seed"><div class="seed"></div></div>
+
+  <div class="logo">title</div>
+  <div class="heigth">heigth</div>
+  <div class="date">date</div>
+  <div class="edit">edit</div>
 </div>
