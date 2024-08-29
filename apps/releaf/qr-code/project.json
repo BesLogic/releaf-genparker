@@ -1,0 +1,20 @@
+{
+  "name": "qr-code",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/releaf/qr-code/src",
+  "// targets": "to see all targets run: nx show project qr-code --web",
+  "targets": {
+    "publish-fe": {
+      "executor": "@nx-tools/nx-container:build",
+      "options": {
+        "push": true
+      },
+      "configurations": {
+        "production": {
+          "tags": ["ghcr.io/beslogic/releaf_qr_code:latest"]
+        }
+      }
+    }
+  }
+}

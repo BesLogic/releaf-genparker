@@ -1,5 +1,16 @@
 version: '3.7'
 services:
+  frontend:
+    image: ghcr.io/beslogic/releaf_qr_code:latest
+    restart: always
+    networks:
+      - nginx-genparker
+    environment:
+      - VIRTUAL_HOST=qrcode.releaftrees.life
+      - LETSENCRYPT_HOST=qrcode.releaftrees.life
+    ports:
+      - '4001:80'
+
   backend:
     image: ghcr.io/beslogic/releaf_backend_philantropy:latest
     restart: always
@@ -15,15 +26,15 @@ services:
       - GenParker__GenParkerMongoDbSettings__ConnectionString
       - Releaf__MongoDbSettings__ConnectionString
     ports:
-      - "4000:4000"
+      - '4000:4000'
 
 secrets:
-    GenParker__KafkaMongoDbSettings__ConnectionString:
-      external: true
-    GenParker__GenParkerMongoDbSettings__ConnectionString:
-      external: true
-    Releaf__MongoDbSettings__ConnectionString:
-      external: true
+  GenParker__KafkaMongoDbSettings__ConnectionString:
+    external: true
+  GenParker__GenParkerMongoDbSettings__ConnectionString:
+    external: true
+  Releaf__MongoDbSettings__ConnectionString:
+    external: true
 
 networks:
   nginx-genparker:

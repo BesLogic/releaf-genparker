@@ -1,11 +1,11 @@
-import { View, Text, ScrollView, StyleSheet, FlatList } from 'react-native';
+import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { TreeStateCard } from './components/TreeStateCard';
 import { useCallback, useEffect, useState } from 'react';
 import { Loading } from '../shared/Loading';
+import { BoxDetailsScreen } from './screens/BoxDetails';
 import { BoxService } from '../infrastructure/services/box.service';
-import { BoxDetails } from '../infrastructure/entities/boxDetails';
 
 const styles = StyleSheet.create({
   title: {
@@ -31,7 +31,16 @@ export const Box = () => {
         component={BoxScreen}
         options={{ headerShown: false }}
       />
-      <SettingsStack.Screen name="BoxDetails" component={BoxDetailsScreen} />
+      <SettingsStack.Screen
+        name="BoxDetails"
+        component={BoxDetailsScreen}
+        options={{ headerShown: false }}
+      />
+      <SettingsStack.Screen
+        name="PopupBoxInfo"
+        component={BoxDetailsScreen}
+        options={{ headerShown: false }}
+      />
     </SettingsStack.Navigator>
   );
 };
@@ -95,81 +104,5 @@ function BoxScreen({ navigation }) {
         </View>
       </ScrollView>
     </SafeAreaView>
-  );
-}
-
-function BoxDetailsScreen({ route, navigation }) {
-  const { id } = route.params;
-
-  const boxService = new BoxService();
-
-  const [isLoading, setIsLoading] = useState(true);
-  const [boxDetails, setBoxDetails] = useState<BoxDetails>(null);
-
-  const fetchBoxes = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const boxDetails: BoxDetails = await boxService.get(id);
-      setBoxDetails(boxDetails);
-    } catch (error) {
-      console.error(error);
-    }
-    setIsLoading(false);
-  }, []);
-
-  useEffect((): void => {
-    void fetchBoxes();
-  }, [fetchBoxes]);
-
-  if (isLoading) {
-    return <Loading></Loading>;
-  }
-
-  return (
-    <View>
-      <Text style={{ color: 'black' }}>
-        Details Screen {boxDetails?.growthInfo?.seedsAverageInchHeight ?? -1}
-      </Text>
-      <View
-        style={{
-          marginTop: 10,
-        }}
-      >
-        <Text style={{ color: 'black' }}>Seeds:</Text>
-        <FlatList
-          data={boxDetails?.seeds ?? []}
-          renderItem={({ item }) => <SeedDisplay seed={item} />}
-          keyExtractor={(item) => item.name}
-        />
-      </View>
-      <View style={[styles.bottomSection]}>
-        <View>
-          <Text style={{ color: 'black' }}>
-            {boxDetails?.vitals?.temperature?.value ?? -1}
-          </Text>
-          <Text style={{ color: 'black' }}>temperature</Text>
-        </View>
-        <View>
-          <Text style={{ color: 'black' }}>
-            {boxDetails?.vitals?.soilMoisturePercent?.value ?? -1}
-          </Text>
-          <Text style={{ color: 'black' }}>soilMoisturePercent</Text>
-        </View>
-        <View>
-          <Text style={{ color: 'black' }}>
-            {boxDetails?.vitals?.luminosityPercent?.value ?? -1}
-          </Text>
-          <Text style={{ color: 'black' }}>luminosityPercent</Text>
-        </View>
-      </View>
-    </View>
-  );
-}
-
-function SeedDisplay({ seed }) {
-  return (
-    <View>
-      <Text style={{ color: 'black' }}>{seed.name}</Text>
-    </View>
   );
 }
