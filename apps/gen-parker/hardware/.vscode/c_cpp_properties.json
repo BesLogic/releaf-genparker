@@ -5,12 +5,14 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "C:/Users/Nicolas/OneDrive/Documents/Arduino/libraries/**",
+                "C:/Users/MatthieuPauze/Documents/Arduino/libraries/**",
                 "C:/Program Files (x86)/Arduino/**"
             ],
             "defines": [
                 "_DEBUG",
                 "UNICODE",
-                "_UNICODE"
+                "_UNICODE",
+                "USBCON",
             ],
             "windowsSdkVersion": "10.0.22621.0",
             "compilerPath": "cl.exe",
