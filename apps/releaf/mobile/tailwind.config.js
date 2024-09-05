@@ -13,6 +13,7 @@ module.exports = {
   ],
   theme: {
     extend: {
+
       colors: {
         releaf: {
           green: {
@@ -22,9 +23,11 @@ module.exports = {
             900: "#2C4E3C",
           },
           orange: "#F28300",
-          brown: "#EAAD65",
+          brownstart: "#FABB72",
+          brownend: "#8E7555"
         }
       },
+
       borderRadius: {
         xl: "1rem",
       },

@@ -8,6 +8,7 @@ import { BoxService } from '../infrastructure/services/box.service';
 import { BoxDetails } from '../infrastructure/entities/boxDetails';
 import { BoxItem } from '../infrastructure/entities/box';
 import { styled } from 'nativewind';
+import LinearGradient from 'react-native-linear-gradient';
 
 const styles = StyleSheet.create({
   title: {
@@ -23,6 +24,21 @@ const styles = StyleSheet.create({
     padding: 10,
     marginTop: 20,
   },
+  linearGradient: {
+    flex: 1,
+    borderRadius: 5,
+    marginBottom: 50,
+    // elevation: 0.1,
+    // transform: [{ rotateX: '7deg' }],
+    shadowColor: '#000000',
+
+  },
+  borderBottom: {
+    borderRadius: 50,
+  },
+
+  // here
+
 });
 
 const StyledText = styled(Text)
@@ -63,7 +79,7 @@ function BoxScreen({ navigation }) {
           id: `box-${i}`,
           seeds: seeds,
           growthInfo: {
-            seedsAverageInchHeight: Math.random() * 10, // Example random height
+            seedsAverageInchHeight: Math.random() * 10,
             germinationDay: new Date()
           }
         };
@@ -128,18 +144,24 @@ function BoxScreen({ navigation }) {
         <StyledView className='justify-center items-center p-3'>
 
           {boxes.map((box, boxIndex) => (
-            <StyledView className='flex-wrap border-transparent rounded-lg flex-row justify-center bg-releaf-brown p-20 mb-5'>
-              {
-                box.seeds.map((seed, seedIndex) => (
-                  <StyledView
-                    key={`${boxIndex}-${seedIndex}`}
-                    className='w-1/6 aspect-square bg-white justify-center items-center border '
-                  >
-                    <Text>{seed.name}</Text>
-                  </StyledView>
-                ))
-              }
-            </StyledView>
+
+            <LinearGradient colors={['#FABB72', '#D49953']} style={styles.linearGradient}>
+
+              <StyledView className='flex-wrap rounded-3xl flex-row justify-center p-3'>
+                {
+                  box.seeds.map((seed, seedIndex) => (
+                    <StyledView
+                      key={`${boxIndex}-${seedIndex}`}
+                      className='w-1/5 aspect-square bg-white justify-center items-center border '
+                    >
+                      <Text>{seed.name}</Text>
+                    </StyledView>
+                  ))
+                }
+              </StyledView>
+
+            </LinearGradient>
+
           ))}
         </StyledView>
 
