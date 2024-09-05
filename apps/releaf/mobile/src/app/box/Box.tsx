@@ -1,7 +1,6 @@
 import { View, Text, ScrollView, StyleSheet, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { TreeStateCard } from './components/TreeStateCard';
 import { useCallback, useEffect, useState } from 'react';
 import { Loading } from '../shared/Loading';
 import { BoxService } from '../infrastructure/services/box.service';
@@ -31,18 +30,15 @@ const styles = StyleSheet.create({
     // elevation: 0.1,
     // transform: [{ rotateX: '7deg' }],
     shadowColor: '#000000',
-
+    elevation: 6,
   },
   borderBottom: {
     borderRadius: 50,
-  },
-
-  // here
-
+  }
 });
 
-const StyledText = styled(Text)
 const StyledView = styled(View)
+const StyleLinearGradient = styled(LinearGradient)
 
 export const Box = () => {
   return (
@@ -144,24 +140,22 @@ function BoxScreen({ navigation }) {
         <StyledView className='justify-center items-center p-3'>
 
           {boxes.map((box, boxIndex) => (
-
-            <LinearGradient colors={['#FABB72', '#D49953']} style={styles.linearGradient}>
-
-              <StyledView className='flex-wrap rounded-3xl flex-row justify-center p-3'>
-                {
-                  box.seeds.map((seed, seedIndex) => (
-                    <StyledView
-                      key={`${boxIndex}-${seedIndex}`}
-                      className='w-1/5 aspect-square bg-white justify-center items-center border '
-                    >
-                      <Text>{seed.name}</Text>
-                    </StyledView>
-                  ))
-                }
-              </StyledView>
-
-            </LinearGradient>
-
+              <StyleLinearGradient colors={['#8E7556', '#8E7556']} className='rounded-3xl elevation-md mb-48'>
+                <StyleLinearGradient colors={['#FABB72', '#D49953']} className='rounded-2xl mb-3'>
+                  <StyledView className='flex-wrap rounded-3xl flex-row justify-center p-3'>
+                    {
+                      box.seeds.map((seed, seedIndex) => (
+                        <StyledView
+                          key={`${boxIndex}-${seedIndex}`}
+                          className='w-1/5 aspect-square bg-white justify-center items-center border '
+                        >
+                          <Text>{seed.name}</Text>
+                        </StyledView>
+                      ))
+                    }
+                  </StyledView>
+              </StyleLinearGradient>
+            </StyleLinearGradient>
           ))}
         </StyledView>
 
