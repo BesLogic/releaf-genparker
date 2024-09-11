@@ -140,7 +140,7 @@ function BoxScreen({ navigation }) {
         <StyledView className='justify-center items-center p-3'>
 
           {boxes.map((box, boxIndex) => (
-              <StyleLinearGradient colors={['#8E7556', '#8E7556']} className='rounded-3xl elevation-md mb-48'>
+              <StyleLinearGradient colors={['#8E7556', '#8E7556']} className='rounded-3xl w-auto h-auto elevation-md mb-10'>
                 <StyleLinearGradient colors={['#FABB72', '#D49953']} className='rounded-2xl mb-3'>
                   <StyledView className='flex-wrap rounded-3xl flex-row justify-center p-3'>
                     {
