@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
 });
 
 const StyledView = styled(View)
+const StyledText = styled(Text)
 const StyleLinearGradient = styled(LinearGradient)
 
 export const Box = () => {
@@ -140,10 +141,10 @@ function BoxScreen({ navigation }) {
         <StyledView className='justify-center items-center p-3'>
 
           {boxes.map((box, boxIndex) => (
-              <StyleLinearGradient colors={['#8E7556', '#8E7556']} className='rounded-3xl w-vw9/10 h-vw9.2/10 elevation-md mb-10'>
-                <StyleLinearGradient colors={['#FABB72', '#D49953']} className='rounded-2xl w-vw9/10 h-vw9/10'>
-                  <StyledView className='flex-wrap rounded-3xl h-full justify-center ml-vw7/100 mr-vw7/100'>
-                    <StyledView className='flex-wrap flex-0.5 h-vw5/100 flex-row'><Text>HEADER</Text></StyledView>
+              <StyleLinearGradient colors={['#8E7556', '#8E7556']} className='rounded-3xl w-vw9/10 h-vw9.21/10 elevation-md mb-10'>
+                <StyleLinearGradient colors={['#FABB72', '#D49953']} className='rounded-2xl h-vw9/10'>
+                  <StyledView className='flex-wrap rounded-3xl h-full gap-1 justify-center ml-vw5/100 mr-vw7/100'>
+                    <StyledView className='flex-wrap flex-0.5 h-vw6/100 flex-row'><Text>HEADER</Text></StyledView>
                     {
                       box.seeds.reduce((acc, curr, i) => {
                         if (i % 5 == 0) acc.push([]);
@@ -151,14 +152,26 @@ function BoxScreen({ navigation }) {
                         return acc;
                       }, []).map((seeds, rowIndex) => (
                         
-                        <StyledView className='flex-wrap h-full flex-1 flex-row'>
+                        <StyledView className='flex-wrap h-full gap-1 flex-1 flex-row'>
                           {seeds.map((seed, i) => (
-                            <StyledView
+                            <StyleLinearGradient
+                              colors={["#987851", "#f1d4b1"]} 
                               key={`${boxIndex}-${rowIndex}-${i}`}
-                              className='h-full flex-1 bg-white justify-center items-center border'
+                              className='h-full flex-1 justify-center items-center rounded-md'
                             >
-                              <Text>{seed.name}</Text>
-                            </StyledView>
+                              <StyledView
+                                className='absolute z-20 opacity-5 top-2 left-0 right-0 bottom-0 bg-slate-300 rounded-md ml-vw0.5/100 mb-vw0.5/100 mt-vw0.5/100 mr-vw0.5/100'
+                              ></StyledView>
+                              <StyledView
+                                className='absolute z-10 top-0 left-0 right-0 bottom-0 bg-releaf-brown-900 rounded-md ml-vw0.5/100 mb-vw0.5/100 mt-vw0.5/100 mr-vw0.5/100'
+                              ></StyledView>
+                              <StyledView
+                                key={`${boxIndex}-${rowIndex}-${i}`}
+                                className='h-full z-40 flex-1 bg-transparent justify-center  items-center rounded-md ml-vw0.5/100 mb-vw0.5/100 mt-vw0.5/100 mr-vw0.5/100'
+                              >
+                                <StyledText className='min-w-full text-center z-30 color-releaf-brown-100'>{seed.name}</StyledText>
+                              </StyledView>
+                            </StyleLinearGradient>
                           ))}
                         </StyledView>)
                     )}
