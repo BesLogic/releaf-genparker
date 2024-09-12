@@ -9,6 +9,7 @@ import { BoxItem } from '../infrastructure/entities/box';
 import { styled } from 'nativewind';
 import LinearGradient from 'react-native-linear-gradient';
 
+const MAX_NAME_LENGTH = 7;
 const styles = StyleSheet.create({
   title: {
     fontSize: 20,
@@ -169,7 +170,7 @@ function BoxScreen({ navigation }) {
                                 key={`${boxIndex}-${rowIndex}-${i}`}
                                 className='h-full z-40 flex-1 bg-transparent justify-center  items-center rounded-md ml-vw0.5/100 mb-vw0.5/100 mt-vw0.5/100 mr-vw0.5/100'
                               >
-                                <StyledText className='min-w-full text-center z-30 color-releaf-brown-100'>{seed.name}</StyledText>
+                                <StyledText className='min-w-full text-center z-30 color-releaf-brown-100'>{(seed.name as string).substring(0, MAX_NAME_LENGTH)}{seed.name.length > MAX_NAME_LENGTH ? '.' : ''}</StyledText>
                               </StyledView>
                             </StyleLinearGradient>
                           ))}
