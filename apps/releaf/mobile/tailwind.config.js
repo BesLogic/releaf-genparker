@@ -13,7 +13,22 @@ module.exports = {
   ],
   theme: {
     extend: {
-
+      width: {
+        'vw1/2': '50vw',
+        'vw1/3': '33.333333vw',
+        'vw2/3': '66.666667vw',
+        'vw1/4': '25vw',
+        'vw3/4': '75vw',
+        'vw9/10': '90vw',
+      },
+      height: {
+        'vw1/2': '50vw',
+        'vw1/3': '33.333333vw',
+        'vw2/3': '66.666667vw',
+        'vw1/4': '25vw',
+        'vw3/4': '75vw',
+        'vw9/10': '90vw',
+      },
       colors: {
         releaf: {
           green: {
