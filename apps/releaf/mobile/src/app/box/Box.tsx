@@ -142,8 +142,8 @@ function BoxScreen({ navigation }) {
           {boxes.map((box, boxIndex) => (
               <StyleLinearGradient colors={['#8E7556', '#8E7556']} className='rounded-3xl w-vw9/10 h-vw9.2/10 elevation-md mb-10'>
                 <StyleLinearGradient colors={['#FABB72', '#D49953']} className='rounded-2xl w-vw9/10 h-vw9/10'>
-                  <StyledView className='flex-wrap rounded-3xl h-full justify-center p-3'>
-                    <StyledView className='flex-wrap flex-1 flex-row'><Text>HEADER</Text></StyledView>
+                  <StyledView className='flex-wrap rounded-3xl h-full justify-center ml-vw7/100 mr-vw7/100'>
+                    <StyledView className='flex-wrap flex-0.5 h-vw5/100 flex-row'><Text>HEADER</Text></StyledView>
                     {
                       box.seeds.reduce((acc, curr, i) => {
                         if (i % 5 == 0) acc.push([]);
@@ -162,7 +162,7 @@ function BoxScreen({ navigation }) {
                           ))}
                         </StyledView>)
                     )}
-                    <StyledView className='flex-wrap flex-1 flex-row'><Text>FOOTER</Text></StyledView>
+                    <StyledView className='flex-wrap flex-row h-vw7/100'><Text>FOOTER</Text></StyledView>
                   </StyledView>
               </StyleLinearGradient>
             </StyleLinearGradient>
