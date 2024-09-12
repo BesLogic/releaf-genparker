@@ -19,12 +19,19 @@
     "publish": {
       "dependsOn": ["setup", "build"]
     },
+    "publish-fe": {
+      "dependsOn": ["setup", "build"]
+    },
     "setup": {
-      "dependsOn": ["build"]
+      "dependsOn": ["build", "build-android"]
     },
     "build": {
-      "dependsOn": ["^build", "codegen", "^codegen", "build-android"],
+      "dependsOn": ["^build", "codegen", "^codegen"],
       "inputs": ["production", "^production"],
+      "cache": true
+    },
+    "build-mobile": {
+      "dependsOn": ["build-android"],
       "cache": true
     },
     "@nx/jest:jest": {
@@ -71,5 +78,23 @@
   "nxCloudAccessToken": "ZTIwYmQ2NDktNWZlMS00M2NmLThjZjYtMzNiYTE0Y2QxZDJifHJlYWQtd3JpdGU=",
   "useInferencePlugins": false,
   "defaultBase": "main",
-  "plugins": ["@nx-dotnet/core"]
+  "plugins": [
+    "@nx-dotnet/core",
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
+    },
+    {
+      "plugin": "@nx/vite/plugin",
+      "options": {
+        "buildTargetName": "build",
+        "previewTargetName": "preview",
+        "testTargetName": "test",
+        "serveTargetName": "serve",
+        "serveStaticTargetName": "serve-static"
+      }
+    }
+  ]
 }

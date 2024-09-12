@@ -82,7 +82,8 @@ module.exports = {
           },
           orange: "#F28300",
           brownstart: "#FABB72",
-          brownend: "#8E7555"
+          brownend: "#8E7555",
+          black: "#000000",
         }
       },
 
