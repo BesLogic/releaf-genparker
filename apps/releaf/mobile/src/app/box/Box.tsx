@@ -12,6 +12,12 @@ import LinearGradient from 'react-native-linear-gradient';
 
 const MAX_NAME_LENGTH = 7;
 const styles = StyleSheet.create({
+  font: {
+    fontFamily: 'Lato-Regular',
+  },
+  fontBold: {
+    fontFamily: 'Lato-Bold',
+  },
   title: {
     fontSize: 20,
     fontWeight: '700',
@@ -155,7 +161,9 @@ function BoxScreen({ navigation }) {
               <StyleLinearGradient colors={['#8E7556', '#8E7556']} className='rounded-3xl w-vw9/10 h-vw9.21/10 elevation-md mb-10'>
                 <StyleLinearGradient colors={['#FABB72', '#D49953']} className='rounded-2xl h-vw9/10'>
                   <StyledView className='flex-wrap rounded-3xl h-full gap-1 justify-center ml-vw5/100 mr-vw7/100'>
-                    <StyledView className='flex-wrap flex-0.5 h-vw6/100 flex-row'><Text>HEADER</Text></StyledView>
+                    <StyledView className='flex-wrap flex-0.5 h-vw6/100 flex-row'>
+                      <StyledText className='font-latoRegular uppercase'>HEADER</StyledText>
+                    </StyledView>
                     {
                       box.seeds.reduce((acc, curr, i) => {
                         if (i % 5 == 0) acc.push([]);
@@ -186,7 +194,7 @@ function BoxScreen({ navigation }) {
                           ))}
                         </StyledView>)
                     )}
-                    <StyledView className='flex-wrap flex-row h-vw7/100'><Text>FOOTER</Text></StyledView>
+                    <StyledView className='flex-wrap flex-row h-vw7/100'><StyledText className="font-latoRegular" >FOOTER</StyledText></StyledView>
                   </StyledView>
               </StyleLinearGradient>
             </StyleLinearGradient>

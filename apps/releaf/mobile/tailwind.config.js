@@ -13,6 +13,34 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        'lato-black': ["Lato-Black"],
+        'lato-bold': ["Lato-Bold"],
+        'lato-regular': ["Lato-Regular"],
+        'lato-light': ["Lato-Light"],
+        'lato-thin': ["Lato-Thin"],
+        'lato-italic': ["Lato-Italic"],
+        'lato-light-italic': ["Lato-LightItalic"],
+        'lato-thin-italic': ["Lato-ThinItalic"],
+        'lato-black-italic': ["Lato-BlackItalic"],
+        'lato-bold-italic': ["Lato-BoldItalic"],
+
+        'inter-black': ["Inter_18pt-Black"],
+        'inter-bold': ["Inter_18pt-Bold"],
+        'inter-regular': ["Inter_18pt-Regular"],
+        'inter-light': ["Inter_18pt-Light"],
+        'inter-thin': ["Inter_18pt-Thin"],
+        'inter-italic': ["Inter_18pt-Italic"],
+        'inter-light-italic': ["Inter_18pt-LightItalic"],
+        'inter-thin-italic': ["Inter_18pt-ThinItalic"],
+        'inter-black-italic': ["Inter_18pt-BlackItalic"],
+        'inter-bold-italic': ["Inter_18pt-BoldItalic"],
+
+        'caveat-regular': ["Caveat-Regular"],
+        'caveat-bold': ["Caveat-Bold"],
+        'caveat-semi-bold': ["Caveat-SemiBold"],
+        'caveat-medium': ["Caveat-Medium"],
+      },
       width: {
         'vw1/1': '100vw',
         'vw1/2': '50vw',
