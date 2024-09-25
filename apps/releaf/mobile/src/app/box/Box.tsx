@@ -1,4 +1,10 @@
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { TreeStateCard } from './components/TreeStateCard';
@@ -6,6 +12,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Loading } from '../shared/Loading';
 import { BoxDetailsScreen } from './screens/BoxDetails';
 import { BoxService } from '../infrastructure/services/box.service';
+import { SetupBox } from './screens/SetupBox';
 
 const styles = StyleSheet.create({
   title: {
@@ -39,6 +46,11 @@ export const Box = () => {
       <SettingsStack.Screen
         name="PopupBoxInfo"
         component={BoxDetailsScreen}
+        options={{ headerShown: false }}
+      />
+      <SettingsStack.Screen
+        name="SetupBox"
+        component={SetupBox}
         options={{ headerShown: false }}
       />
     </SettingsStack.Navigator>
@@ -81,9 +93,11 @@ function BoxScreen({ navigation }) {
               margin: 10,
             }}
           >
-            <Text style={[styles.title]}>
-              Mes Boîtes ({boxes?.length ?? 0})
-            </Text>
+            <TouchableOpacity onPress={() => navigation.navigate('SetupBox')}>
+              <Text style={[styles.title]}>
+                Mes Boîtes ({boxes?.length ?? 0})
+              </Text>
+            </TouchableOpacity>
           </View>
 
           {boxes.map((box, index) => (

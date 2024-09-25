@@ -3,7 +3,6 @@ import {
   Text,
   TextInput,
   ScrollView,
-  Button,
   TouchableOpacity,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -14,6 +13,7 @@ import { BoxDetails } from '../../infrastructure/entities/boxDetails';
 import { styled } from 'nativewind';
 import { differenceInDays, format } from 'date-fns';
 import { CalendarIcon } from 'react-native-heroicons/outline';
+import { InputButton } from '../../shared/InputButton';
 import DatePicker from 'react-native-date-picker';
 
 const SSafeAreaView = styled(SafeAreaView);
@@ -21,8 +21,9 @@ const SText = styled(Text);
 const SView = styled(View);
 const SCalendarIcon = styled(CalendarIcon);
 const STextInput = styled(TextInput);
-const SButton = styled(Button);
 const STouchableOpacity = styled(TouchableOpacity);
+
+const SInputButton = styled(InputButton);
 
 export function BoxDetailsScreen({ route, navigation }) {
   const { id } = route.params;
@@ -123,22 +124,20 @@ export function BoxDetailsScreen({ route, navigation }) {
           </SView>
         </SView>
 
-        <SView className="mb-2 mt-16 mb-8 mx-12">
-          <STouchableOpacity onPress={save}>
-            <SView className="bg-green-600 px-8 py-5 rounded-lg">
-              <SText className="m-auto font-semibold text-white">Save</SText>
-            </SView>
-          </STouchableOpacity>
-          <STouchableOpacity
-            className="mt-2"
-            onPress={() => navigation.goBack()}
-          >
-            <SView className="border-green-600 border-[1px] px-8 py-5 rounded-lg">
-              <SText className="text-green-600 font-semibold m-auto">
-                Cancel
-              </SText>
-            </SView>
-          </STouchableOpacity>
+        <SView className="mt-16 mb-8 mx-12">
+          <SInputButton
+            text={'Save'}
+            outline={false}
+            click={save}
+          ></SInputButton>
+
+          <SView className="mt-2">
+            <SInputButton
+              text={'Cancel'}
+              outline={true}
+              click={() => navigation.goBack()}
+            ></SInputButton>
+          </SView>
         </SView>
 
         <DatePicker
