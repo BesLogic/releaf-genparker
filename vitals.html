@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .box {
+        width: 350px;
+        height: 400px;
+        background: linear-gradient(#f2e9dd, #d8c8b6);
+        border-radius: 15px;
+        gap: 3px;
+        padding: 5px 10px;
+      }
+
+      .vitals {
+        color: #433a2e;
+        font-size: x-large;
+        font-weight: 500;
+      }
+
+      .bi-sun {
+        color: #edb900;
+      }
+
+      .symbol {
+        flex: 2;
+        display: flex;
+        justify-content: center;
+        font-size: 2rem;
+      }
+
+      .percent {
+        flex: 1.2;
+        margin: 0 20px;
+        background-color: white;
+        padding: 5px 0;
+        text-align: center;
+        font-size: larger;
+        font-weight: 500;
+      }
+
+      .wide-box {
+        display: flex;
+        flex: auto;
+        align-items: center;
+        border-radius: 15px;
+        background-color: #f4efe8;
+      }
+
+      body {
+        padding: 25px 50px;
+      }
+
+      .battery-wrapper {
+        padding: 0.5rem;
+        border-left: 2px solid #efe7de;
+        height: 100%;
+        display: flex;
+        align-items: center;
+      }
+
+      .battery {
+        border: 3px solid #333;
+        width: 18px;
+        height: 28px;
+        padding: 2px;
+        border-radius: 4px;
+        position: relative;
+        margin: 15px 0;
+      }
+
+      .battery:before {
+        content: '';
+        height: 3px;
+        width: 8px;
+        background: #333;
+        display: block;
+        position: absolute;
+        top: -6px;
+        border-radius: 4px 4px 0 0;
+      }
+
+      .battery:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: -1px;
+        left: -1px;
+        right: -1px;
+        bottom: -1px;
+        border: 1px solid #fff;
+        border-radius: 2px;
+      }
+
+      .battery-level {
+        background: #30b455;
+        position: absolute;
+        bottom: 0px;
+        left: 0;
+        right: 0;
+      }
+
+      .battery-level.warn {
+        background-color: #efaf13;
+      }
+
+      .battery-level.alert {
+        background-color: #e81309;
+      }
+
+      .battery-level.alert:before {
+        background-repeat: no-repeat;
+        background-size: 18px;
+        height: 18px;
+        width: 18px;
+        margin: -25px 0 0 2px;
+        content: '';
+        display: inline-block;
+        position: absolute;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="box flex flex-col">
+      <div class="text-center">
+        <i class="bi bi-hospital-fill me-2"></i>
+        <span class="vitals">Vitals</span>
+      </div>
+
+      <div class="wide-box">
+        <div class="symbol">
+          <i class="bi bi-sun"></i>
+        </div>
+        <div class="percent rounded-full">80%</div>
+
+        <div class="battery-wrapper">
+          <div class="battery">
+            <div class="battery-level" style="height: 66%"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wide-box">
+        <div class="symbol flex">
+          <i class="bi bi-droplet"></i>
+          <i class="bi bi-droplet"></i>
+          <i class="bi bi-droplet"></i>
+        </div>
+
+        <div class="percent rounded-full">50%</div>
+
+        <div class="battery-wrapper">
+          <div class="battery">
+            <div class="battery-level alert" style="height: 20%"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wide-box">
+        <div class="symbol flex align">
+          <i class="bi bi-thermometer-high"></i>
+        </div>
+
+        <div class="percent rounded-full">30,7 Â°C</div>
+
+        <div class="battery-wrapper">
+          <div class="battery">
+            <div class="battery-level warn" style="height: 40%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
