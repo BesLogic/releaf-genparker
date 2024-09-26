@@ -16,6 +16,40 @@ import { differenceInDays, format } from 'date-fns';
 import { CalendarIcon } from 'react-native-heroicons/outline';
 import DatePicker from 'react-native-date-picker';
 
+const DEFAULT_BOX: BoxDetails = {
+  id: {
+    value: '660e14f5e64c50d55776768f',
+  },
+  treeDefinitionId: {
+    value: '660e144de64c50d55776768b',
+  },
+  seeds: [],
+  vitals: {
+    temperature: {
+      value: 24.6,
+      batteryLevel: 0,
+      lastUpdate: new Date(),
+      batteryLastUpdate: new Date(),
+    },
+    soilMoisturePercent: {
+      value: 0.994,
+      lastUpdate: new Date(),
+      batteryLevel: 50,
+      batteryLastUpdate: new Date(),
+    },
+    luminosityPercent: {
+      value: 0.001,
+      lastUpdate: new Date(),
+      batteryLevel: 75,
+      batteryLastUpdate: new Date(),
+    },
+  },
+  growthInfo: {
+    seedsAverageInchHeight: 2.3,
+    germinationDay: new Date(),
+  },
+};
+
 const SSafeAreaView = styled(SafeAreaView);
 const SText = styled(Text);
 const SView = styled(View);
@@ -38,7 +72,8 @@ export function BoxDetailsScreen({ route, navigation }) {
   const fetchBoxes = useCallback(async () => {
     setIsLoading(true);
     try {
-      const boxDetails: BoxDetails = await boxService.get(id);
+      // const boxDetails: BoxDetails = await boxService.get(id);
+      const boxDetails: BoxDetails = DEFAULT_BOX;
       setBoxDetails(boxDetails);
     } catch (error) {
       console.error(error);
