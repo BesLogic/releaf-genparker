@@ -171,6 +171,7 @@ function BoxScreen({ navigation }) {
         <StyledView className="justify-center items-center p-3">
           {boxes.map((box, boxIndex) => (
             <StyleLinearGradient
+              key={`${boxIndex}`}
               colors={['#8E7556', '#8E7556']}
               className="rounded-3xl w-vw9/10 h-vw9.21/10 elevation-md mb-10"
             >
