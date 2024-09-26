@@ -1,10 +1,17 @@
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useCallback, useEffect, useState } from 'react';
 import { Loading } from '../shared/Loading';
 import { BoxDetailsScreen } from './screens/BoxDetails';
 import { BoxService } from '../infrastructure/services/box.service';
+import { SetupBox } from './screens/SetupBox';
 import { BoxDetails } from '../infrastructure/entities/boxDetails';
 import { BoxItem } from '../infrastructure/entities/box';
 import { styled } from 'nativewind';
@@ -67,6 +74,11 @@ export const Box = () => {
         component={BoxDetailsScreen}
         options={{ headerShown: false }}
       />
+      <SettingsStack.Screen
+        name="SetupBox"
+        component={SetupBox}
+        options={{ headerShown: false }}
+      />
     </SettingsStack.Navigator>
   );
 };
@@ -125,9 +137,11 @@ function BoxScreen({ navigation }) {
               margin: 10,
             }}
           >
-            <Text style={[styles.title]}>
-              Mes Boîtes ({boxes?.length ?? 0})
-            </Text>
+            <TouchableOpacity onPress={() => navigation.navigate('SetupBox')}>
+              <Text style={[styles.title]}>
+                Mes Boîtes ({boxes?.length ?? 0})
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -157,6 +171,7 @@ function BoxScreen({ navigation }) {
         <StyledView className="justify-center items-center p-3">
           {boxes.map((box, boxIndex) => (
             <StyleLinearGradient
+              key={`${boxIndex}`}
               colors={['#8E7556', '#8E7556']}
               className="rounded-3xl w-vw9/10 h-vw9.21/10 elevation-md mb-10"
             >

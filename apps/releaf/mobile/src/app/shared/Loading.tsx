@@ -1,5 +1,4 @@
 import { View, Text } from 'react-native';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 export const Loading = () => {
   return (
