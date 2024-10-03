@@ -13,6 +13,12 @@ module.exports = {
   ],
   theme: {
     extend: {
+      flex: {
+        '2': '2 2 0%',
+        '3': '3 3 0%',
+        '4': '4 4 0%',
+        '5': '5 5 0%',
+      },
       fontFamily: {
         'lato-black': ["Lato-Black"],
         'lato-bold': ["Lato-Bold"],
@@ -106,6 +112,7 @@ module.exports = {
           brown: {
             100: "#fcf3e8",
             300: "#ede5db",
+            500: "#E4BC8D",
             900: "#756757",
           },
           orange: "#F28300",
