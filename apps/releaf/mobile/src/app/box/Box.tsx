@@ -15,7 +15,8 @@ import { SetupBox } from './screens/SetupBox';
 import { BoxItem } from '../infrastructure/entities/box';
 import { styled } from 'nativewind';
 import LinearGradient from 'react-native-linear-gradient';
-import Edit from '../../assets/images/edit';
+import { Edit } from '../../assets/images/edit';
+import { Logo } from '../../assets/images/logo'
 
 const MAX_NAME_LENGTH = 7;
 const styles = StyleSheet.create({
@@ -158,9 +159,13 @@ function BoxScreen({ navigation }) {
                 className="rounded-2xl h-vw9/10"
               >
                 <SView className="flex-wrap rounded-3xl h-full gap-1 justify-center ml-vw5/100 mr-vw7/100">
-                  <SView className="flex-wrap flex-0.5 h-vw6/100 flex-row">
-                    <SText className="font-latoRegular uppercase">
-                      HEADER
+                  <SView className="flex-wrap justify-end flex-0.5 h-vw5/100 flex-row">
+                    <SText className="ml-1 flex-4 text-base font-lato-bold">
+                      Narrow-leaved Meadowsweet
+                    </SText>
+                    <SText className="text-end font-lato-bold">
+                      <SText className='text-base'>93 </SText>
+                      <SText className='text-sm'>jours</SText>
                     </SText>
                   </SView>
                   {box.seeds
@@ -177,11 +182,11 @@ function BoxScreen({ navigation }) {
                             key={`${boxIndex}-${rowIndex}-${i}`}
                             className="h-full flex-1 justify-center items-center rounded-md"
                           >
-                            <SView className="absolute z-20 opacity-5 top-2 left-0 right-0 bottom-0 bg-slate-300 rounded-md ml-vw0.5/100 mb-vw0.5/100 mt-vw0.5/100 mr-vw0.5/100"></SView>
-                            <SView className="absolute z-10 top-0 left-0 right-0 bottom-0 bg-releaf-brown-900 rounded-md ml-vw0.5/100 mb-vw0.5/100 mt-vw0.5/100 mr-vw0.5/100"></SView>
+                            <SView className="absolute z-20 top-2 left-0 right-0 bottom-0 bg-releaf-brown-900 rounded-md ml-vw0.5/100 mb-vw0.5/100 mt-vw0.5/100 mr-vw0.5/100"></SView>
+                            <SView className="absolute z-10 top-0 left-0 right-0 bottom-0 bg-releaf-brown-800 rounded-md ml-vw0.5/100 mb-vw0.5/100 mt-vw0.5/100 mr-vw0.5/100"></SView>
                             <SView
                               key={`${boxIndex}-${rowIndex}-${i}`}
-                              className="h-full z-40 flex-1 bg-transparent justify-center  items-center rounded-md ml-vw0.5/100 mb-vw0.5/100 mt-vw0.5/100 mr-vw0.5/100"
+                              className="h-full z-40 flex-1 bg-transparent justify-end  items-center rounded-md ml-vw0.5/100 mb-vw0.5/100 mt-vw0.5/100 mr-vw0.5/100"
                             >
                               <SText className="min-w-full text-center z-30 color-releaf-brown-100">
                                 {(seed.name as string).substring(
@@ -196,8 +201,8 @@ function BoxScreen({ navigation }) {
                       </SView>
                     ))}
                   <SView className="flex-wrap flex-row h-vw7/100 pt-1 pl-1">
-                    <SText className="flex-1 font-latoRegular">
-                      LOGO
+                    <SText className="flex-1 text-base font-latoRegular">
+                      <Logo></Logo>
                     </SText>
                     <STouchableOpacity
                       className='flex-4 flex-row gap-1'
@@ -207,7 +212,7 @@ function BoxScreen({ navigation }) {
                     >
                       <SText className="text-center flex-1 text-base font-caveat-bold bg-releaf-brown-500 rounded-l-md">28 cm</SText>
                       <SText className="text-center flex-2 text-base font-caveat-bold bg-releaf-brown-500">22 novembre 2024</SText>
-                      <SText className="text-center flex-1 text-base bg-white rounded-r-md"><Edit size={20}></Edit></SText> 
+                      <SText className="text-center flex-1 text-base bg-white rounded-r-md elevation-md"><Edit size={20}></Edit></SText> 
                     </STouchableOpacity>
                   </SView>
                 </SView>
