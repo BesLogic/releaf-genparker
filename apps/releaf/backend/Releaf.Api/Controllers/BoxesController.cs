@@ -41,10 +41,9 @@ public class BoxesController : ControllerBase
   }
 
   [HttpGet]
-  public IEnumerable<string> GetAll()
+  public IEnumerable<BoxAggregate> GetAll()
   {
-    IEnumerable<BoxAggregate> boxes = boxRepo.GetBoxesForUser(currentUser.Id);
-    return boxes.Select(t => t.Id.Value);
+    return boxRepo.GetBoxesForUser(currentUser.Id);
   }
 
   [HttpGet("{id}")]

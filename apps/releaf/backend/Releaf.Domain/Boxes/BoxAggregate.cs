@@ -7,7 +7,7 @@ namespace Releaf.Domain.Boxes;
 
 public class BoxAggregate
 {
-  public const int BoxCount = 20;
+  public const int BoxCount = 25;
 
   public BoxAggregate(
     BoxId id,
