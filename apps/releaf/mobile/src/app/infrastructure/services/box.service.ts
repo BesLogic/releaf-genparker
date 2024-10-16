@@ -8,14 +8,14 @@ export interface IBoxService {
 
 export class BoxService {
 
-  async getAll(): Promise<string[]> {
-    let boxes: string[] = [];
+  async getAll(): Promise<BoxDetails[]> {
+    let boxes: BoxDetails[] = [];
     try {
       const response = await fetch(
-        'https://api.genparker.releaftrees.life/boxes/', { 
+        'https://api.genparker.releaftrees.life/boxes/', {
         headers: new Headers({
           'Authorization': 'Basic bXJiYW1ib286bXJiYW1ib28='
-        }), 
+        }),
       }
       );
       boxes = await response.json();
@@ -29,10 +29,10 @@ export class BoxService {
     let boxDetails: BoxDetails;
     try {
       const response = await fetch(
-        'https://api.genparker.releaftrees.life/boxes/' + id, { 
+        'https://api.genparker.releaftrees.life/boxes/' + id, {
         headers: new Headers({
           'Authorization': 'Basic bXJiYW1ib286bXJiYW1ib28='
-        }), 
+        }),
       }
       );
       boxDetails = await response.json();

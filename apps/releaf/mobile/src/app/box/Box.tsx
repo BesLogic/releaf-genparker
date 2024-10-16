@@ -96,25 +96,8 @@ function BoxScreen({ navigation }) {
   const fetchBoxes = useCallback(async () => {
     setIsLoading(true);
     try {
-      //const allBoxes = await boxService.getAll();
-      const allBoxes = [];
-      for (let i = 0; i < 3; i++) {
-        const seeds = [];
-        for (let j = 0; j < 25; j++) {
-          seeds.push({ name: `seed-${i}-${j}` });
-        }
-        const box: BoxItem = {
-          id: `box-${i}`,
-          seeds: seeds,
-          growthInfo: {
-            seedsAverageInchHeight: Math.random() * 10,
-            germinationDay: new Date(),
-          },
-        };
-        allBoxes.push(box);
-      }
-      setBoxes(allBoxes);
-      console.info(allBoxes);
+      const allBoxes = await boxService.getAll();
+      setBoxes(allBoxes.map((box) => new BoxItem(box)));
     } catch (error) {
       console.error(error);
     }
@@ -130,7 +113,6 @@ function BoxScreen({ navigation }) {
   }
 
   return (
-    //icitte on va afficher les boites
     <SafeAreaView>
       <ScrollView>
         <View style={{ backgroundColor: '#ffffff' }}>
@@ -164,7 +146,7 @@ function BoxScreen({ navigation }) {
                       Narrow-leaved Meadowsweet
                     </SText>
                     <SText className="text-end font-lato-bold">
-                      <SText className='text-base'>93 </SText>
+                      <SText className='text-base'>{box.dateSinceGermination} </SText>
                       <SText className='text-sm'>jours</SText>
                     </SText>
                   </SView>
@@ -175,7 +157,7 @@ function BoxScreen({ navigation }) {
                       return acc;
                     }, [])
                     .map((seeds, rowIndex) => (
-                      <SView className="flex-wrap h-full gap-1 flex-1 flex-row">
+                      <SView key={`${boxIndex}-${rowIndex}`} className="flex-wrap h-full gap-1 flex-1 flex-row">
                         {seeds.map((seed, i) => (
                           <SLinearGradient
                             colors={['#987851', '#f1d4b1']}
@@ -184,10 +166,7 @@ function BoxScreen({ navigation }) {
                           >
                             <SView className="absolute z-20 top-2 left-0 right-0 bottom-0 bg-releaf-brown-900 rounded-md ml-vw0.5/100 mb-vw0.5/100 mt-vw0.5/100 mr-vw0.5/100"></SView>
                             <SView className="absolute z-10 top-0 left-0 right-0 bottom-0 bg-releaf-brown-800 rounded-md ml-vw0.5/100 mb-vw0.5/100 mt-vw0.5/100 mr-vw0.5/100"></SView>
-                            <SView
-                              key={`${boxIndex}-${rowIndex}-${i}`}
-                              className="h-full z-40 flex-1 bg-transparent justify-end  items-center rounded-md ml-vw0.5/100 mb-vw0.5/100 mt-vw0.5/100 mr-vw0.5/100"
-                            >
+                            <SView className="h-full z-40 flex-1 bg-transparent justify-end  items-center rounded-md ml-vw0.5/100 mb-vw0.5/100 mt-vw0.5/100 mr-vw0.5/100">
                               <SText className="min-w-full text-center z-30 color-releaf-brown-100">
                                 {(seed.name as string).substring(
                                   0,
@@ -210,9 +189,9 @@ function BoxScreen({ navigation }) {
                         navigation.navigate('BoxDetails', { id: '11111' })
                       }
                     >
-                      <SText className="text-center flex-1 text-base font-caveat-bold bg-releaf-brown-500 rounded-l-md">28 cm</SText>
-                      <SText className="text-center flex-2 text-base font-caveat-bold bg-releaf-brown-500">22 novembre 2024</SText>
-                      <SText className="text-center flex-1 text-base bg-white rounded-r-md elevation-md"><Edit size={20}></Edit></SText> 
+                      <SText className="text-center flex-1 text-base font-caveat-bold bg-releaf-brown-500 rounded-l-md">{box.seedsAverageInchHeight} cm</SText>
+                      <SText className="text-center flex-2 text-base font-caveat-bold bg-releaf-brown-500">{box.germinationDay}</SText>
+                      <SText className="text-center flex-1 text-base bg-white rounded-r-md elevation-md"><Edit size={20}></Edit></SText>
                     </STouchableOpacity>
                   </SView>
                 </SView>
