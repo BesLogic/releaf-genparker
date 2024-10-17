@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Releaf.Application.Commands;
+using Releaf.Application.Query;
 using Releaf.Auth;
 using Releaf.Domain.Boxes;
 using Releaf.Domain.Repo;
@@ -41,9 +42,12 @@ public class BoxesController : ControllerBase
   }
 
   [HttpGet]
-  public IEnumerable<BoxAggregate> GetAll()
+  public async Task<IEnumerable<BoxAggregate>> GetAll()
   {
-    return boxRepo.GetBoxesForUser(currentUser.Id);
+    var cmd = new GetBoxesQuery(currentUser.Id);
+    var result = await mediator.Send(cmd);
+
+    return result;
   }
 
   [HttpGet("{id}")]

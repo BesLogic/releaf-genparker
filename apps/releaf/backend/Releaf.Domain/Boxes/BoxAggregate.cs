@@ -35,6 +35,7 @@ public class BoxAggregate
   public IEnumerable<Seed> Seeds { get; }
   public BoxVitals Vitals { get; }
   public GrowthInfo GrowthInfo { get; private set; }
+  public TreeDefinitionAggregate TreeDefinitionAggregate { get; private set; }
 
   public void UpdateTemperatureVitals(DateTime timeStamp, double temperature)
   {
@@ -108,5 +109,15 @@ public class BoxAggregate
     }
 
     GrowthInfo = growthInfo;
+  }
+
+  public void ChangeTreeDefinition(TreeDefinitionAggregate treeDefinitionAggregate)
+  {
+    if (treeDefinitionAggregate == null)
+    {
+      throw new TreeDefinitionNotFoundException();
+    }
+
+    TreeDefinitionAggregate = treeDefinitionAggregate;
   }
 }
