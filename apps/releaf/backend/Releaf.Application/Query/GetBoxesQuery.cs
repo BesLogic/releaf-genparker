@@ -29,12 +29,6 @@ public class GetBoxesQueryHandler : IRequestHandler<GetBoxesQuery, IEnumerable<B
   public Task<IEnumerable<BoxAggregate>> Handle(GetBoxesQuery request, CancellationToken cancellationToken)
   {
     var boxAggregate = BoxRepo.GetBoxesForUser(request.OwnerId);
-    
-    foreach (var item in boxAggregate)
-    {
-      var treeDefinition = TreeRepo.GetOne(item.TreeDefinitionId);
-      item.ChangeTreeDefinition(treeDefinition);
-    }
 
     return Task.FromResult(boxAggregate);
   }
