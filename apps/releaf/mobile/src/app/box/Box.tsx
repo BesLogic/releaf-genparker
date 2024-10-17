@@ -17,6 +17,8 @@ import { styled } from 'nativewind';
 import LinearGradient from 'react-native-linear-gradient';
 import { Edit } from '../../assets/images/edit';
 import { Logo } from '../../assets/images/logo'
+import { selectTreeDefinitions } from '../store/slices/treeDefinitionSlice';
+import { useSelector } from 'react-redux';
 
 const MAX_NAME_LENGTH = 7;
 const styles = StyleSheet.create({
@@ -90,8 +92,15 @@ const SettingsStack = createNativeStackNavigator();
 function BoxScreen({ navigation }) {
   const boxService = new BoxService();
 
+  const treeDefinitions = useSelector(selectTreeDefinitions);
   const [isLoading, setIsLoading] = useState(true);
   const [boxes, setBoxes] = useState<BoxItem[]>([]);
+
+  useEffect(() => {
+    if (treeDefinitions.length === 0) return;
+    if (boxes.length === 0) return;
+    boxes.forEach((box) => box.setTreeName(treeDefinitions));
+  }, [treeDefinitions, boxes])
 
   const fetchBoxes = useCallback(async () => {
     setIsLoading(true);
@@ -143,7 +152,7 @@ function BoxScreen({ navigation }) {
                 <SView className="flex-wrap rounded-3xl h-full gap-1 justify-center ml-vw5/100 mr-vw7/100">
                   <SView className="flex-wrap justify-end flex-0.5 h-vw5/100 flex-row">
                     <SText className="ml-1 flex-4 text-base font-lato-bold">
-                      Narrow-leaved Meadowsweet
+                      {box.treeName}
                     </SText>
                     <SText className="text-end font-lato-bold">
                       <SText className='text-base'>{box.dateSinceGermination} </SText>

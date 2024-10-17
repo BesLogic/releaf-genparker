@@ -7,11 +7,9 @@ import { Order } from '../order/Order';
 import { Knowledge } from '../knowledge/Knowledge';
 import { Profile } from '../profile/Profile';
 import { Notifications } from '../notifications/Notifications';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Box } from '../box/Box';
-
-
-
+import { useDispatch } from 'react-redux';
+import { load } from '../store/slices/treeDefinitionSlice';
 
 // Screen names
 const orderName = 'Order';
@@ -22,6 +20,10 @@ const profileName = 'Profile';
 
 const Tab = createBottomTabNavigator();
 export const Navigation = () => {
+  const dispatch = useDispatch();
+
+  dispatch(load());
+
   return (
     <NavigationContainer>
       <Tab.Navigator

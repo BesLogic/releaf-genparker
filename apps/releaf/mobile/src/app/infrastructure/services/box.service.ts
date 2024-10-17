@@ -1,13 +1,6 @@
 import { BoxDetails } from "../entities/boxDetails";
 
-export interface IBoxService {
-  test(): string;
-  getAll(): Promise<string[]>;
-  get(id: string): Promise<BoxDetails>;
-}
-
 export class BoxService {
-
   async getAll(): Promise<BoxDetails[]> {
     let boxes: BoxDetails[] = [];
     try {
