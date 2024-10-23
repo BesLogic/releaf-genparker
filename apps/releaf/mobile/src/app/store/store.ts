@@ -7,5 +7,6 @@ export const store = configureStore({
     treeDefinitions: treeDefinitionsReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().prepend(treeDefinitionListenerMiddleware.middleware),
+    getDefaultMiddleware()
+      .prepend(treeDefinitionListenerMiddleware.middleware),
 });

@@ -151,7 +151,7 @@ function BoxScreen({ navigation }) {
               >
                 <SView className="flex-wrap rounded-3xl h-full gap-1 justify-center ml-vw5/100 mr-vw7/100">
                   <SView className="flex-wrap justify-end flex-0.5 h-vw5/100 flex-row">
-                    <SText className="ml-1 flex-4 text-base font-lato-bold">
+                    <SText className="ml-1 uppercase flex-4 text-base font-lato-bold">
                       {box.treeName}
                     </SText>
                     <SText className="text-end font-lato-bold">
