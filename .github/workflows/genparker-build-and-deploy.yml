@@ -104,7 +104,7 @@ jobs:
       - uses: r0adkll/upload-google-play@v1
         if: ${{ hashFiles('apps/releaf/mobile/android/app/build/outputs/bundle/release/app-release.aab') != '' }}
         with:
-          serviceAccountJsonPlainText: ${{ SERVICE_ACCOUNT_JSON }}
+          serviceAccountJsonPlainText: ${SERVICE_ACCOUNT_JSON}
           packageName: com.release
           releaseFiles: apps/releaf/mobile/android/app/build/outputs/bundle/release/app-release.aab
           track: alpha
