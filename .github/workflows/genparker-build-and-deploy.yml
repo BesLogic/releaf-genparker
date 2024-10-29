@@ -3,11 +3,11 @@ name: genparker-pipeline
 on:
   push:
     branches:
-      - 'main'
+      - "main"
 
 env:
   BEFORE_SHA: ${{ github.event.before }}
-  DOCKER_ENVIRONMENT: 'latest'
+  DOCKER_ENVIRONMENT: "latest"
   ORG_GRADLE_PROJECT_RELEAF_UPLOAD_STORE_PASSWORD: ${{ secrets.RELEAF_UPLOAD_STORE_PASSWORD }}
   ORG_GRADLE_PROJECT_RELEAF_UPLOAD_KEY_PASSWORD: ${{ secrets.RELEAF_UPLOAD_KEY_PASSWORD }}
   RELEAF_GENPARKER_KEYS: ${{ secrets.RELEAF_GENPARKER_KEYS }}
@@ -47,17 +47,17 @@ jobs:
       - name: publish affected
         run: npx nx affected --target=publish --head=${{needs.init.outputs.branch}} --base=$BEFORE_SHA --configuration=${{needs.init.outputs.environment }} --parallel=5
 
-      - name: 'cp for kustomize'
+      - name: "cp for kustomize"
         run: |
           cp -r configs/genparker/base configs/genparker/overlay/philantropy/base & \
           cp configs/genparker/overlay/kustomization.yml configs/genparker/overlay/philantropy
 
-      - name: 'Kustomize Build'
+      - name: "Kustomize Build"
         uses: int128/kustomize-action@v1
         id: kustomize
         with:
-          kustomization: 'overlay/*/kustomization.yml'
-          base-directory: 'configs/genparker'
+          kustomization: "overlay/*/kustomization.yml"
+          base-directory: "configs/genparker"
 
       - run: cp -r ${{ steps.kustomize.outputs.directory }} deployment_configs
 
@@ -83,8 +83,8 @@ jobs:
 
       - uses: actions/setup-java@v4
         with:
-          distribution: 'microsoft'
-          java-version: '17'
+          distribution: "microsoft"
+          java-version: "17"
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v2
@@ -103,7 +103,7 @@ jobs:
       - uses: r0adkll/upload-google-play@v1
         if: ${{ hashFiles('apps/releaf/mobile/android/app/build/outputs/bundle/release/app-release.aab') != '' }}
         with:
-          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+          serviceAccountJsonPlainText: ${{ SERVICE_ACCOUNT_JSON }}
           packageName: com.release
           releaseFiles: apps/releaf/mobile/android/app/build/outputs/bundle/release/app-release.aab
           track: alpha
