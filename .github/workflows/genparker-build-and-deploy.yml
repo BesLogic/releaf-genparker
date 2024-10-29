@@ -11,7 +11,6 @@ env:
   ORG_GRADLE_PROJECT_RELEAF_UPLOAD_STORE_PASSWORD: ${{ secrets.RELEAF_UPLOAD_STORE_PASSWORD }}
   ORG_GRADLE_PROJECT_RELEAF_UPLOAD_KEY_PASSWORD: ${{ secrets.RELEAF_UPLOAD_KEY_PASSWORD }}
   RELEAF_GENPARKER_KEYS: ${{ secrets.RELEAF_GENPARKER_KEYS }}
-  SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
 
 jobs:
   init:
@@ -104,7 +103,7 @@ jobs:
       - uses: r0adkll/upload-google-play@v1
         if: ${{ hashFiles('apps/releaf/mobile/android/app/build/outputs/bundle/release/app-release.aab') != '' }}
         with:
-          serviceAccountJsonPlainText: ${SERVICE_ACCOUNT_JSON}
+          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
           packageName: com.release
           releaseFiles: apps/releaf/mobile/android/app/build/outputs/bundle/release/app-release.aab
           track: alpha

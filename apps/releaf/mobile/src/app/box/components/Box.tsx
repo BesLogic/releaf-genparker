@@ -16,7 +16,7 @@ const SLinearGradient = styled(LinearGradient);
 const MAX_NAME_LENGTH = 7;
 
 export function Box({ box }: { box: BoxItem }) {
-  console.log('a small updates #4')
+  console.log('a small updates #5')
   const [boxHoldPosition, setBoxHoldPosition] = useState<number>(0);
   const [boxPosition, setBoxPosition] = useState<number>(0);
 
