@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import QRScanner from './components/QRScanner';
+import QRScanner from '../box/components/QRScanner';
 const dWidth = Dimensions.get('window').width;
 
 const clr1 = 'mediumseagreen';

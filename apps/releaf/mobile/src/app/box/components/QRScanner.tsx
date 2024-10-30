@@ -13,7 +13,7 @@ const SText = styled(Text);
 
 const QRScanner = (props) => {
   const [hasPermission, setHasPermission] = useState(false);
-  const [refresh, setRefresh] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const device = useCameraDevice('back');
   // const device = null;
@@ -28,11 +28,6 @@ const QRScanner = (props) => {
   });
 
   useEffect(() => {
-    // exception case
-    setRefresh(!refresh);
-  }, [device, hasPermission]);
-
-  useEffect(() => {
     const requestCameraPermission = async () => {
       const permission = await Camera.requestCameraPermission();
       console.log('Camera.requestCameraPermission ', permission);
@@ -41,13 +36,19 @@ const QRScanner = (props) => {
 
     requestCameraPermission();
 
-    //if it is idle for 15 secs, it will be closed
-    /*
     setTimeout(() => {
-      props.onRead(null);
-    }, 15 * 1000);
-    */
+      setIsLoading(false);
+      console.log('refresh');
+    }, 3 * 1000);
   }, []);
+
+  if (isLoading) {
+    return (
+      <SView className="h-52 mt-5 bg-slate-200">
+        <SText className="m-auto text-black">Loading</SText>
+      </SView>
+    );
+  }
 
   if (device == null || !hasPermission) {
     return (

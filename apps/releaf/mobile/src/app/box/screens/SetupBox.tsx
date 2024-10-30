@@ -3,7 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from 'react';
 import { InputButton } from '../../shared/InputButton';
 import { styled } from 'nativewind';
-import QRScanner from '../../notifications/components/QRScanner';
+import QRScanner from '../components/QRScanner';
 
 const SSafeAreaView = styled(SafeAreaView);
 const SText = styled(Text);
@@ -79,7 +79,6 @@ export function SetupBox({ route, navigation }) {
 
   let dislayCamera = <View></View>;
   if (step?.displayCamera) {
-    // dislayCamera = <SView className="bg-slate-500 h-52 mt-5"></SView>;
     dislayCamera = <QRScanner onRead={onQrRead}></QRScanner>;
   }
 
@@ -107,6 +106,15 @@ export function SetupBox({ route, navigation }) {
                 text={step?.buttonText}
                 outline={false}
                 click={step?.click}
+              ></SInputButton>
+            </SView>
+            <SView className="mt-4">
+              <SInputButton
+                text="Cancel"
+                outline={true}
+                click={() => {
+                  navigation.navigate('Box');
+                }}
               ></SInputButton>
             </SView>
           </SView>

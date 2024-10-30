@@ -16,7 +16,7 @@ import { BoxItem } from '../infrastructure/entities/box';
 import { styled } from 'nativewind';
 import LinearGradient from 'react-native-linear-gradient';
 import { Edit } from '../../assets/images/edit';
-import { Logo } from '../../assets/images/logo'
+import { Logo } from '../../assets/images/logo';
 import { selectTreeDefinitions } from '../store/slices/treeDefinitionSlice';
 import { useSelector } from 'react-redux';
 
@@ -100,7 +100,7 @@ function BoxScreen({ navigation }) {
     if (treeDefinitions.length === 0) return;
     if (boxes.length === 0) return;
     boxes.forEach((box) => box.setTreeName(treeDefinitions));
-  }, [treeDefinitions, boxes])
+  }, [treeDefinitions, boxes]);
 
   const fetchBoxes = useCallback(async () => {
     setIsLoading(true);
@@ -155,8 +155,10 @@ function BoxScreen({ navigation }) {
                       {box.treeName}
                     </SText>
                     <SText className="text-end font-lato-bold">
-                      <SText className='text-base'>{box.dateSinceGermination} </SText>
-                      <SText className='text-sm'>jours</SText>
+                      <SText className="text-base">
+                        {box.dateSinceGermination}{' '}
+                      </SText>
+                      <SText className="text-sm">jours</SText>
                     </SText>
                   </SView>
                   {box.seeds
@@ -166,7 +168,10 @@ function BoxScreen({ navigation }) {
                       return acc;
                     }, [])
                     .map((seeds, rowIndex) => (
-                      <SView key={`${boxIndex}-${rowIndex}`} className="flex-wrap h-full gap-1 flex-1 flex-row">
+                      <SView
+                        key={`${boxIndex}-${rowIndex}`}
+                        className="flex-wrap h-full gap-1 flex-1 flex-row"
+                      >
                         {seeds.map((seed, i) => (
                           <SLinearGradient
                             colors={['#987851', '#f1d4b1']}
@@ -193,14 +198,20 @@ function BoxScreen({ navigation }) {
                       <Logo></Logo>
                     </SText>
                     <STouchableOpacity
-                      className='flex-4 flex-row gap-1'
+                      className="flex-4 flex-row gap-1"
                       onPress={() =>
                         navigation.navigate('BoxDetails', { id: '11111' })
                       }
                     >
-                      <SText className="text-center flex-1 text-base font-caveat-bold bg-releaf-brown-500 rounded-l-md">{box.seedsAverageInchHeight} cm</SText>
-                      <SText className="text-center flex-2 text-base font-caveat-bold bg-releaf-brown-500">{box.germinationDay}</SText>
-                      <SText className="text-center flex-1 text-base bg-white rounded-r-md elevation-md"><Edit size={20}></Edit></SText>
+                      <SText className="text-center flex-1 text-base font-caveat-bold bg-releaf-brown-500 rounded-l-md">
+                        {box.seedsAverageInchHeight} cm
+                      </SText>
+                      <SText className="text-center flex-2 text-base font-caveat-bold bg-releaf-brown-500">
+                        {box.germinationDay}
+                      </SText>
+                      <SText className="text-center flex-1 text-base bg-white rounded-r-md elevation-md">
+                        <Edit size={20}></Edit>
+                      </SText>
                     </STouchableOpacity>
                   </SView>
                 </SView>
