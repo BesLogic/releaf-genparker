@@ -3,6 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from 'react';
 import { InputButton } from '../../shared/InputButton';
 import { styled } from 'nativewind';
+import QRScanner from '../../notifications/components/QRScanner';
 
 const SSafeAreaView = styled(SafeAreaView);
 const SText = styled(Text);
@@ -62,11 +63,24 @@ export function SetupBox({ route, navigation }) {
     } as SetupStep,
   ];
 
+  const [showQR, setShowQR] = useState(false);
+  const [qrCode, setQrCode] = useState('');
+
+  const openQRscanner = () => {
+    setShowQR(true);
+  };
+
+  const onQrRead = (qrtext) => {
+    setQrCode(qrtext);
+    setShowQR(false);
+  };
+
   const [step, setStep] = useState<SetupStep>(allSteps[0]);
 
   let dislayCamera = <View></View>;
   if (step?.displayCamera) {
-    dislayCamera = <SView className="bg-slate-500 h-52 mt-5"></SView>;
+    // dislayCamera = <SView className="bg-slate-500 h-52 mt-5"></SView>;
+    dislayCamera = <QRScanner onRead={onQrRead}></QRScanner>;
   }
 
   return (
