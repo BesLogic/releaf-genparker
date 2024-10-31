@@ -11,7 +11,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { Loading } from '../../shared/Loading';
 import { BoxDetailsScreen } from './BoxDetails';
 import { BoxService } from '../../infrastructure/services/box.service';
-import { SetupBox } from './SetupBox';
 import { BoxItem } from '../../infrastructure/entities/box';
 import { styled } from 'nativewind';
 import { selectTreeDefinitions } from '../../store/slices/treeDefinitionSlice';
@@ -28,22 +27,13 @@ const styles = StyleSheet.create({
 
 const SView = styled(View);
 
+// @TODO : remove navigation at this level
 export const Boxes = () => {
   return (
     <SettingsStack.Navigator>
       <SettingsStack.Screen
         name="Box"
         component={BoxScreen}
-        options={{ headerShown: false }}
-      />
-      <SettingsStack.Screen
-        name="BoxDetails"
-        component={BoxDetailsScreen}
-        options={{ headerShown: false }}
-      />
-      <SettingsStack.Screen
-        name="PopupBoxInfo"
-        component={BoxDetailsScreen}
         options={{ headerShown: false }}
       />
     </SettingsStack.Navigator>
@@ -103,7 +93,7 @@ function BoxScreen({ navigation }) {
 
         <SView className="justify-center items-center p-3">
           {boxes.map((box, boxIndex) => (
-            <Box key={boxIndex} box={box}></Box>
+            <Box key={boxIndex} box={box} navigation={navigation}></Box>
           ))}
         </SView>
       </ScrollView>

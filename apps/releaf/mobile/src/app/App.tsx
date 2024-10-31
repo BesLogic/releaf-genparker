@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { store } from './store/store';
 import { Provider } from 'react-redux';
 import { SetupBox } from '../app/box/screens/SetupBox';
+import { BoxDetailsScreen } from '../app/box/screens/BoxDetails';
 
 const SettingsStack = createNativeStackNavigator();
 
@@ -20,13 +21,18 @@ export const App = () => {
       <NavigationContainer>
         <SettingsStack.Navigator>
           <SettingsStack.Screen
-            name="Box"
-            component={MainNav}
+            name="SetupBox"
+            component={SetupBox}
             options={{ headerShown: false }}
           />
           <SettingsStack.Screen
-            name="SetupBox"
-            component={SetupBox}
+            name="BoxDetails"
+            component={BoxDetailsScreen}
+            options={{ headerShown: false }}
+          />
+          <SettingsStack.Screen
+            name="Box"
+            component={MainNav}
             options={{ headerShown: false }}
           />
         </SettingsStack.Navigator>

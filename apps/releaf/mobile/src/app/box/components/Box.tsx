@@ -15,33 +15,33 @@ const SLinearGradient = styled(LinearGradient);
 
 const MAX_NAME_LENGTH = 7;
 
-export function Box({ box }: { box: BoxItem }) {
-  console.log('a small updates #5')
+export function Box({ box, navigation }: { box: BoxItem; navigation: any }) {
+  console.log('a small updates #5');
   const [boxHoldPosition, setBoxHoldPosition] = useState<number>(0);
   const [boxPosition, setBoxPosition] = useState<number>(0);
 
   const ontouchstart = (ev: GestureResponderEvent) => {
-    setBoxHoldPosition(ev.nativeEvent.locationX)
-  }
+    setBoxHoldPosition(ev.nativeEvent.locationX);
+  };
 
   const ontouchmove = (ev: GestureResponderEvent) => {
-    const diff = ev.nativeEvent.pageX - boxHoldPosition
-    const pagePercent = (diff / windowWidth) * 100
-    if (pagePercent < -60 || pagePercent > 0) return
-    if (Math.abs(diff - boxPosition) < 0.5) return
-    setBoxPosition(diff)
-  }
+    const diff = ev.nativeEvent.pageX - boxHoldPosition;
+    const pagePercent = (diff / windowWidth) * 100;
+    if (pagePercent < -60 || pagePercent > 0) return;
+    if (Math.abs(diff - boxPosition) < 0.5) return;
+    setBoxPosition(diff);
+  };
 
   const ontouchend = (ev: GestureResponderEvent) => {
-    const pagePercent = (boxPosition / windowWidth) * 100
-    const diff = ev.nativeEvent.pageX - boxHoldPosition
-    setBoxPosition(diff)
+    const pagePercent = (boxPosition / windowWidth) * 100;
+    const diff = ev.nativeEvent.pageX - boxHoldPosition;
+    setBoxPosition(diff);
     if (pagePercent < -20) {
-      setBoxPosition((-60 / 100) * windowWidth)
+      setBoxPosition((-60 / 100) * windowWidth);
     } else {
-      setBoxPosition(0)
+      setBoxPosition(0);
     }
-  }
+  };
 
   return (
     <SLinearGradient
@@ -52,7 +52,7 @@ export function Box({ box }: { box: BoxItem }) {
       className="rounded-3xl w-vw9/10 h-vw9.21/10 elevation-md mb-10"
       style={{ transform: [{ translateX: boxPosition }] }}
     >
-      <SView className="top-0 left-0 right-0 bottom-0 absolute h-full z-40 bg-transparent"></SView>
+      <SView className="bg-transparent top-0 left-0 right-0 bottom-10 absolute z-40"></SView>
       <SLinearGradient
         colors={['#FABB72', '#D49953']}
         className="rounded-2xl h-vw9/10"
@@ -101,11 +101,20 @@ export function Box({ box }: { box: BoxItem }) {
               <Logo></Logo>
             </SText>
             <STouchableOpacity
-              className='flex-4 flex-row gap-1'
+              onPress={() => {
+                navigation.navigate('BoxDetails', { id: box.id });
+              }}
+              className="flex-4 flex-row gap-1"
             >
-              <SText className="text-center flex-1 text-base font-caveat-bold bg-releaf-brown-500 rounded-l-md">{box.seedsAverageInchHeight} cm</SText>
-              <SText className="text-center flex-2 text-base font-caveat-bold bg-releaf-brown-500">{box.germinationDay}</SText>
-              <SText className="text-center flex-1 text-base bg-white rounded-r-md elevation-md"><Edit size={20}></Edit></SText>
+              <SText className="text-center flex-1 text-base font-caveat-bold bg-releaf-brown-500 rounded-l-md">
+                {box.seedsAverageInchHeight} cm
+              </SText>
+              <SText className="text-center flex-2 text-base font-caveat-bold bg-releaf-brown-500">
+                {box.germinationDay}
+              </SText>
+              <SText className="text-center flex-1 text-base bg-white rounded-r-md elevation-md">
+                <Edit size={20}></Edit>
+              </SText>
             </STouchableOpacity>
           </SView>
         </SView>
