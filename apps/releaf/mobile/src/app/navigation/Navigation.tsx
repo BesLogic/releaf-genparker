@@ -7,7 +7,7 @@ import { Order } from '../order/Order';
 import { Knowledge } from '../knowledge/Knowledge';
 import { Profile } from '../profile/Profile';
 import { Notifications } from '../notifications/Notifications';
-import { Box } from '../box/Box';
+import { Boxes } from '../box/screens/Boxes';
 import { useDispatch } from 'react-redux';
 import { load } from '../store/slices/treeDefinitionSlice';
 
@@ -63,7 +63,7 @@ export const Navigation = () => {
         />
         <Tab.Screen
           name={homeName}
-          component={Box}
+          component={Boxes}
           options={{ headerShown: false, tabBarLabel: '' }}
         />
         <Tab.Screen
