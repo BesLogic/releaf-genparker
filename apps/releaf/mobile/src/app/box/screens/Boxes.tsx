@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '700',
     color: '#2C4E3C',
-  }
+  },
 });
 
 const SView = styled(View);
@@ -46,11 +46,6 @@ export const Boxes = () => {
         component={BoxDetailsScreen}
         options={{ headerShown: false }}
       />
-      <SettingsStack.Screen
-        name="SetupBox"
-        component={SetupBox}
-        options={{ headerShown: false }}
-      />
     </SettingsStack.Navigator>
   );
 };
@@ -68,7 +63,7 @@ function BoxScreen({ navigation }) {
     if (treeDefinitions.length === 0) return;
     if (boxes.length === 0) return;
     boxes.forEach((box) => box.setTreeName(treeDefinitions));
-  }, [treeDefinitions, boxes])
+  }, [treeDefinitions, boxes]);
 
   const fetchBoxes = useCallback(async () => {
     setIsLoading(true);
@@ -112,6 +107,6 @@ function BoxScreen({ navigation }) {
           ))}
         </SView>
       </ScrollView>
-    </SafeAreaView >
+    </SafeAreaView>
   );
 }

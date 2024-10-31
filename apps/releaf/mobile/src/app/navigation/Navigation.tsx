@@ -25,59 +25,56 @@ export const Navigation = () => {
   dispatch(load());
 
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        initialRouteName={homeName}
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            const rn = route.name;
+    <Tab.Navigator
+      initialRouteName={homeName}
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          const rn = route.name;
 
-            let type = IconType.StoreFront;
+          let type = IconType.StoreFront;
 
-            if (rn === orderName) {
-              type = IconType.StoreFront;
-            } else if (rn === knowledgeName) {
-              type = IconType.MenuBook;
-            } else if (rn === homeName) {
-              type = IconType.PottedPlant;
-            } else if (rn === notificationsName) {
-              type = IconType.Notification;
-            } else {
-              type = IconType.Face;
-            }
+          if (rn === orderName) {
+            type = IconType.StoreFront;
+          } else if (rn === knowledgeName) {
+            type = IconType.MenuBook;
+          } else if (rn === homeName) {
+            type = IconType.PottedPlant;
+          } else if (rn === notificationsName) {
+            type = IconType.Notification;
+          } else {
+            type = IconType.Face;
+          }
 
-            return <Icons type={type} isSelected={focused} />;
-          },
-          tabBarStyle: { height: 100, backgroundColor: '#009959' },
-        })}
-      >
-        <Tab.Screen
-          name={orderName}
-          component={Order}
-          options={{ headerShown: false, tabBarLabel: '' }}
-        />
-        <Tab.Screen
-          name={knowledgeName}
-          component={Knowledge}
-          options={{ headerShown: false, tabBarLabel: '' }}
-        />
-        <Tab.Screen
-          name={homeName}
-          component={Boxes}
-          options={{ headerShown: false, tabBarLabel: '' }}
-        />
-        <Tab.Screen
-          name={notificationsName}
-          component={Notifications}
-          options={{ headerShown: false, tabBarLabel: '' }}
-        />
-        <Tab.Screen
-          name={profileName}
-          component={Profile}
-          options={{ headerShown: false, tabBarLabel: '' }}
-        />
-      </Tab.Navigator>
-
-    </NavigationContainer>
+          return <Icons type={type} isSelected={focused} />;
+        },
+        tabBarStyle: { height: 100, backgroundColor: '#009959' },
+      })}
+    >
+      <Tab.Screen
+        name={orderName}
+        component={Order}
+        options={{ headerShown: false, tabBarLabel: '' }}
+      />
+      <Tab.Screen
+        name={knowledgeName}
+        component={Knowledge}
+        options={{ headerShown: false, tabBarLabel: '' }}
+      />
+      <Tab.Screen
+        name={homeName}
+        component={Boxes}
+        options={{ headerShown: false, tabBarLabel: '' }}
+      />
+      <Tab.Screen
+        name={notificationsName}
+        component={Notifications}
+        options={{ headerShown: false, tabBarLabel: '' }}
+      />
+      <Tab.Screen
+        name={profileName}
+        component={Profile}
+        options={{ headerShown: false, tabBarLabel: '' }}
+      />
+    </Tab.Navigator>
   );
 };
