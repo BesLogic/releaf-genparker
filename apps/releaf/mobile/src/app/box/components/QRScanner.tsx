@@ -6,17 +6,18 @@ import {
   useCodeScanner,
 } from 'react-native-vision-camera';
 import { styled } from 'nativewind';
+import { InputButton } from '../../shared/InputButton';
 
 const SCamera = styled(Camera);
 const SView = styled(View);
 const SText = styled(Text);
+const SInputButton = styled(InputButton);
 
 const QRScanner = (props) => {
   const [hasPermission, setHasPermission] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [showCamera, setShowCamera] = useState(false);
 
   const device = useCameraDevice('back');
-  // const device = null;
 
   const codeScanner = useCodeScanner({
     codeTypes: ['qr'],
@@ -35,24 +36,27 @@ const QRScanner = (props) => {
     };
 
     requestCameraPermission();
-
-    setTimeout(() => {
-      setIsLoading(false);
-      console.log('refresh');
-    }, 3 * 1000);
   }, []);
 
-  if (isLoading) {
+  if (!showCamera) {
     return (
-      <SView className="h-52 mt-5 bg-slate-200">
-        <SText className="m-auto text-black">Loading</SText>
+      <SView className="w-full h-full bg-slate-200">
+        <SView className="mx-5 m-auto">
+          <SInputButton
+            text="Show Camera"
+            outline={true}
+            click={() => {
+              setShowCamera(true);
+            }}
+          ></SInputButton>
+        </SView>
       </SView>
     );
   }
 
   if (device == null || !hasPermission) {
     return (
-      <SView className="h-52 mt-5 bg-slate-200">
+      <SView className="w-full h-full bg-slate-200">
         <SText className="m-auto text-black">
           Camera not available or not permitted
         </SText>
@@ -63,7 +67,7 @@ const QRScanner = (props) => {
   return (
     <SCamera
       codeScanner={codeScanner}
-      className="h-52 mt-5"
+      className="w-full h-full"
       device={device}
       isActive={true}
     />

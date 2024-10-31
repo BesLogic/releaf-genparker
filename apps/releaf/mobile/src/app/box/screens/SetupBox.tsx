@@ -63,27 +63,25 @@ export function SetupBox({ route, navigation }) {
     } as SetupStep,
   ];
 
-  const [showQR, setShowQR] = useState(false);
   const [qrCode, setQrCode] = useState('');
-
-  const openQRscanner = () => {
-    setShowQR(true);
-  };
 
   const onQrRead = (qrtext) => {
     setQrCode(qrtext);
-    setShowQR(false);
   };
 
   const [step, setStep] = useState<SetupStep>(allSteps[0]);
 
   let dislayCamera = <View></View>;
   if (step?.displayCamera) {
-    dislayCamera = <QRScanner onRead={onQrRead}></QRScanner>;
+    dislayCamera = (
+      <SView className="h-52 mt-5">
+        <QRScanner onRead={onQrRead}></QRScanner>
+      </SView>
+    );
   }
 
   return (
-    <SView style={{ flex: 1 }} className="bg-green-100">
+    <SView className="bg-green-100">
       <SSafeAreaView>
         <ScrollView>
           <SView className="mt-5">
