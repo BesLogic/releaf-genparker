@@ -6,11 +6,12 @@ const SText = styled(Text);
 const SView = styled(View);
 const STouchableOpacity = styled(TouchableOpacity);
 
-const ButtonClass = 'bg-green-600 px-8 py-5 rounded-lg';
-const TextClass = 'm-auto font-semibold text-white';
+const ButtonClass = 'bg-releaf-green-500 px-20 py-4 rounded-lg';
+const TextClass = 'm-auto font-lato-bold text-xl text-white';
 
-const ButtonOutlineClass = 'border-green-600 border-[1px] px-8 py-5 rounded-lg';
-const TextOutlineClass = 'text-green-600 font-semibold m-auto';
+const ButtonOutlineClass =
+  'border-releaf-green-500 border-[1px] px-20 py-4 rounded-lg';
+const TextOutlineClass = 'text-releaf-green-500 font-lato-bold text-xl m-auto';
 
 interface InputButtonProps {
   text: string;

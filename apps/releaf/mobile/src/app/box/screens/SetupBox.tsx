@@ -85,21 +85,25 @@ export function SetupBox({ route, navigation }) {
       <SSafeAreaView>
         <ScrollView>
           <SView className="mt-5">
-            <SText className="text-green-600 font-semibold text-3xl m-auto">
+            <SText className="text-releaf-green-500 text-3xl m-auto font-lato-bold">
               Set up your box
             </SText>
           </SView>
 
           <SView className="mx-6 mt-3 mb-3 px-4 py-6 bg-white rounded-lg">
-            <SText className="text-gray-700 text-xl mb-4">
+            <SText className="text-releaf-green-10 text-2xl mb-4 font-lato-bold">
               Step {step?.index}
             </SText>
-            <SText className="text-gray-700 text-base">{step?.info1}</SText>
+            <SText className="text-releaf-green-10 text-xl font-lato-bold">
+              {step?.info1}
+            </SText>
             {dislayCamera}
             <SView className="mt-2">
-              <SText className="text-green-600">Notice: {step?.hint}</SText>
+              <SText className="text-releaf-green-500 text-sm font-lato">
+                Notice: {step?.hint}
+              </SText>
             </SView>
-            <SView className="mt-8">
+            <SView className="mt-20">
               <SInputButton
                 text={step?.buttonText}
                 outline={false}

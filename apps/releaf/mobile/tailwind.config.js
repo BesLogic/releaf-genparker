@@ -104,6 +104,7 @@ module.exports = {
       colors: {
         releaf: {
           green: {
+            10: "#2C4E3C",
             100: "#00A86B",
             500: "#007E51",
             700: "#009959",
