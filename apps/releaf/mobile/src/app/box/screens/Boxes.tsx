@@ -17,6 +17,7 @@ import { styled } from 'nativewind';
 import { selectTreeDefinitions } from '../../store/slices/treeDefinitionSlice';
 import { useSelector } from 'react-redux';
 import { Box } from '../components/Box';
+import { Vitals } from '../components/Vitals';
 
 const styles = StyleSheet.create({
   title: {
@@ -108,7 +109,14 @@ function BoxScreen({ navigation }) {
 
         <SView className="justify-center items-center p-3">
           {boxes.map((box, boxIndex) => (
-            <Box key={boxIndex} box={box}></Box>
+            <SView className='relative'>
+              <SView className="z-10">
+                <Box key={boxIndex} box={box}></Box>
+              </SView>
+              <SView className='absolute left-1 right-1 top-9'>
+                <Vitals></Vitals>
+              </SView>
+            </SView>
           ))}
         </SView>
       </ScrollView>

@@ -65,8 +65,6 @@ export function BoxDetailsScreen({ route, navigation }) {
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
 
-  const boxService = new BoxService();
-
   const [isLoading, setIsLoading] = useState(true);
   const [boxDetails, setBoxDetails] = useState<BoxDetails>(null);
 

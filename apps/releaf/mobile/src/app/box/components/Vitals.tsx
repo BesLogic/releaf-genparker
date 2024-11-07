@@ -1,72 +1,30 @@
-const styles = StyleSheet.create({
-  // :root {
-  //   --wide-box-bg-color: #f4efe9;
-  // }
+import { styled } from "nativewind";
+import { View, Text, } from "react-native";
+import LinearGradient from "react-native-linear-gradient";
+import { HealthMetrics } from "../../../assets/images/health-metrics";
 
-  // .box {
-  //   width: 350px;
-  //   height: 400px;
-  //   background: linear-gradient(#F2E9DD, #D8C8B6);
-  //   border-radius: 15px;
-  //   gap: 3px;
-  //   padding: 5px 10px;
-  // }
+const SLinearGradient = styled(LinearGradient);
+const SView = styled(View);
+const SText = styled(Text);
 
-  // .vitals {
-  //   color: #433A2E;
-  //   font-size: x-large;
-  //   font-weight: 500;
-  // }
-
-  // .symbol {
-  //   flex: 2;
-  //   display: flex;
-  //   justify-content: center;
-  //   font-size: 2rem;
-  // }
-
-  // .percent {
-  //   flex: 1.2;
-  //   margin: 0 20px;
-  //   background-color: white;
-  //   padding: 5px 0;
-  //   text-align: center;
-  //   font-size: larger;
-  //   font-weight: 500;
-  // }
-
-  // .wide-box {
-  //   display: flex;
-  //   flex: auto;
-  //   align-items: center;
-  //   border-radius: 15px;
-  //   background-color: var(--wide-box-bg-color);
-  // }
-
-  // body {
-  //   padding: 25px 50px;
-  // }
-
-  // .battery-wrapper {
-  //   padding: 0.5rem;
-  //   border-left: 2px solid #EFE7DE;
-  //   height: 100%;
-  //   display: flex;
-  //   align-items: center;
-  // }
-
-  // .warning {
-  //   position: absolute;
-  //   top: 10px;
-  //   left: 10px;
-  // }
-});
-
-export const CircleVitalStatus = ({ type = 'light' }) => {
-  return (<View></View>);
+export const Vitals = ({ type = 'light' }) => {
+  return (<SLinearGradient
+    colors={['#8E7555', '#8E7555']}
+    className="rounded-3xl h-vw7.9/10 elevation-md mb-10"
+  >
+    <SLinearGradient
+      colors={['#F3E9DD', '#D8C9B7']}
+      className="rounded-2xl h-vw7.8/10 pl-vw1/3"
+    >
+      <SView className="flex-row items-center pt-2">
+        <HealthMetrics height={20} width={20}></HealthMetrics>
+        <SText className="pl-2 font-lato-bold text-2xl color-releaf-brown-900">Vitals</SText>
+      </SView>
+    </SLinearGradient>
+  </SLinearGradient>);
   // <View styles={class="box flex flex-col"}>
-     {/* class="box flex flex-col" */}
-    {/* <div class="flex justify-center">
+  {/* class="box flex flex-col" */ }
+  {/* <div class="flex justify-center">
       <img src="assets/vitals/cross.svg" alt="cross" />
       <span class="vitals">Vitals</span>
     </div>
