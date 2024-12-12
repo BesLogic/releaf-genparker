@@ -1,28 +1,12 @@
 # https://github.com/nginx-proxy/nginx-proxy
 version: '3.7'
 services:
-  # nginx-docker-gen:
-  #   image: nginxproxy/docker-gen
-  #   restart: always
-  #   container_name: nginx-proxy-gen
-  #   labels:
-  #     - "com.github.nginx-proxy.docker-gen"
-  #   networks:
-  #     - nginx
-  #     - nginx-canopeum
-  #     - nginx-genparker
-  #   volumes:
-  #     - /var/run/docker.sock:/tmp/docker.sock:rw
-  #     - nginx-template:/etc/docker-gen/templates
-  #     - /var/run/nginx/nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro
-  #     - nginx-config:/etc/nginx/conf.d
-
   nginx-proxy:
     image: nginxproxy/nginx-proxy
     restart: always
     container_name: nginx-proxy
     labels:
-      - "com.github.nginx-proxy.nginx"
+      - 'com.github.nginx-proxy.nginx'
     networks:
       - nginx
       - nginx-canopeum
@@ -33,8 +17,8 @@ services:
       - nginx-html:/usr/share/nginx/html
       - nginx-config:/etc/nginx/conf.d
     ports:
-      - "80:80"
-      - "443:443"
+      - '80:80'
+      - '443:443'
 
   nginx-proxy-acme:
     image: nginxproxy/acme-companion
@@ -54,6 +38,21 @@ services:
       - /etc/letsencrypt/live/releaftrees.life:/etc/nginx/certs
       - nginx-acme:/etc/acme.sh
       - nginx-html:/usr/share/nginx/html
+
+  Watchtower:
+    container_name: Watchtower
+    image: containrrr/watchtower
+    command: --debug false --interval 60 --label-enable true --include-restarting true --include-stopped true --cleanup true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WATCHTOWER_POLL_INTERVAL=60
+      - WATCHTOWER_DEBUG=false
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_INCLUDE_STOPPED=true
+      - WATCHTOWER_INCLUDE_RESTARTING=true
+      - WATCHTOWER_LABEL_ENABLE=true
+      - WATCHTOWER_NOTIFICATIONS_LEVEL=info
 
 volumes:
   nginx-acme:
