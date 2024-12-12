@@ -42,7 +42,7 @@ services:
   Watchtower:
     container_name: Watchtower
     image: containrrr/watchtower
-    command: --debug false --interval 60 --label-enable true --include-restarting true --include-stopped true --cleanup true
+    command: --debug false --interval 60 --include-restarting true --include-stopped true --cleanup true --debug
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
