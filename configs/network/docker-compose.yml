@@ -42,9 +42,13 @@ services:
   Watchtower:
     container_name: Watchtower
     image: containrrr/watchtower
-    command: --debug true --interval 60 --include-restarting true --include-stopped true --cleanup true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      WATCHTOWER_DEBUG=true
+      WATCHTOWER_LOG_LEVEL=debug
+      WATCHTOWER_POLL_INTERVAL=60
+      
 
 volumes:
   nginx-acme:
