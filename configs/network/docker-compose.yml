@@ -48,9 +48,10 @@ services:
     environment:
       - WATCHTOWER_POLL_INTERVAL=60
       - WATCHTOWER_DEBUG=true
-      - WATCHTOWER_CLEANUP=true
       - WATCHTOWER_INCLUDE_STOPPED=true
       - WATCHTOWER_INCLUDE_RESTARTING=true
+      - WATCHTOWER_CLEANUP=false
+      - WATCHTOWER_ROLLING_RESTART=true
 
 volumes:
   nginx-acme:
