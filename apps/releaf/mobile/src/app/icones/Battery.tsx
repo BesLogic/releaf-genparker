@@ -1,7 +1,7 @@
 import * as React from "react"
 import Svg, { G, Rect, Path, Defs, ClipPath } from "react-native-svg"
 
-const SvgComponent = (props) => {
+export const Battery = (props: { percent: number }) => {
   const lerp = (a, b, decPercent) => {
     return (a * (1 - decPercent)) + (b * decPercent);
   }
@@ -48,4 +48,3 @@ const SvgComponent = (props) => {
     </Defs>
   </Svg>;
 }
-export default SvgComponent
