@@ -11,6 +11,7 @@ services:
       - nginx
       - nginx-canopeum
       - nginx-genparker
+      - nginx-carboneqc
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - /etc/letsencrypt/live/releaftrees.life:/etc/nginx/certs
@@ -28,6 +29,7 @@ services:
       - nginx
       - nginx-canopeum
       - nginx-genparker
+      - nginx-carboneqc
     depends_on:
       - nginx-proxy
       - nginx-proxy-gen
@@ -68,4 +70,6 @@ networks:
   nginx-canopeum:
     external: true
   nginx-genparker:
+    external: true
+  nginx-carboneqc:
     external: true
