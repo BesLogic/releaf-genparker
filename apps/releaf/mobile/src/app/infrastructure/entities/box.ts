@@ -2,6 +2,7 @@ import { BoxDetails } from "./boxDetails";
 import { Seed } from "./seed";
 import moment from 'moment'
 import { TreeDefinition } from "./treeDefinition";
+import { Vitals } from "./vital";
 
 export class BoxItem {
   id: string;
@@ -11,12 +12,14 @@ export class BoxItem {
   germinationDay: string;
   dateSinceGermination: string;
   treeName: string;
+  vitals: Vitals;
 
   constructor(boxDetails: BoxDetails) {
     this.id = boxDetails.id.value;
     this.seeds = boxDetails.seeds;
     this.seedsAverageInchHeight = boxDetails.growthInfo.seedsAverageInchHeight;
     this.treeDefinitionId = boxDetails.treeDefinitionId.value;
+    this.vitals = boxDetails.vitals;
 
     const momentGerminationDay = moment(boxDetails.growthInfo.germinationDay);
     const now = moment(new Date());

@@ -114,12 +114,12 @@ function BoxScreen({ navigation }) {
                 <Box key={boxIndex} box={box}></Box>
               </SView>
               <SView className='absolute left-1 right-1 top-9'>
-                <Vitals></Vitals>
+                <Vitals box={box}></Vitals>
               </SView>
             </SView>
           ))}
         </SView>
       </ScrollView>
-    </SafeAreaView >
+    </SafeAreaView>
   );
 }
