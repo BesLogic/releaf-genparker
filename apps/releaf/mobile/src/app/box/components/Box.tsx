@@ -17,7 +17,7 @@ const MAX_NAME_LENGTH = 7;
 export const BOX_LEFT_POSITION = -0.6 * windowWidth;
 export const BOX_RIGHT_POSITION = 0;
 
-export function Box({ box }: { box: BoxItem }) {
+export function Box({ box, navigate }: { box: BoxItem, navigate: (boxId: string) => void }) {
   let finalPosition = 0;
 
   const pan = useRef(new Animated.ValueXY()).current;
@@ -56,7 +56,7 @@ export function Box({ box }: { box: BoxItem }) {
   return (
     <Animated.View
       style={{
-        transform: [{ translateX: pan.x }],
+        transform: [{ translateX: pan.x }]
       }}
       {...panResponder.panHandlers}
     >
@@ -64,8 +64,6 @@ export function Box({ box }: { box: BoxItem }) {
         colors={['#8E7556', '#8E7556']}
         className="rounded-3xl w-vw9/10 h-vw9.21/10 elevation-md mb-10"
       >
-        <SView className="top-0 left-0 right-0 bottom-0 absolute h-full z-40 bg-transparent"></SView>
-
         <SLinearGradient
           colors={['#FABB72', '#D49953']}
           className="rounded-2xl h-vw9/10"
@@ -73,7 +71,7 @@ export function Box({ box }: { box: BoxItem }) {
           <SView className="flex-wrap rounded-3xl h-full gap-1 justify-center ml-vw5/100 mr-vw7/100">
             <SView className="flex-wrap justify-end flex-0.5 h-vw5/100 flex-row">
               <SText className="ml-1 uppercase flex-4 text-base font-lato-bold">
-                {box.treeName}2
+                {box.treeName}
               </SText>
               <SText className="text-end font-lato-bold">
                 <SText className='text-base'>{box.dateSinceGermination} </SText>
@@ -109,12 +107,15 @@ export function Box({ box }: { box: BoxItem }) {
                   ))}
                 </SView>
               ))}
-            <SView className="flex-wrap flex-row h-vw7/100 pt-1 pl-1  z-60">
+            <SView className="flex-wrap flex-row h-vw7/100 pt-1 pl-1">
               <SText className="flex-1 text-base font-latoRegular">
                 <Logo></Logo>
               </SText>
               <STouchableOpacity
                 className='flex-4 flex-row gap-1'
+                onPressOut={
+                  () => navigate(box.id)
+                }
               >
                 <SText className="text-center flex-1 text-base font-caveat-bold bg-releaf-brown-500 rounded-l-md">{box.seedsAverageInchHeight} cm</SText>
                 <SText className="text-center flex-2 text-base font-caveat-bold bg-releaf-brown-500">{box.germinationDay}</SText>

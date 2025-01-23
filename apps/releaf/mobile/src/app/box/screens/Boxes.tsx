@@ -111,7 +111,13 @@ function BoxScreen({ navigation }) {
           {boxes.map((box, boxIndex) => (
             <SView className='relative'>
               <SView className="z-10">
-                <Box key={boxIndex} box={box}></Box>
+                <Box 
+                  key={boxIndex} 
+                  box={box} 
+                  navigate={
+                    (id) => navigation.navigate('BoxDetails', { boxId: id })
+                  }
+                ></Box>
               </SView>
               <SView className='absolute left-1 right-1 top-9'>
                 <Vitals box={box}></Vitals>
