@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: backend-philanthropy
+  name: genparker-philanthropy-svc
+spec:
+  clusterIP: None
+  ports:
+  - name: http
+    port: 59595
+  selector:
+    app: backend-philanthropy
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: backend-philanthropy
+  name: genparker-philanthropy
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: backend-philanthropy
+  serviceName: genparker-philanthropy
+  template:
+    metadata:
+      labels:
+        app: backend-philanthropy
+    spec:
+      containers:
+      - env:
+        - name: SERVER
+          value: Dev
+        - name: SERVICE
+          value: platform-service
+        - name: KAFKA_SERVER
+          value: my-cluster-kafka-brokers.kafka.svc.cluster.local:9092
+        - name: KAFKA_TOPIC_DATA
+          value: genparker-philantropy-topic-data
+        - name: KAFKA_TOPIC_LOG
+          value: genparker-philantropy-topic-log
+        - name: KAFKA_TOPIC_MODULE
+          value: genparker-philantropy-topic-module
+        image: ghcr.io/beslogic/genparker_philantropy:latest
+        imagePullPolicy: Always
+        name: backend-philanthropy
+      imagePullSecrets:
+      - name: dockersecret
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: "true"
+  name: platform-genparker-ingress
+spec:
+  rules:
+  - host: philanthropy.genparker.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: genparker-philanthropy-svc
+            port:
+              number: 59595
+        path: /
+        pathType: Prefix
